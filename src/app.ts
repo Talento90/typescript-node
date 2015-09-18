@@ -3,8 +3,6 @@
 import express = require('express');
 
 var port = process.env.port || 3001;
-
-
 var app = express();
 
 app.get('/', (req, res) => {
