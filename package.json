@@ -17,6 +17,7 @@
     "test": "gulp test"
   },
   "dependencies": {
+    "babel": "^5.8.23",
     "express": "^4.13.3"
   },
   "devDependencies": {
@@ -31,6 +32,6 @@
     "typescript": "^1.6.2"
   },
   "engines": {
-    "node": ">=0.12.0"
+    "node": ">=4.1.1"
   }
 }

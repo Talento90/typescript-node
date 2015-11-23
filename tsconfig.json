@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "ES6",
     "module": "commonjs",
     "noImplicitAny": true,
     "removeComments": true,
     "sourceMap": false,
-    "outDir": "./build" 
+    "outDir": "./build",
+    "declaration": true,
+    "noResolve": false    
   }
 }

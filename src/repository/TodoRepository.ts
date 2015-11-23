@@ -1,4 +1,4 @@
-import Todo = require('../models/Todo');
+import Todo from '../models/Todo';
 
 var dummyTodos = [
 	new Todo("Todo 1", "Description bla bla 1"),

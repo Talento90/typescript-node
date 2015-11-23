@@ -11,17 +11,17 @@
     "assert/assert.d.ts": {
       "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
     },
-    "express/express.d.ts": {
-      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
-    },
-    "mime/mime.d.ts": {
-      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
-    },
     "node/node.d.ts": {
-      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
+      "commit": "70b40db9e027f20a51aff03ed35862ce02ad7fff"
+    },
+    "express/express.d.ts": {
+      "commit": "70b40db9e027f20a51aff03ed35862ce02ad7fff"
     },
     "serve-static/serve-static.d.ts": {
-      "commit": "7a3ca1f0b8a0960af9fc1838f3234cc9d6ce0645"
+      "commit": "70b40db9e027f20a51aff03ed35862ce02ad7fff"
+    },
+    "mime/mime.d.ts": {
+      "commit": "70b40db9e027f20a51aff03ed35862ce02ad7fff"
     }
   }
 }

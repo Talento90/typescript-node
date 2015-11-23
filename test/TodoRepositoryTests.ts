@@ -1,7 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-import assert = require("assert");
-import TodoRepository = require("../src/repository/TodoRepository");
+import * as assert from "assert";
+import * as TodoRepository from "../src/repository/TodoRepository";
 
 describe("TodoRepository", function() {
   it("should return all todos", function(done) {

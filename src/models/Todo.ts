@@ -1,4 +1,4 @@
-class Todo {
+export default class Todo {
 	public Name: string;
 	public Description: string;
 	
@@ -8,4 +8,3 @@ class Todo {
 	}
 }
 
-export = Todo;

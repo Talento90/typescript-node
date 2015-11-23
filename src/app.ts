@@ -1,7 +1,7 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-import express = require('express');
-import TodoController = require("./controllers/TodoController");
+import * as express from "express";
+import * as TodoController from "./controllers/TodoController";
 
 var port = process.env.port || 3001;
 var app = express();

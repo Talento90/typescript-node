@@ -15,7 +15,10 @@ var tsProject = ts.createProject('tsconfig.json', {
 
 
 gulp.task('nodemon', 'Run nodemon (Build and Watch Ts files)', ['build', 'watch'], function() {  
-    nodemon({script: './build/src/app.js'});
+    nodemon({
+        script: './build/src/app.js',
+        //exec: 'babel-node'
+    });
 });
 
 gulp.task('build', 'Build all Typescript files.', function () {
