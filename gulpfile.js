@@ -18,6 +18,7 @@ var tsProject = ts.createProject('tsconfig.json', {
 var outDir = tsconfig.compilerOptions.outDir;
 var tsFiles = [sourceFiles, testFiles];
 
+
 gulp.task('nodemon', 'Run nodemon (Build and Watch Ts files)', ['build', 'watch'], function() {  
     nodemon({
         script: './build/src/app.js',
@@ -29,7 +30,7 @@ gulp.task('clean', 'Clean build folder.', function () {
         .pipe(clean());
 });
 
-gulp.task('build', 'Build all Typescript files.', function () { 
+gulp.task('build', 'Build all Typescript files.', ['clean'], function () { 
  var tsResult = gulp.src(tsFiles, srcOption)
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject));
