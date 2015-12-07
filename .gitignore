@@ -29,7 +29,6 @@ node_modules
 #VSCode
 .vscode
 
-#Ignore JS and Map Files
-/build/**/*.js
-/build/**/*.js.map
+#Ignore build folder
+build
 
