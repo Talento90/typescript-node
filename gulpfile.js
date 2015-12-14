@@ -44,31 +44,23 @@ gulp.task('build', 'Build all Typescript files.', ['clean'], function () {
 gulp.task('watch', 'Watch all ts files.', function() {  
     gulp.watch(sourceFiles, ['build']);
 });
-
-gulp.task('test', 'Runs the Mocha tests.', ['build'], function () {    
-    return gulp.src('build/test/**/*.js')
+  
+gulp.task('test', function (cb) {
+  gulp.src(['build/src/**/*.js'])
+    .pipe(istanbul())
+    .pipe(istanbul.hookRequire()) 
+    .on('finish', function () {
+      gulp.src(['build/test/**/*.js'])
         .pipe(mocha())
-        .pipe(istanbul.writeReports({
-            dir: './coverage',
-            reporters: [ 'lcov', 'json']
-        }));
+        .pipe(istanbul.writeReports(
+          {
+            dir: './reports/test-coverage',
+            reporters: [ 'html'],
+          }        
+        ))
+        .on('end', cb);
+    });
 });
-
-
-gulp.task('test2', 'teste2', function () {
-    return gulp.src('build/test/**/*.js')
-      // Right there
-      .pipe(istanbul({includeUntested: true}))
-      .on('finish', function () {
-        gulp.src('build/test/**/*.js')
-          .pipe(mocha({reporter: 'spec'}))
-          .pipe(istanbul.writeReports({
-            dir: './assets/unit-test-coverage',
-            reporters: [ 'lcov' ],
-            reportOpts: { dir: './assets/unit-test-coverage'}
-          }));
-      });
-  });
 
 gulp.task('tslint', 'Lints all TypeScript source files.', function(){
   return gulp.src(tsFiles)

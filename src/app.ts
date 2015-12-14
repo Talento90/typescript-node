@@ -1,16 +1,17 @@
 /// <reference path="../typings/tsd.d.ts" />
 
-import * as express from "express";
-import * as TodoController from "./controllers/TodoController";
+import * as hapi from "hapi";
+import Controllers from "./controllers";
 
-var port = process.env.port || 3001;
-var app = express();
+var port = process.env.port || 3000;
+var server = new hapi.Server();
 
-app.get('/api/todos', TodoController.GetAllTodos);
+server.connection({ port: port });
 
-var server = app.listen(port, () => {
-    var host = server.address().address;
-    var port = server.address().port;
+//Register Controllers
+Controllers(server);
 
-    console.log('Example app listening at http://%s:%s', host, port);
+
+server.start(function () {
+    console.log('Server running at:', server.info.uri);
 });
