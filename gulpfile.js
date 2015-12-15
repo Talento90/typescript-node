@@ -20,10 +20,10 @@ var outDir = tsconfig.compilerOptions.outDir;
 var tsFiles = [sourceFiles, testFiles];
 
 
-gulp.task('nodemon', 'Run nodemon (Build and Watch Ts files)', ['build', 'watch'], function() {  
-    nodemon({
-        script: './build/src/app.js',
-    });
+gulp.task('nodemon', 'Run nodemon (Build and Watch Ts files)', ['watch'], function() {  
+     nodemon({
+        script: './build/src/app.js'
+    })
 });
 
 gulp.task('clean', 'Clean build folder.', function () {
@@ -41,7 +41,7 @@ gulp.task('build', 'Build all Typescript files.', ['clean'], function () {
         .pipe(gulp.dest(outDir));
 });
 
-gulp.task('watch', 'Watch all ts files.', function() {  
+gulp.task('watch', 'Watch all ts files.', ['build'], function() {  
     gulp.watch(sourceFiles, ['build']);
 });
   

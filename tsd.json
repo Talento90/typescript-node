@@ -22,6 +22,9 @@
     },
     "boom/boom.d.ts": {
       "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
+    },
+    "linqsharp/linqsharp.d.ts": {
+      "commit": "8ea42cd8bb11863ed6f242d67c502288ebc45a7b"
     }
   }
 }

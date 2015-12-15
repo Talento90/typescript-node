@@ -39,13 +39,12 @@ export default function (server: Hapi.Server){
             }
         }
     });
-    
-    
+     
     server.route({
         method: 'POST',
         path: '/api/todos',
         handler: function (request: Hapi.Request, reply: Hapi.IReply) {         
-            var todo = new Todo(request.payload.name, request.payload.description);
+            var todo = new Todo(request.payload.id, request.payload.name, request.payload.description);
             
             TodoRepository.createTodo(todo)
                 .then((todo: Todo) => {
@@ -55,6 +54,7 @@ export default function (server: Hapi.Server){
         config: {
             validate: {
                 payload: {
+                    id: Joi.number().required(),
                     name: Joi.string().required(),
                     description: Joi.string().required().min(10)
                 }   
