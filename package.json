@@ -18,8 +18,6 @@
   },
   "dependencies": {
     "boom": "^3.0.0",
-    "good": "^6.4.0",
-    "good-console": "^5.2.0",
     "hapi": "^11.1.2",
     "joi": "^7.0.1",
     "linqsharp": "^1.0.1"
