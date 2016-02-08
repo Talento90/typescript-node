@@ -34,3 +34,6 @@ node_modules
 #Ignore build folder
 build
 
+#Ignore typings
+typings
+
