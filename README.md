@@ -5,7 +5,7 @@ This is a very simple template project for node and typescript projects.
 **Installation**
 
 * *npm install* (Install node packages)
-* *tsd install* (Install typings)
+* *typings install* (Install typings)
 
 **Run**
 
