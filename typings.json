@@ -6,6 +6,7 @@
     "hapi": "github:DefinitelyTyped/DefinitelyTyped/hapi/hapi.d.ts#37afc2c83af2b87a3d2812d2fd2615a6dde825ae",
     "joi": "github:DefinitelyTyped/DefinitelyTyped/joi/joi.d.ts#860a1399c4884274632140e482378d37e8ebb326",
     "linqsharp": "github:DefinitelyTyped/DefinitelyTyped/linqsharp/linqsharp.d.ts#855dfaafb10cbe5f9338e8d3fe7d8c56720e7b1a",
-    "mocha": "github:DefinitelyTyped/DefinitelyTyped/mocha/mocha.d.ts#d6dd320291705694ba8e1a79497a908e9f5e6617"
+    "mocha": "github:DefinitelyTyped/DefinitelyTyped/mocha/mocha.d.ts#d6dd320291705694ba8e1a79497a908e9f5e6617",
+    "node": "github:DefinitelyTyped/DefinitelyTyped/node/node.d.ts#aee0039a2d6686ec78352125010ebb38a7a7d743"
   }
 }

@@ -18,14 +18,13 @@
   },
   "dependencies": {
     "boom": "^3.0.0",
-    "hapi": "^11.1.2",
+    "hapi": "^13.0.0",
     "joi": "^7.0.1",
     "linqsharp": "^1.0.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "gulp": "^3.9.0",
-    "gulp-clean": "^0.3.1",
     "gulp-help": "^1.6.0",
     "gulp-istanbul": "^0.10.3",
     "gulp-mocha": "^2.1.3",
