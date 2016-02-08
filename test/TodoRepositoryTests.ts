@@ -1,7 +1,9 @@
-/// <reference path="../typings/tsd.d.ts" />
+/// <reference path="../typings/main.d.ts" />
 
-import * as assert from "assert";
+import * as chai from "chai";
 import * as TodoRepository from "../src/repository/TodoRepository";
+
+let assert = chai.assert;
 
 describe("TodoRepository", function() {
   it("should return all todos", function(done) {
