@@ -1,12 +1,9 @@
 {
-  "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "noImplicitAny": false,
-    "removeComments": true,
-    "sourceMap": false,
-    "outDir": "./build",
-    "declaration": true,
-    "noResolve": false    
-  }
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "noImplicitAny": false,
+        "removeComments": true,
+        "outDir": "./build"
+    }
 }

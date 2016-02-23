@@ -11,26 +11,21 @@ var nodemon = require('gulp-nodemon')
 var tsconfig = require('./tsconfig')
 var sourceFiles = 'src/**/*.ts'
 var testFiles = 'test/**/*.ts'
-var srcOption = { base: './' }
+
 var tsProject = ts.createProject('tsconfig.json', {
   typescript: require('typescript')
 })
+
 var outDir = tsconfig.compilerOptions.outDir
 var tsFiles = [sourceFiles, testFiles]
 
-gulp.task('nodemon', 'Run nodemon (Build and Watch Ts files)', ['watch'], function () {
-  nodemon({
-    script: './build/src/app.js'
-  })
-})
-
-gulp.task('clean', 'Clean build folder.', function () {
+gulp.task('clean', 'Clean build folder.', () => {
   return gulp.src(outDir, {read: false})
     .pipe(rimraf())
 })
 
-gulp.task('build', 'Build all Typescript files.', ['clean'], function () {
-  var tsResult = gulp.src(tsFiles, srcOption)
+gulp.task('build', 'Build all Typescript files.', ['clean'], () => {
+  var tsResult = gulp.src(tsFiles)
     .pipe(sourcemaps.init())
     .pipe(ts(tsProject))
 
@@ -39,11 +34,18 @@ gulp.task('build', 'Build all Typescript files.', ['clean'], function () {
     .pipe(gulp.dest(outDir))
 })
 
-gulp.task('watch', 'Watch all ts files.', ['build'], function () {
+
+gulp.task('nodemon', 'Run nodemon (Build and Watch Ts files)', ['watch'], () => {
+  nodemon({
+    script: './build/src/app.js'
+  })
+})
+
+gulp.task('watch', 'Watch all ts files.', ['build'], () => {
   gulp.watch(sourceFiles, ['build'])
 })
 
-gulp.task('test', function (cb) {
+gulp.task('test', (cb) => {
   gulp.src(['build/src/**/*.js'])
     .pipe(istanbul())
     .pipe(istanbul.hookRequire())
