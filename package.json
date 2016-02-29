@@ -20,7 +20,7 @@
     "boom": "^3.0.0",
     "hapi": "^13.0.0",
     "joi": "^7.0.1",
-    "mongoose": "^4.4.4"
+    "mongodb": "^2.1.7"
   },
   "devDependencies": {
     "chai": "^3.5.0",

@@ -1,17 +1,21 @@
 import { IRepository, IEntity } from '../interfaces';
-import * as Mongoose from 'mongoose';
+import * as MongoDb from 'mongodb';
 
 
-new Mongoose.Schema()
-
-export default class MongoRepository<T extends IEntity> implements IRepository<T> {
-    
-    protected _model: Mongoose.Model<Mongoose.Document>;
-    
+export abstract class MongoRepository<T extends IEntity> implements IRepository<T> {
+      
     constructor() {
-        //_model =   
+        
     }
-
+    
+    protected abstract getCollectionName(): string;
+    
+    protected getCollection(): Promise<MongoDb.Collection> {
+        return MongoDb.MongoClient.connect("").then((db: MongoDb.Db) => {
+            return db.collection(this.getCollectionName());
+        });
+    }
+    
     public getAll(): Promise<Array<T>> {
         return Promise.resolve();
     }
@@ -32,3 +36,5 @@ export default class MongoRepository<T extends IEntity> implements IRepository<T
         return Promise.resolve();
     }
 }
+
+export default 'MongoRepository';
