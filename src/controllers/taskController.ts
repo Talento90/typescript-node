@@ -1,6 +1,5 @@
 import * as Hapi from "hapi";
 import * as Boom from "boom";
-import Task from '../models/task';
 import BaseController from './baseController'
 
 export default class taskController extends BaseController {
