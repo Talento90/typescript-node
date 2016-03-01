@@ -1,6 +1,7 @@
 import * as Hapi from "hapi";
 import * as Boom from "boom";
-import BaseController from './baseController'
+import BaseController from './baseController';
+import * as TaskModels from '../models/taskModels';
 
 export default class taskController extends BaseController {
 
@@ -9,7 +10,7 @@ export default class taskController extends BaseController {
     }
 
     public createTask(request: Hapi.Request, reply: Hapi.IReply) {
-
+        
     }
 
     public getTaskById(request: Hapi.Request, reply: Hapi.IReply) {
