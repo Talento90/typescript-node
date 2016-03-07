@@ -20,7 +20,7 @@
     "boom": "^3.0.0",
     "hapi": "^13.0.0",
     "joi": "^7.0.1",
-    "mongoose": "^4.4.5"
+    "mongodb": "^2.1.7"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -33,6 +33,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tslint": "^3.1",
     "gulp-typescript": "^2.8.3",
+    "run-sequence": "^1.1.5",
     "tslint": "^3.5.0",
     "typescript": "^1.7.3"
   },
