@@ -1,6 +1,8 @@
 import * as Hapi from "hapi";
 import * as Boom from "boom";
+import * as Joi from "joi";
 import BaseController from './baseController';
+import * as TaskModel from '../models/taskModel';
 import { ITask, ITaskRepository } from '../libs/repository/interfaces'
 
 export default class taskController extends BaseController {
@@ -11,73 +13,196 @@ export default class taskController extends BaseController {
         this.taskRepository = taskRepository;
     }
 
-    public createTask(request: Hapi.Request, reply: Hapi.IReply) {
-        var newTask: ITask = request.payload;      
-        
-        this.taskRepository.create(newTask).then((task) => {
-            reply(task);
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
-    }
-
-    public updateTask(request: Hapi.Request, reply: Hapi.IReply) {
-        const id = request.params["id"]
-        
-        this.taskRepository.findById(id).then((task: ITask) => {
-            if (task) {
-                var updateTask: ITask = request.payload;      
-        
-                this.taskRepository.findByIdAndUpdate(id, updateTask).then((updatedTask: ITask) => {
-                    reply(updatedTask);
+    public createTask(): Hapi.IRouteAdditionalConfigurationOptions {
+        return {
+            handler: (request: Hapi.Request, reply: Hapi.IReply) => {
+                var newTask: ITask = request.payload;
+                console.log(newTask);
+                
+                this.taskRepository.create(newTask).then((task) => {
+                    reply(task).code(201);
                 }).catch((error) => {
                     reply(Boom.badImplementation(error));
                 });
-            } else {
-                reply(Boom.notFound());
+            },
+            tags: ['api', 'tasks'],
+            description: 'Create a task.',
+            validate: {
+                payload: TaskModel.createTaskModel
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responses: {
+                        '201': {
+                            'description': 'Created Task.',
+                            'schema': TaskModel.taskModel
+                        }
+                    }
+                }
             }
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
+        }
     }
 
-    public deleteTask(request: Hapi.Request, reply: Hapi.IReply) {
-        const id = request.params["id"]
+    public updateTask(): Hapi.IRouteAdditionalConfigurationOptions {
+        return {
+            handler: (request: Hapi.Request, reply: Hapi.IReply) => {
+                const id = request.params["id"]
 
-        this.taskRepository.findById(id).then((task: ITask) => {
-            if (task) {
-                this.taskRepository.findByIdAndDelete(id).then(() => {
-                    reply(task);
+                this.taskRepository.findById(id).then((task: ITask) => {
+                    if (task) {
+                        var updateTask: ITask = request.payload;
+
+                        this.taskRepository.findByIdAndUpdate(id, updateTask).then((updatedTask: ITask) => {
+                            reply(updatedTask);
+                        }).catch((error) => {
+                            reply(Boom.badImplementation(error));
+                        });
+                    } else {
+                        reply(Boom.notFound());
+                    }
                 }).catch((error) => {
                     reply(Boom.badImplementation(error));
                 });
-            } else {
-                reply(Boom.notFound());
+            },
+            tags: ['api', 'tasks'],
+            description: 'Update task by id.',
+            validate: {
+                params: {
+                    id: Joi.string().required()
+                },
+                payload: TaskModel.updateTaskModel
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responses: {
+                        '200': {
+                            'description': 'Deleted Task.',
+                            'schema': TaskModel.taskModel
+                        },
+                        '404': {
+                            'description': 'Task does not exists.'
+                        }
+                    }
+                }
             }
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
+        };
     }
 
-    public getTaskById(request: Hapi.Request, reply: Hapi.IReply) {
-        const id = request.params["id"]
+    public deleteTask(): Hapi.IRouteAdditionalConfigurationOptions {
+        return {
+            handler: (request: Hapi.Request, reply: Hapi.IReply) => {
+                const id = request.params["id"]
 
-        this.taskRepository.findById(id).then((task: ITask) => {
-            if (task) {
-                reply(task);
-            } else {
-                reply(Boom.notFound());
+                this.taskRepository.findById(id).then((task: ITask) => {
+                    if (task) {
+                        this.taskRepository.findByIdAndDelete(id).then(() => {
+                            reply(task);
+                        }).catch((error) => {
+                            reply(Boom.badImplementation(error));
+                        });
+                    } else {
+                        reply(Boom.notFound());
+                    }
+                }).catch((error) => {
+                    reply(Boom.badImplementation(error));
+                });
+            },
+            tags: ['api', 'tasks'],
+            description: 'Delete task by id.',
+            validate: {
+                params: {
+                    id: Joi.string().required()
+                }
+            },
+            response: {
+                schema: TaskModel.taskModel
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responses: {
+                        '200': {
+                            'description': 'Deleted Task.',
+                            'schema': TaskModel.taskModel
+                        },
+                        '404': {
+                            'description': 'Task does not exists.'
+                        }
+                    }
+                }
             }
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
+        };
     }
 
-    public getTasks(request: Hapi.Request, reply: Hapi.IReply) {
-        this.taskRepository.find({}).then((tasks: Array<ITask>) => {
-            reply(tasks);
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
+    public getTaskById(): Hapi.IRouteAdditionalConfigurationOptions {
+        return {
+            handler: (request: Hapi.Request, reply: Hapi.IReply) => {
+                const id = request.params["id"]
+                console.log(id);
+                this.taskRepository.findById(id).then((task: ITask) => {
+                    if (task) {
+                        reply(task);
+                    } else {
+                        reply(Boom.notFound());
+                    }
+                }).catch((error) => {
+                    reply(Boom.badImplementation(error));
+                });
+            },
+            tags: ['api', 'tasks'],
+            description: 'Get task by id.',
+            validate: {
+                params: {
+                    id: Joi.string().required()
+                }
+            },
+            response: {
+                schema: TaskModel.taskModel
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responses: {
+                        '200': {
+                            'description': 'Task founded.'
+                        },
+                        '404': {
+                            'description': 'Task does not exists.'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public getTasks(): Hapi.IRouteAdditionalConfigurationOptions {
+        return {
+            handler: (request: Hapi.Request, reply: Hapi.IReply) => {
+                var top = request.query.top;
+                var skip = request.query.skip;
+
+                this.taskRepository.find({}, top, skip).then((tasks: Array<ITask>) => {
+                    reply(tasks);
+                }).catch((error) => {
+                    reply(Boom.badImplementation(error));
+                });
+            },
+            tags: ['api', 'tasks'],
+            description: 'Get all tasks.',
+            validate: {
+                query: {
+                    top: Joi.number().default(5),
+                    skip: Joi.number().default(0)
+                }
+            },
+            plugins: {
+                'hapi-swagger': {
+                    responses: {
+                        '200': {
+                            'description': 'Returned Tasks.',
+                            'schema': TaskModel.taskModel
+                        }
+                    }
+                }
+            }
+        };
     }
 }

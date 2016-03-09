@@ -19,16 +19,19 @@ abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity
     }
 
     public findById(id: string): Promise<T> {
-        return this.collection.then((collection: MongoDb.Collection) => {
-            return collection.find({ _id: id }).toArray().then((results) => {
-                return results.length > 0 ? results[0] : undefined;
+        return this.collection.then((collection: any) => {
+            return collection.findOne({ _id: new MongoDb.ObjectID(id) }).then((result) => {
+                return result;
             });
         });
     }
 
     public findByIdAndDelete(id: string): Promise<any> {
         return this.collection.then((collection: MongoDb.Collection) => {
+            console.log(id);
+            
             return collection.deleteOne({ _id: id }).then((result) => {
+                console.log(result);
                 return result;
             });
         });
