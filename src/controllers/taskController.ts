@@ -51,8 +51,12 @@ export default class taskController extends BaseController {
                 this.taskRepository.findById(id).then((task: ITask) => {
                     if (task) {
                         var updateTask: ITask = request.payload;
-
-                        this.taskRepository.findByIdAndUpdate(id, updateTask).then((updatedTask: ITask) => {
+                                                
+                        task.completed = updateTask.completed;
+                        task.description = updateTask.description;
+                        task.name = updateTask.name;
+                        
+                        this.taskRepository.findByIdAndUpdate(id, task).then((updatedTask: ITask) => {
                             reply(updatedTask);
                         }).catch((error) => {
                             reply(Boom.badImplementation(error));

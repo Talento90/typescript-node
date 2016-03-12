@@ -1,6 +1,6 @@
 import * as MongoDb from 'mongodb'
 import {IEntity, IRepository} from "../interfaces"
-
+const UUID = require("node-uuid");
 
 abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity>  {
 
@@ -20,16 +20,14 @@ abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity
 
     public findById(id: string): Promise<T> {
         return this.collection.then((collection: any) => {
-            return collection.findOne({ _id: new MongoDb.ObjectID(id) }).then((result) => {
+            return collection.findOne({_id: id}).then((result) => {
                 return result;
             });
         });
     }
 
     public findByIdAndDelete(id: string): Promise<any> {
-        return this.collection.then((collection: MongoDb.Collection) => {
-            console.log(id);
-            
+        return this.collection.then((collection: MongoDb.Collection) => {            
             return collection.deleteOne({ _id: id }).then((result) => {
                 console.log(result);
                 return result;
@@ -53,6 +51,8 @@ abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity
     }
 
     public create(entity: T): Promise<T> {
+        
+        entity._id = UUID.v4();
         return this.collection.then((collection: MongoDb.Collection) => {
             entity.createdDate = new Date();
             return collection.insertOne(entity).then((result) => {

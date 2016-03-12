@@ -13,11 +13,10 @@ export const updateTaskModel = Joi.object().keys({
 
 
 export const taskModel = Joi.object({
-    id: Joi.string().required(),
+    _id: Joi.string().required(),
     name: Joi.string().required(),
     description: Joi.string().required(),
     completed: Joi.boolean(),
-    version: Joi.string().required(),
     createdDate: Joi.date(),
     updatedAt: Joi.date()
 }).label("Task Model").description("Json body that represents a task.");
