@@ -19,9 +19,11 @@ let entryPoint = './build/src/server.js'
 /**
  * Remove build directory.
  */
-gulp.task('clean', (cb) => {
-  return rimraf([outDir], cb)
+gulp.task('clean', function () {
+  return gulp.src(outDir, { read: false })
+    .pipe(rimraf())
 })
+
 
 /**
  * Lint all custom TypeScript files.
@@ -35,7 +37,7 @@ gulp.task('tslint', () => {
 /**
  * Compile TypeScript sources and create sourcemaps in build directory.
  */
-gulp.task('compile', [], () => {
+gulp.task('compile', ['clean'], () => {
   let tsResult = gulp.src([sourceFiles, testFiles])
     .pipe(sourcemaps.init())
     .pipe(tsc(tsProject))

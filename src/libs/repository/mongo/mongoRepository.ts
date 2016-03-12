@@ -1,13 +1,14 @@
 import * as MongoDb from 'mongodb'
 import {IEntity, IRepository} from "../interfaces"
 const UUID = require("node-uuid");
+import Configurations from "../../../configs/configurations";
 
 abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity>  {
 
     protected collection: Promise<MongoDb.Collection>;
 
     constructor() {
-        this.collection = this.getCollection("mongodb://localhost/typescript");
+        this.collection = this.getCollection(Configurations.Repository.connectionString);
     }
 
     protected abstract getCollectionName(): string;

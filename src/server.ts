@@ -1,11 +1,12 @@
 /// <reference path="../typings.d.ts" />
 import {IPlugin} from "./libs/plugins/interfaces";
+import Configurations from "./configs/configurations";
 import * as Hapi from "hapi";
 import Routes from "./routes";
 const fs = require('fs');
 const path = require('path');
 
-var port = process.env.port || 3000;
+var port = process.env.port || Configurations.Server.port;
 var server = new Hapi.Server();
 
 server.connection({ port: port });
