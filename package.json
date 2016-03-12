@@ -18,9 +18,18 @@
   },
   "dependencies": {
     "boom": "^3.0.0",
+    "fs": "0.0.2",
+    "good": "^6.6.0",
+    "good-console": "^5.3.1",
     "hapi": "^13.0.0",
+    "hapi-swagger": "^4.2.1",
+    "inert": "^3.2.0",
     "joi": "^7.0.1",
-    "linqsharp": "^1.0.1"
+    "moment": "^2.12.0",
+    "mongodb": "^2.1.7",
+    "node-uuid": "^1.4.7",
+    "path": "^0.12.7",
+    "vision": "^4.0.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -33,7 +42,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-tslint": "^3.1",
     "gulp-typescript": "^2.8.3",
-    "tslint": "2.*",
+    "tslint": "^3.5.0",
     "typescript": "^1.7.3"
   },
   "engines": {
