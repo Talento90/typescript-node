@@ -24,7 +24,6 @@ gulp.task('clean', function () {
     .pipe(rimraf())
 })
 
-
 /**
  * Lint all custom TypeScript files.
  */
@@ -75,14 +74,19 @@ gulp.task('test', ['build'], (cb) => {
             reporters: ['html']
           }
         ))
-        .on('end', cb)
+        .once('error', () => {
+          process.exit(1)
+        })
+        .once('end', () => {
+          process.exit()
+        })
     })
 })
 
 gulp.task('nodemon', ['build'], () => {
   nodemon({
     script: entryPoint,
-    env: { 'NODE_ENV': 'development' },
+    env: { 'NODE_ENV': 'dev' },
     tasks: ['build']
   })
 })

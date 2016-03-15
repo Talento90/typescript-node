@@ -1,15 +1,15 @@
 import * as Hapi from "hapi";
 import * as Boom from "boom";
 import * as Joi from "joi";
-import BaseController from './baseController';
-import * as TaskModel from '../models/taskModel';
-import { ITask, ITaskRepository } from '../libs/repository/interfaces'
+import BaseController from "./baseController";
+import * as TaskModel from "../models/taskModel";
+import { ITask, ITaskRepository } from "../libs/repository/interfaces"
 
 export default class taskController extends BaseController {
     private taskRepository: ITaskRepository;
 
-    constructor(server: Hapi.Server, taskRepository: ITaskRepository) {
-        super(server);
+    constructor(taskRepository: ITaskRepository) {
+        super();
         this.taskRepository = taskRepository;
     }
 

@@ -1,15 +1,15 @@
-/// <reference path="../typings/main.d.ts" />
-
+/// <reference path="../../../typings.d.ts" />
 import * as chai from "chai";
-import TaskRepository from "../src/libs/repository/mongo/taskRepository";
-import {ITask} from "../src/libs/repository/interfaces";
+import TaskRepository from "../../../src/libs/repository/mongo/taskRepository";
+import { ITask, ITaskRepository } from "../../../src/libs/repository/interfaces";
+import Kernel from "../../../src/libs/ioc";
 
 let assert = chai.assert;
 
 describe("TaskRepository", function() {
   it("Create a task", function(done) {
-      var repo = new TaskRepository();
-      
+      var repo: ITaskRepository = Kernel.get<ITaskRepository>("ITaskRepository");
+
       var task: ITask = {
           _id: undefined,
           name: "task",

@@ -1,11 +1,13 @@
 import * as Hapi from "hapi";
-import TaskController from '../controllers/taskController';
-import TaskRepository from '../libs/repository/mongo/taskRepository';
+import TaskController from "../controllers/taskController";
+import Kernel from "../libs/ioc";
+import { ITaskRepository } from "../libs/repository/interfaces";
 
+const taskRepository = Kernel.get<ITaskRepository>("ITaskRepository");
 
 export default function(server: Hapi.Server) {
 
-    const taskController = new TaskController(server, new TaskRepository());
+    const taskController = new TaskController(taskRepository);
 
     server.route({
         method: 'GET',

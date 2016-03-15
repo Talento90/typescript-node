@@ -1,9 +1,13 @@
 import {ITask} from "../interfaces"
 import MongoRepository from "./mongoRepository"
+import {IRepositoryConfig} from "../../../configs/interfaces";
+import { inject } from "inversify";
 
+
+@inject("IRepositoryConfig")
 class TaskRepository extends MongoRepository<ITask>  {
-    constructor() {
-        super();
+    constructor(configs: IRepositoryConfig) {
+        super(configs);
     }  
     
      protected getCollectionName(): string {

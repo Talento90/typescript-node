@@ -1,14 +1,15 @@
-import * as MongoDb from 'mongodb'
-import {IEntity, IRepository} from "../interfaces"
+import * as MongoDb from 'mongodb';
+import {IEntity, IRepository} from "../interfaces";
+import {IRepositoryConfig} from "../../../configs/interfaces";
 const UUID = require("node-uuid");
-import Configurations from "../../../configs/configurations";
+
 
 abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity>  {
 
     protected collection: Promise<MongoDb.Collection>;
 
-    constructor() {
-        this.collection = this.getCollection(Configurations.Repository.connectionString);
+    constructor(configs: IRepositoryConfig) {
+        this.collection = this.getCollection(configs.connectionString);
     }
 
     protected abstract getCollectionName(): string;

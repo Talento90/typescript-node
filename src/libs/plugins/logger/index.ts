@@ -1,7 +1,5 @@
-import {IPlugin} from '../interfaces'
-import * as Hapi from 'hapi'
-const Good = require('good');
-const GoodConsole = require('good-console');
+import {IPlugin} from "../interfaces";
+import * as Hapi from "hapi";
 
 export default (): IPlugin => {
     return {
@@ -15,7 +13,7 @@ export default (): IPlugin => {
             };
 
             server.register({
-                register: Good,
+                register: require('good'),
                 options: opts
             }, (error) => {
                 if (error) {
