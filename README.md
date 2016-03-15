@@ -1,6 +1,6 @@
 # typescript-node [![Build Status](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)](https://travis-ci.org/Talento90/typescript-node)
 
-Template project for node and typescript.
+Boilerplate template for node and typescript services.
 
 **Installation**
 
@@ -14,9 +14,15 @@ Template project for node and typescript.
 * *gulp tslint* (Run tslint)
 * *gulp nodemon* (Run nodemon and watch ts files)
 
+**Features**
 
-Running on port 3000 ex: localhost:3000/api/tasks
+* *Inversion of control using Inversify/*
+* *Service Api using Hapijs*
+* *Swagger documentation*
+* *Generic Mongo Repository*
 
+
+Running on port 3000 ex: localhost:3000/documentation
 
 Have fun :)
 
