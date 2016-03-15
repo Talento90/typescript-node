@@ -1,4 +1,4 @@
-import {IPlugin} from "../interfaces";
+import { IPlugin } from "../interfaces";
 import * as Hapi from "hapi";
 
 export default (): IPlugin => {
@@ -27,5 +27,5 @@ export default (): IPlugin => {
                 version: "1.0.0"
             };
         }
-    }
+    };
 };

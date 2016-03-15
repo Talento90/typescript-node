@@ -7,9 +7,9 @@ import TaskRepository from "../repository/mongo/taskRepository";
 
 export default function(kernel: IKernel) {
     //Configurations
-    kernel.bind<IRepositoryConfig>("IRepositoryConfig").to(Configurations).inSingletonScope();;
-    kernel.bind<IServerConfig>("IServerConfig").to(Configurations).inSingletonScope();;
+    kernel.bind<IRepositoryConfig>("IRepositoryConfig").to(Configurations).inSingletonScope();
+    kernel.bind<IServerConfig>("IServerConfig").to(Configurations).inSingletonScope();
 
     //Repositories
-    kernel.bind<ITaskRepository>("ITaskRepository").to(TaskRepository).inSingletonScope();;
+    kernel.bind<ITaskRepository>("ITaskRepository").to(TaskRepository).inSingletonScope();
 };

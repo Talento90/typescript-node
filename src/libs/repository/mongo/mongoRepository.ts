@@ -29,7 +29,7 @@ abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity
     }
 
     public findByIdAndDelete(id: string): Promise<any> {
-        return this.collection.then((collection: MongoDb.Collection) => {            
+        return this.collection.then((collection: MongoDb.Collection) => {
             return collection.deleteOne({ _id: id }).then((result) => {
                 console.log(result);
                 return result;
@@ -53,7 +53,6 @@ abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity
     }
 
     public create(entity: T): Promise<T> {
-        
         entity._id = UUID.v4();
         return this.collection.then((collection: MongoDb.Collection) => {
             entity.createdDate = new Date();

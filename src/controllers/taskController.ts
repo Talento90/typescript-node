@@ -3,9 +3,9 @@ import * as Boom from "boom";
 import * as Joi from "joi";
 import BaseController from "./baseController";
 import * as TaskModel from "../models/taskModel";
-import { ITask, ITaskRepository } from "../libs/repository/interfaces"
+import { ITask, ITaskRepository } from "../libs/repository/interfaces";
 
-export default class taskController extends BaseController {
+export default class TaskController extends BaseController {
     private taskRepository: ITaskRepository;
 
     constructor(taskRepository: ITaskRepository) {
@@ -17,8 +17,7 @@ export default class taskController extends BaseController {
         return {
             handler: (request: Hapi.Request, reply: Hapi.IReply) => {
                 var newTask: ITask = request.payload;
-                console.log(newTask);
-                
+
                 this.taskRepository.create(newTask).then((task) => {
                     reply(task).code(201);
                 }).catch((error) => {
@@ -40,22 +39,20 @@ export default class taskController extends BaseController {
                     }
                 }
             }
-        }
+        };
     }
 
     public updateTask(): Hapi.IRouteAdditionalConfigurationOptions {
         return {
             handler: (request: Hapi.Request, reply: Hapi.IReply) => {
-                const id = request.params["id"]
+                const id = request.params["id"];
 
                 this.taskRepository.findById(id).then((task: ITask) => {
                     if (task) {
                         var updateTask: ITask = request.payload;
-                                                
                         task.completed = updateTask.completed;
                         task.description = updateTask.description;
                         task.name = updateTask.name;
-                        
                         this.taskRepository.findByIdAndUpdate(id, task).then((updatedTask: ITask) => {
                             reply(updatedTask);
                         }).catch((error) => {
@@ -95,7 +92,7 @@ export default class taskController extends BaseController {
     public deleteTask(): Hapi.IRouteAdditionalConfigurationOptions {
         return {
             handler: (request: Hapi.Request, reply: Hapi.IReply) => {
-                const id = request.params["id"]
+                const id = request.params["id"];
 
                 this.taskRepository.findById(id).then((task: ITask) => {
                     if (task) {
@@ -140,7 +137,7 @@ export default class taskController extends BaseController {
     public getTaskById(): Hapi.IRouteAdditionalConfigurationOptions {
         return {
             handler: (request: Hapi.Request, reply: Hapi.IReply) => {
-                const id = request.params["id"]
+                const id = request.params["id"];
                 console.log(id);
                 this.taskRepository.findById(id).then((task: ITask) => {
                     if (task) {
@@ -174,7 +171,7 @@ export default class taskController extends BaseController {
                     }
                 }
             }
-        }
+        };
     }
 
     public getTasks(): Hapi.IRouteAdditionalConfigurationOptions {

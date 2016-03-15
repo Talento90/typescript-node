@@ -57,7 +57,7 @@ gulp.task('watch', function () {
 /**
  * Build the project.
  */
-gulp.task('build', ['compile'], () => {
+gulp.task('build', ['tslint', 'compile'], () => {
   console.log('Building the project ...')
 })
 
