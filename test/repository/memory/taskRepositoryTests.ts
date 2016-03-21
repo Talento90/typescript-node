@@ -1,17 +1,13 @@
 /// <reference path="../../../typings.d.ts" />
 import * as chai from "chai";
-import "reflect-metadata";
-import TaskRepository from "../../../src/libs/repository/mongo/taskRepository";
+import TaskRepository from "../../../src/libs/repository/memory/taskRepository";
 import { ITask, ITaskRepository } from "../../../src/libs/repository/interfaces";
-import {IRepositoryConfig} from "../../../src/configs/interfaces";
-import Kernel from "../../../src/libs/ioc";
 
-const configurations = Kernel.get<IRepositoryConfig>("IRepositoryConfig");
-const assert = chai.assert;
+let assert = chai.assert;
 
 describe("TaskRepository", function() {
   it("Create a task", function(done) {
-      var repo: ITaskRepository = new TaskRepository(configurations);
+      var repo: ITaskRepository = new TaskRepository();
 
       var task: ITask = {
           _id: undefined,

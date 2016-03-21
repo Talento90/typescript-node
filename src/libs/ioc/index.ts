@@ -1,7 +1,6 @@
 import "reflect-metadata";
 import { Kernel } from "inversify";
 
-
 const env = process.env.NODE_ENV || "dev";
 var kernel = new Kernel();
 
