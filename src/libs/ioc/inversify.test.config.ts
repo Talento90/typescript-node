@@ -2,7 +2,7 @@ import { IKernel } from "inversify";
 import {IRepositoryConfig, IServerConfig} from "../../configs/interfaces";
 import Configurations from "../../configs/configurations";
 import { ITaskRepository } from "../repository/interfaces";
-import TaskRepository from "../repository/mongo/taskRepository";
+import TaskRepository from "../repository/memory/taskRepository";
 
 
 export default function(kernel: IKernel) {

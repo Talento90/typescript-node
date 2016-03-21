@@ -22,7 +22,7 @@ export default (): IPlugin => {
                             }
                         ],
                         enableDocumentation: true,
-                        documentationPath: '/documentation'
+                        documentationPath: '/docs'
                     }
                 }
             ]
