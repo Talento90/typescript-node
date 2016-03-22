@@ -6,8 +6,8 @@ let tsc = require('gulp-typescript');
 let sourcemaps = require('gulp-sourcemaps');
 let tslint = require('gulp-tslint');
 let nodemon = require('gulp-nodemon');
-var mocha = require('gulp-mocha');
-var istanbul = require('gulp-istanbul');
+let mocha = require('gulp-mocha');
+let istanbul = require('gulp-istanbul');
 
 // /*  Variables */
 let tsProject = tsc.createProject('tsconfig.json');
@@ -30,7 +30,7 @@ gulp.task('clean', function () {
 gulp.task('tslint', () => {
   return gulp.src(sourceFiles)
     .pipe(tslint())
-    .pipe(tslint.report('verbose'));
+    .pipe(tslint.report('prose'));
 });
 
 /**
@@ -41,12 +41,12 @@ gulp.task('compile', ['clean'], () => {
     .pipe(sourcemaps.init())
     .pipe(tsc(tsProject));
   return tsResult.js
-    .pipe(sourcemaps.write('.'))
+    .pipe(sourcemaps.write('.', { sourceRoot: '.' }))
     .pipe(gulp.dest(outDir));
 });
 
 /**
- * Watch for changes in TypeScript, HTML and CSS files.
+ * Watch for changes in TypeScript
  */
 gulp.task('watch', function () {
   gulp.watch([sourceFiles], ['compile']).on('change', function (e) {
@@ -86,7 +86,6 @@ gulp.task('test', ['build'], (cb) => {
 gulp.task('nodemon', ['build'], () => {
   nodemon({
     script: entryPoint,
-    env: { 'NODE_ENV': 'dev' },
-    tasks: ['build']
+    env: { 'NODE_ENV': 'dev' }
   });
 });

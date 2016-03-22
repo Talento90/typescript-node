@@ -22,7 +22,7 @@ Boilerplate template for node and typescript services.
 * *Generic Mongo Repository*
 
 
-Running on port 3000 ex: localhost:3000/documentation
+Running on port 5000 ex: localhost:5000/docs
 
 Have fun :)
 

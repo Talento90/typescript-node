@@ -11,7 +11,6 @@ export const updateTaskModel = Joi.object().keys({
     completed: Joi.boolean()
 });
 
-
 export const taskModel = Joi.object({
     _id: Joi.string().required(),
     name: Joi.string().required(),
