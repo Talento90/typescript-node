@@ -6,7 +6,7 @@ import { ITaskRepository } from "../../../src/libs/repository/interfaces";
 
 let assert = chai.assert;
 
-describe("TaskRepository", function() {
+describe("Memory TaskRepository", function() {
   it("Create a task", function(done) {
       var repo: ITaskRepository = new TaskRepository();
 
@@ -18,7 +18,7 @@ describe("TaskRepository", function() {
           createdDate: undefined,
           updatedDate: undefined
       };
-      
+
       repo.create(task).then((createdTask) => {
           assert.isNotNull(task._id);
           assert.isNotNull(task.createdDate);

@@ -10,7 +10,7 @@ import Kernel from "../../../src/libs/ioc";
 const configurations = Kernel.get<IRepositoryConfig>("IRepositoryConfig");
 const assert = chai.assert;
 
-describe("TaskRepository", function() {
+describe("Mongo TaskRepository", function() {
   it("Create a task", function(done) {
       var repo: ITaskRepository = new TaskRepository(configurations);
 
@@ -22,7 +22,7 @@ describe("TaskRepository", function() {
           createdDate: undefined,
           updatedDate: undefined
       };
-      
+
       repo.create(task).then((createdTask) => {
           assert.isNotNull(task._id);
           assert.isNotNull(task.createdDate);
