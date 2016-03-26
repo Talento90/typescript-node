@@ -12,14 +12,15 @@ Boilerplate template for node and typescript services.
 * *gulp build* (Build TS files)
 * *gulp test* (Run mocha tests)
 * *gulp tslint* (Run tslint)
-* *gulp nodemon* (Run nodemon and watch ts files)
+* *gulp watch* (Watch ts files)
+* *npm run start* (Runs application)
 
 **Features**
 
 * *Inversion of control using Inversify/*
 * *Service Api using Hapijs*
 * *Swagger documentation*
-* *Generic Mongo Repository*
+* *Generic Mongo and Memory Repository*
 
 
 Running on port 5000 ex: localhost:5000/docs
