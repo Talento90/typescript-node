@@ -1,6 +1,8 @@
 import * as MongoDb from 'mongodb';
-import {IEntity, IRepository} from "../interfaces";
+import {IEntity} from "../../../core/interfaces";
+import {IRepository} from "../interfaces";
 import {IRepositoryConfig} from "../../../configs/interfaces";
+import * as Moment from "moment";
 const UUID = require("node-uuid");
 
 
@@ -38,7 +40,7 @@ abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity
 
     public findByIdAndUpdate(id: string, entity: T): Promise<T> {
         return this.collection.then((collection: MongoDb.Collection) => {
-            entity.updatedAt = new Date();
+            entity.updatedDate = Moment.utc().toDate();
             return collection.updateOne({ _id: id }, entity).then((result) => {
                 return entity;
             });
@@ -54,7 +56,7 @@ abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity
     public create(entity: T): Promise<T> {
         entity._id = UUID.v4();
         return this.collection.then((collection: MongoDb.Collection) => {
-            entity.createdDate = new Date();
+            entity.createdDate = Moment.utc().toDate();
             return collection.insertOne(entity).then((result) => {
                 return entity;
             });

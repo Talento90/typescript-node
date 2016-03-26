@@ -1,7 +1,8 @@
 /// <reference path="../../../typings.d.ts" />
 import * as chai from "chai";
 import TaskRepository from "../../../src/libs/repository/memory/taskRepository";
-import { ITask, ITaskRepository } from "../../../src/libs/repository/interfaces";
+import Task from "../../../src/core/task";
+import { ITaskRepository } from "../../../src/libs/repository/interfaces";
 
 let assert = chai.assert;
 
@@ -9,13 +10,13 @@ describe("TaskRepository", function() {
   it("Create a task", function(done) {
       var repo: ITaskRepository = new TaskRepository();
 
-      var task: ITask = {
+      var task: Task = {
           _id: undefined,
           name: "task",
           description: "teste",
           completed: false,
           createdDate: undefined,
-          updatedAt: undefined
+          updatedDate: undefined
       };
       
       repo.create(task).then((createdTask) => {

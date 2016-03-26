@@ -1,38 +1,53 @@
-import {IEntity, IRepository} from "../interfaces";
+import {IEntity} from "../../../core/interfaces";
+import {IRepository} from "../interfaces";
+import * as Moment from "moment";
 const UUID = require("node-uuid");
 
 
 class MemoryRepository<T extends IEntity> implements IRepository<IEntity> {
-    protected database: {[id: string]: T} = {};
+    protected database: Map<string, T>;
+
+    constructor() {
+        this.database = new Map<string, T>();
+    }
 
     public findById(id: string): Promise<T> {
-        return Promise.resolve(this.database[id]);
+        return Promise.resolve(this.database.get(id));
     }
 
     public findByIdAndDelete(id: string): Promise<T> {
-        var deletedEntity = this.database[id];
-        delete this.database[id];
+        var deletedEntity = this.database.get(id);
+        this.database.delete(id);
         return Promise.resolve(deletedEntity);
     }
 
     public findByIdAndUpdate(id: string, entity: T): Promise<T> {
-        if (this.database[id]) {
-            entity.updatedAt = new Date();
-            this.database[id] = entity;
+        var entityToUpdate = this.database.get(id);
+
+        if (entityToUpdate !== undefined) {
+            this.database.delete(id);
+            entity.updatedDate = Moment.utc().toDate();
+            this.database.set(id, entity);
+            return Promise.resolve(entity);
         }
 
-        return Promise.resolve(this.database[id]);
+        return Promise.resolve(undefined);
     }
 
     public find(filter: Object, top?: number, skip?: number): Promise<Array<T>> {
-        var values = Object.keys(this.database).map(key => this.database[key]);
-        values = values.slice(skip, skip + top);
+        var values = new Array<T>();
+
+        this.database.forEach((value) => {
+            values.push(value);
+        });
+
         return Promise.resolve(values);
     }
 
     public create(entity: T): Promise<T> {
         entity._id = UUID.v4();
-        this.database[entity._id] = entity;
+        entity.createdDate = Moment.utc().toDate();
+        this.database.set(entity._id, entity);
         return Promise.resolve(entity);
     }
 }

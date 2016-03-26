@@ -3,7 +3,8 @@ import * as Boom from "boom";
 import * as Joi from "joi";
 import BaseController from "./baseController";
 import * as TaskModel from "../models/taskModel";
-import { ITask, ITaskRepository } from "../libs/repository/interfaces";
+import Task from "../core/Task";
+import { ITaskRepository } from "../libs/repository/interfaces";
 
 export default class TaskController extends BaseController {
     private taskRepository: ITaskRepository;
@@ -16,7 +17,7 @@ export default class TaskController extends BaseController {
     public createTask(): Hapi.IRouteAdditionalConfigurationOptions {
         return {
             handler: (request: Hapi.Request, reply: Hapi.IReply) => {
-                var newTask: ITask = request.payload;
+                var newTask: Task = request.payload;
 
                 this.taskRepository.create(newTask).then((task) => {
                     reply(task).code(201);
@@ -47,13 +48,13 @@ export default class TaskController extends BaseController {
             handler: (request: Hapi.Request, reply: Hapi.IReply) => {
                 const id = request.params["id"];
 
-                this.taskRepository.findById(id).then((task: ITask) => {
+                this.taskRepository.findById(id).then((task: Task) => {
                     if (task) {
-                        var updateTask: ITask = request.payload;
+                        var updateTask: Task = request.payload;
                         task.completed = updateTask.completed;
                         task.description = updateTask.description;
                         task.name = updateTask.name;
-                        this.taskRepository.findByIdAndUpdate(id, task).then((updatedTask: ITask) => {
+                        this.taskRepository.findByIdAndUpdate(id, task).then((updatedTask: Task) => {
                             reply(updatedTask);
                         }).catch((error) => {
                             reply(Boom.badImplementation(error));
@@ -94,7 +95,7 @@ export default class TaskController extends BaseController {
             handler: (request: Hapi.Request, reply: Hapi.IReply) => {
                 const id = request.params["id"];
 
-                this.taskRepository.findById(id).then((task: ITask) => {
+                this.taskRepository.findById(id).then((task: Task) => {
                     if (task) {
                         this.taskRepository.findByIdAndDelete(id).then(() => {
                             reply(task);
@@ -139,7 +140,7 @@ export default class TaskController extends BaseController {
             handler: (request: Hapi.Request, reply: Hapi.IReply) => {
                 const id = request.params["id"];
                 console.log(id);
-                this.taskRepository.findById(id).then((task: ITask) => {
+                this.taskRepository.findById(id).then((task: Task) => {
                     if (task) {
                         reply(task);
                     } else {
@@ -180,7 +181,7 @@ export default class TaskController extends BaseController {
                 var top = request.query.top;
                 var skip = request.query.skip;
 
-                this.taskRepository.find({}, top, skip).then((tasks: Array<ITask>) => {
+                this.taskRepository.find({}, top, skip).then((tasks: Array<Task>) => {
                     reply(tasks);
                 }).catch((error) => {
                     reply(Boom.badImplementation(error));

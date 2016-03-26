@@ -1,8 +1,8 @@
-import {ITask} from "../interfaces";
+import Task from "../../../core/task";
 import MemoryRepository from "./memoryRepository";
 import {IRepositoryConfig} from "../../../configs/interfaces";
 
-class TaskRepository extends MemoryRepository<ITask> {
+class TaskRepository extends MemoryRepository<Task> {
 
 }
 

@@ -1,16 +1,5 @@
-
-export interface IEntity {
-    _id: string;
-    createdDate: Date;
-    updatedAt: Date;
-}
-
-export interface ITask extends IEntity {
-    name: string;
-    description: string;
-    completed: boolean;
-}
-
+import {IEntity} from "../../core/interfaces";
+import Task from "../../core/task";
 
 export interface IRepository<T extends IEntity> {
     findById(id: string): Promise<T>;
@@ -20,5 +9,5 @@ export interface IRepository<T extends IEntity> {
     create(entity: T): Promise<T>;
 }
 
-export interface ITaskRepository extends IRepository<ITask> {
+export interface ITaskRepository extends IRepository<Task> {
 }

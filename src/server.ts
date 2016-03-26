@@ -11,7 +11,12 @@ const serverConfigs = kernel.get<IServerConfig>("IServerConfig");
 const port = process.env.port || serverConfigs.port;
 const server = new Hapi.Server();
 
-server.connection({ port: port });
+server.connection({
+    port: port,
+    routes: {
+        cors: true
+    }
+});
 
 //  Setup Hapi Plugins
 const pluginsPath = __dirname + '/libs/plugins/';

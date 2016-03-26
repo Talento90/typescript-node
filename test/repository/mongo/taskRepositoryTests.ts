@@ -2,7 +2,8 @@
 import * as chai from "chai";
 import "reflect-metadata";
 import TaskRepository from "../../../src/libs/repository/mongo/taskRepository";
-import { ITask, ITaskRepository } from "../../../src/libs/repository/interfaces";
+import Task from "../../../src/core/task";
+import { ITaskRepository } from "../../../src/libs/repository/interfaces";
 import {IRepositoryConfig} from "../../../src/configs/interfaces";
 import Kernel from "../../../src/libs/ioc";
 
@@ -13,13 +14,13 @@ describe("TaskRepository", function() {
   it("Create a task", function(done) {
       var repo: ITaskRepository = new TaskRepository(configurations);
 
-      var task: ITask = {
+      var task: Task = {
           _id: undefined,
           name: "task",
           description: "teste",
           completed: false,
           createdDate: undefined,
-          updatedAt: undefined
+          updatedDate: undefined
       };
       
       repo.create(task).then((createdTask) => {

@@ -17,5 +17,5 @@ export const taskModel = Joi.object({
     description: Joi.string().required(),
     completed: Joi.boolean(),
     createdDate: Joi.date(),
-    updatedAt: Joi.date()
+    updatedDate: Joi.date()
 }).label("Task Model").description("Json body that represents a task.");
