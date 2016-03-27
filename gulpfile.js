@@ -6,13 +6,14 @@ let tsc = require('gulp-typescript');
 let sourcemaps = require('gulp-sourcemaps');
 let tslint = require('gulp-tslint');
 let mocha = require('gulp-mocha');
+let path = require('path');
 
 // /*  Variables */
 let tsProject = tsc.createProject('tsconfig.json');
 let sourceFiles = 'src/**/*.ts';
 let testFiles = 'test/**/*.ts';
 let outDir = require('./tsconfig.json').compilerOptions.outDir;
-let entryPoint = './build/src/server.js';
+let sourceRoot = path.join(__dirname);
 
 /**
  * Remove build directory.
@@ -39,7 +40,7 @@ gulp.task('compile', ['clean'], () => {
     .pipe(sourcemaps.init())
     .pipe(tsc(tsProject));
   return tsResult.js
-    .pipe(sourcemaps.write('.', { sourceRoot: '.' }))
+    .pipe(sourcemaps.write('.', { sourceRoot: sourceRoot }))
     .pipe(gulp.dest(outDir));
 });
 
