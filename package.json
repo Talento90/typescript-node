@@ -14,7 +14,7 @@
     "nodejs"
   ],
   "scripts": {
-    "start": "node build/src/server.js",  
+    "start": "node build/src/index.js",  
     "test": "gulp test"
   },
   "dependencies": {

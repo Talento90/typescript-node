@@ -31,8 +31,4 @@ plugins.forEach((pluginName: string) => {
 //Register Routes
 Routes(server);
 
-server.start(function() {
-    console.log('Server running at:', server.info.uri);
-});
-
 export default server;

@@ -60,6 +60,9 @@ gulp.task('build', ['tslint', 'compile'], () => {
   console.log('Building the project ...');
 });
 
+/**
+ * Run tests.
+ */
 gulp.task('test', ['compile'], (cb) => {
       gulp.src(['build/test/**/*.js'])
         .pipe(mocha())
