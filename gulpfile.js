@@ -7,13 +7,6 @@ let mocha = require('gulp-mocha');
 let path = require('path');
 let exec = require('child_process').exec;
 
-// /*  Variables */
-let tsProject = tsc.createProject('tsconfig.json');
-let sourceFiles = 'src/**/*.ts';
-let testFiles = 'test/**/*.ts';
-let outDir = require('./tsconfig.json').compilerOptions.outDir;
-let sourceRoot = path.join(__dirname);
-
 /**
  * Remove build directory.
  */
