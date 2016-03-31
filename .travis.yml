@@ -6,5 +6,6 @@ before_script:
   - npm install -g typings
   - npm install -g typescript
   - typings install
+  - npm run build
 services:
   - mongodb
