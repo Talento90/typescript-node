@@ -4,6 +4,7 @@ node_js:
 before_script:
   - npm install -g gulp
   - npm install -g typings
+  - npm install -g typescript
   - typings install
 services:
   - mongodb
