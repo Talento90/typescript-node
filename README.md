@@ -4,8 +4,7 @@ Boilerplate template for node and typescript services.
 
 **Installation**
 
-* *npm install* (Install node packages)
-* *typings install* (Install typings)
+* *npm run setup* (Install nuget packages & typings)
 
 **Run**
 
