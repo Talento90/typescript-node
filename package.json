@@ -14,8 +14,11 @@
     "nodejs"
   ],
   "scripts": {
-    "start": "node build/src/index.js",  
-    "test": "gulp test"
+    "build": "tsc",
+    "build:w": "tsc -w",
+    "start": "node build/src/index.js",
+    "setup": "npm install & typings install",  
+    "test": "mocha ./build/test/**/*.js"
   },
   "dependencies": {
     "boom": "^3.1.2",
@@ -31,6 +34,7 @@
     "mongodb": "^2.1.11",
     "node-uuid": "^1.4.7",
     "path": "^0.12.7",
+    "reflect-metadata": "^0.1.3",
     "vision": "^4.0.1"
   },
   "devDependencies": {
@@ -38,10 +42,7 @@
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
     "gulp-rimraf": "^0.2.0",
-    "gulp-sourcemaps": "^1.6.0",
     "gulp-tslint": "4.3.4",
-    "gulp-typescript": "^2.12.1",
-    "reflect-metadata": "^0.1.3",
     "tslint": "^3.6.0",
     "typescript": "^1.8.9"
   },
