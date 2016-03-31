@@ -25,7 +25,7 @@ gulp.task('tslint', () => {
 });
 
 /**
- * Compile TypeScript sources and create sourcemaps in build directory.
+ * Compile TypeScript.
  */
 
 gulp.task('compile', (cb) => {
@@ -49,13 +49,6 @@ gulp.task('compile', (cb) => {
  * Watch for changes in TypeScript
  */
 gulp.task('watch', (cb) => {
-  exec('tsc --version', (err, stdout, stderr) => {
-    console.log('TypeScript ', stdout);
-    if (stderr) {
-      console.log(stderr);
-    }
-  });
-
   return exec('tsc -w', (err, stdout, stderr) => {
     console.log(stdout);
     if (stderr) {

@@ -14,11 +14,10 @@
     "nodejs"
   ],
   "scripts": {
-    "build": "tsc",
-    "build:w": "tsc -w",
+    "build": "gulp build",
     "start": "node build/src/index.js",
     "setup": "npm install & typings install",  
-    "test": "mocha ./build/test/**/*.js"
+    "test": "gulp test"
   },
   "dependencies": {
     "boom": "^3.1.2",
