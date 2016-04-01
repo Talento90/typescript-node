@@ -19,7 +19,7 @@ gulp.task('clean', function () {
  * Lint all custom TypeScript files.
  */
 gulp.task('tslint', () => {
-  return gulp.src(sourceFiles)
+  return gulp.src('src/**/*.ts')
     .pipe(tslint())
     .pipe(tslint.report('prose'));
 });
@@ -28,34 +28,32 @@ gulp.task('tslint', () => {
  * Compile TypeScript.
  */
 
-gulp.task('compile', (cb) => {
-  exec('tsc --version', (err, stdout, stderr) => {
+function compileTS(args, cb) {
+    exec('tsc --version', (err, stdout, stderr) => {
     console.log('TypeScript ', stdout);
     if (stderr) {
       console.log(stderr);
     }
   });
-
-  return exec('tsc', (err, stdout, stderr) => {
+  
+  return exec('tsc' + args, (err, stdout, stderr) => {
     console.log(stdout);
     if (stderr) {
       console.log(stderr);
     }
     cb(err);
   });
+}
+
+gulp.task('compile', (cb) => {
+    compileTS('', cb);
 });
 
 /**
  * Watch for changes in TypeScript
  */
 gulp.task('watch', (cb) => {
-  return exec('tsc -w', (err, stdout, stderr) => {
-    console.log(stdout);
-    if (stderr) {
-      console.log(stderr);
-    }
-    cb(err);
-  });
+    compileTS(' -w', cb);
 });
 
 /**
