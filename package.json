@@ -27,7 +27,7 @@
     "hapi": "^13.2.2",
     "hapi-swagger": "^4.3.1",
     "inert": "^3.2.0",
-    "inversify": "^2.0.0-alpha.6",
+    "inversify": "^2.0.0-beta.1",
     "joi": "^8.0.5",
     "moment": "^2.12.0",
     "mongodb": "^2.1.11",
