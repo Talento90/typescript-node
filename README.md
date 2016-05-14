@@ -4,15 +4,15 @@ Boilerplate template for node and typescript services.
 
 **Installation**
 
-* *npm run setup* (Install nuget packages & typings)
+* *npm run setup* (install nuget packages & typings)
 
 **Run**
 
-* *gulp build* (Build TS files)
-* *gulp test* (Run mocha tests)
-* *gulp tslint* (Run tslint)
-* *gulp watch* (Watch ts files)
-* *npm run start* (Runs application)
+* *gulp build* (build ts files)
+* *gulp test* (run mocha tests)
+* *gulp tslint* (run tslint)
+* *gulp watch* (watch ts files)
+* *npm run start* (start the application)
 
 **Features**
 
