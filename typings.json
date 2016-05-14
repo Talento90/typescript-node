@@ -2,11 +2,11 @@
   "ambientDependencies": {
     "boom": "registry:dt/boom#0.0.0+20160317120654",
     "chai": "registry:dt/chai#3.4.0+20160317120654",
-    "hapi": "registry:dt/hapi#13.0.0+20160326163053",
+    "hapi": "registry:dt/hapi#13.0.0+20160423150146",
     "joi": "registry:dt/joi#6.5.0+20160324101820",
     "mocha": "registry:dt/mocha#2.2.5+20160317120654",
-    "moment-node": "registry:dt/moment-node#2.11.1+20160329220348",
-    "mongodb": "registry:dt/mongodb#2.1.0+20160328151449",
-    "node": "registry:dt/node#4.0.0+20160330064709"
+    "moment-node": "registry:dt/moment-node#2.11.1+20160511043338",
+    "mongodb": "registry:dt/mongodb#2.1.0+20160512045721",
+    "node": "registry:dt/node#4.0.0+20160509154515"
   }
 }

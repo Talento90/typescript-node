@@ -1,12 +1,12 @@
 import Task from "../../../core/task";
 import MongoRepository from "./mongoRepository";
 import {IRepositoryConfig} from "../../../configs/interfaces";
-import { inject } from "inversify";
+import { inject, injectable } from "inversify";
 
 
-@inject("IRepositoryConfig")
+@injectable()
 class TaskRepository extends MongoRepository<Task>  {
-    constructor(configs: IRepositoryConfig) {
+    constructor(@inject("IRepositoryConfig") configs: IRepositoryConfig) {
         super(configs);
     }
 

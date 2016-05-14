@@ -1,5 +1,7 @@
 import { IRepositoryConfig, IServerConfig } from "./interfaces";
+import { injectable } from "inversify";
 
+@injectable()
 export default class Configurations implements IRepositoryConfig, IServerConfig {
 
     private configs: any;
