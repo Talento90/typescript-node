@@ -1,11 +1,12 @@
 import * as MongoDb from 'mongodb';
+import { injectable } from "inversify";
 import {IEntity} from "../../../core/interfaces";
 import {IRepository} from "../interfaces";
 import {IRepositoryConfig} from "../../../configs/interfaces";
 import * as Moment from "moment";
 import * as UUID from "node-uuid";
 
-
+@injectable()
 abstract class MongoRepository<T extends IEntity> implements IRepository<IEntity>  {
 
     protected collection: Promise<MongoDb.Collection>;
