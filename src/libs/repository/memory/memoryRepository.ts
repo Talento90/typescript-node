@@ -1,7 +1,7 @@
 import {IEntity} from "../../../core/interfaces";
 import {IRepository} from "../interfaces";
 import * as Moment from "moment";
-import * as UUID from "node-uuid";
+const UUID = require("node-uuid");
 
 
 class MemoryRepository<T extends IEntity> implements IRepository<IEntity> {
