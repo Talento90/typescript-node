@@ -29,6 +29,7 @@
     "inert": "^3.2.1",
     "joi": "^8.4.2",
     "moment": "^2.14.1",
+    "mongoose": "^4.5.7",
     "nconf": "^0.8.4",
     "path": "^0.12.7",
     "vision": "^4.1.0"
@@ -39,6 +40,7 @@
     "gulp-mocha": "^2.2.0",
     "gulp-rimraf": "^0.2.0",
     "gulp-tslint": "^4.3.4",
+    "sinon": "^1.17.4",
     "tslint": "^3.13.0",
     "typescript": "^1.8.10"
   },

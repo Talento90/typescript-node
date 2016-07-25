@@ -2,16 +2,18 @@ import * as Hapi from "hapi";
 import * as Joi from "joi";
 import TaskController from "./task-controller";
 import { TaskModel } from "./task";
-import * as TaskValidations from "./task-validations";
+import * as TaskValidator from "./task-validator";
 
 export default function (server: Hapi.Server) {
 
     const taskController = new TaskController();
+    server.bind(taskController);
 
     server.route({
         method: 'GET',
         path: '/api/tasks/{id}',
         config: {
+            handler: taskController.getTaskById,
             tags: ['api', 'tasks'],
             description: 'Get task by id.',
             validate: {
@@ -20,7 +22,7 @@ export default function (server: Hapi.Server) {
                 }
             },
             response: {
-                schema: TaskValidations.taskModel
+                schema: TaskValidator.taskModel
             },
             plugins: {
                 'hapi-swagger': {
@@ -41,6 +43,7 @@ export default function (server: Hapi.Server) {
         method: 'GET',
         path: '/api/tasks',
         config: {
+            handler: taskController.getTasks,
             tags: ['api', 'tasks'],
             description: 'Get all tasks.',
             validate: {
@@ -54,7 +57,7 @@ export default function (server: Hapi.Server) {
                     responses: {
                         '200': {
                             'description': 'Returned Tasks.',
-                            'schema': TaskValidations.taskModel
+                            'schema': TaskValidator.taskModel
                         }
                     }
                 }
@@ -66,6 +69,7 @@ export default function (server: Hapi.Server) {
         method: 'DELETE',
         path: '/api/tasks/{id}',
         config: {
+            handler: taskController.deleteTask,
             tags: ['api', 'tasks'],
             description: 'Delete task by id.',
             validate: {
@@ -74,14 +78,14 @@ export default function (server: Hapi.Server) {
                 }
             },
             response: {
-                schema: TaskValidations.taskModel
+                schema: TaskValidator.taskModel
             },
             plugins: {
                 'hapi-swagger': {
                     responses: {
                         '200': {
                             'description': 'Deleted Task.',
-                            'schema': TaskValidations.taskModel
+                            'schema': TaskValidator.taskModel
                         },
                         '404': {
                             'description': 'Task does not exists.'
@@ -96,20 +100,21 @@ export default function (server: Hapi.Server) {
         method: 'PUT',
         path: '/api/tasks/{id}',
         config: {
+            handler: taskController.updateTask,
             tags: ['api', 'tasks'],
             description: 'Update task by id.',
             validate: {
                 params: {
                     id: Joi.string().required()
                 },
-                payload: TaskValidations.updateTaskModel
+                payload: TaskValidator.updateTaskModel
             },
             plugins: {
                 'hapi-swagger': {
                     responses: {
                         '200': {
                             'description': 'Deleted Task.',
-                            'schema': TaskValidations.taskModel
+                            'schema': TaskValidator.taskModel
                         },
                         '404': {
                             'description': 'Task does not exists.'
@@ -124,17 +129,18 @@ export default function (server: Hapi.Server) {
         method: 'POST',
         path: '/api/tasks',
         config: {
+            handler: taskController.createTask,
             tags: ['api', 'tasks'],
             description: 'Create a task.',
             validate: {
-                payload: TaskValidations.createTaskModel
+                payload: TaskValidator.createTaskModel
             },
             plugins: {
                 'hapi-swagger': {
                     responses: {
                         '201': {
                             'description': 'Created Task.',
-                            'schema': TaskValidations.taskModel
+                            'schema': TaskValidator.taskModel
                         }
                     }
                 }

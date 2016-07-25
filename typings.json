@@ -4,13 +4,14 @@
     "hapi": "registry:dt/hapi#13.0.0+20160709092105",
     "joi": "registry:dt/joi#9.0.0+20160626220651",
     "moment-node": "registry:dt/moment-node#2.11.1+20160511043338",
+    "mongodb": "registry:dt/mongodb#2.1.0+20160602142941",
     "mongoose": "registry:dt/mongoose#4.5.4+20160721201159",
     "nconf": "registry:dt/nconf#0.0.0+20160724073144",
     "node": "registry:dt/node#6.0.0+20160720070758"
   },
   "globalDevDependencies": {
-    "sinon": "registry:dt/sinon#1.16.0+20160517064723",
+    "chai": "registry:dt/chai#3.4.0+20160601211834",
     "mocha": "registry:dt/mocha#2.2.5+20160720003353",
-    "chai": "registry:dt/chai#3.4.0+20160601211834"
+    "sinon": "registry:dt/sinon#1.16.0+20160517064723"
   }
 }

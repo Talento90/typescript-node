@@ -1,5 +1,5 @@
 {
-    "repository": {
+    "database": {
         "connectionString": "mongodb://localhost/taskdb-test"
     },
     "server": {
