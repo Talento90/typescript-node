@@ -12,7 +12,6 @@ export const updateTaskModel = Joi.object().keys({
 });
 
 export const taskModel = Joi.object({
-    _id: Joi.string().required(),
     name: Joi.string().required(),
     description: Joi.string().required(),
     completed: Joi.boolean(),

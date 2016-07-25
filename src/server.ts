@@ -1,14 +1,13 @@
 /// <reference path="../typings.d.ts" />
 import * as Hapi from "hapi";
-import Routes from "./routes";
-import kernel from "./libs/ioc";
+import * as NConf from "nconf";
 import * as path from "path";
 import * as fs from "fs";
-import { IPlugin } from "./libs/plugins/interfaces";
-import { IServerConfig } from "./configs/interfaces";
+import { IPlugin } from "./plugins/interfaces";
+import * as Tasks from "./tasks";
 
-const serverConfigs = kernel.get<IServerConfig>("IServerConfig");
-const port = process.env.port || serverConfigs.port;
+const serverConfigs = NConf.env().file({ file: `configurations/config.${process.env.NODE_ENV}.json` });
+const port = process.env.port || serverConfigs.get("server.port");
 const server = new Hapi.Server();
 
 server.connection({
@@ -28,7 +27,7 @@ plugins.forEach((pluginName: string) => {
     plugin.register(server);
 });
 
-//Register Routes
-Routes(server);
+//Init Features
+Tasks.init(server);
 
 export default server;

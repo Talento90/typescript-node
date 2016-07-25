@@ -1,0 +1,8 @@
+{
+    "repository": {
+        "connectionString": "mongodb://localhost/taskdb-test"
+    },
+    "server": {
+        "port": 5005
+    }
+}
