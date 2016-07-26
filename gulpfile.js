@@ -7,6 +7,8 @@ let mocha = require('gulp-mocha');
 let path = require('path');
 let exec = require('child_process').exec;
 
+const tscCmd = "npm run tsc";
+
 /**
  * Remove build directory.
  */
@@ -28,15 +30,8 @@ gulp.task('tslint', () => {
  * Compile TypeScript.
  */
 
-function compileTS(args, cb) {
-    exec('tsc --version', (err, stdout, stderr) => {
-    console.log('TypeScript ', stdout);
-    if (stderr) {
-      console.log(stderr);
-    }
-  });
-  
-  return exec('tsc' + args, (err, stdout, stderr) => {
+function compileTS(args, cb) {  
+  return exec(tscCmd + args, (err, stdout, stderr) => {
     console.log(stdout);
     if (stderr) {
       console.log(stderr);
@@ -57,9 +52,17 @@ gulp.task('watch', (cb) => {
 });
 
 /**
+ * Copy config files
+ */
+gulp.task('configs', (cb) => {
+    return gulp.src("src/configurations/*.json")
+      .pipe(gulp.dest('./build/src/configurations'));     
+});
+
+/**
  * Build the project.
  */
-gulp.task('build', ['tslint', 'compile'], () => {
+gulp.task('build', ['tslint', 'compile', 'configs'], () => {
   console.log('Building the project ...');
 });
 
@@ -78,4 +81,4 @@ gulp.task('test', ['compile'], (cb) => {
         });
 });
 
-gulp.task('default', ['watch']);
+gulp.task('default', ['build']);

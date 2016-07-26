@@ -1,14 +1,11 @@
-import * as NConf from "nconf";
 import * as Server from "./server";
 import * as Database from "./database";
+import * as Configs from "./configurations";
 
 console.log(`Running enviroment ${process.env.NODE_ENV || "dev"}`);
 
-//Read Configurations
-const configs = NConf.argv().env().file({ file: `configurations/config.${process.env.NODE_ENV}.json` });
-
 //Init Database
-const connectionString = configs.get("database.connectionString");
+const connectionString = Configs.get("database.connectionString");
 Database.init(connectionString);
 
 //Starting Application Server

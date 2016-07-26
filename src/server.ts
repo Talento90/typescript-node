@@ -1,13 +1,13 @@
 /// <reference path="../typings.d.ts" />
 import * as Hapi from "hapi";
-import * as NConf from "nconf";
 import * as path from "path";
 import * as fs from "fs";
 import { IPlugin } from "./plugins/interfaces";
 import * as Tasks from "./tasks";
+import * as Confs from "./configurations";
 
 export function init() {
-    const port = process.env.port || NConf.get("server.port");
+    const port = process.env.port || Confs.get("server.port");
     const server = new Hapi.Server();
 
     server.connection({
