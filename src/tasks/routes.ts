@@ -21,9 +21,6 @@ export default function (server: Hapi.Server) {
                     id: Joi.string().required()
                 }
             },
-            response: {
-                schema: TaskValidator.taskModel
-            },
             plugins: {
                 'hapi-swagger': {
                     responses: {
@@ -51,16 +48,6 @@ export default function (server: Hapi.Server) {
                     top: Joi.number().default(5),
                     skip: Joi.number().default(0)
                 }
-            },
-            plugins: {
-                'hapi-swagger': {
-                    responses: {
-                        '200': {
-                            'description': 'Returned Tasks.',
-                            'schema': TaskValidator.taskModel
-                        }
-                    }
-                }
             }
         }
     });
@@ -77,15 +64,11 @@ export default function (server: Hapi.Server) {
                     id: Joi.string().required()
                 }
             },
-            response: {
-                schema: TaskValidator.taskModel
-            },
             plugins: {
                 'hapi-swagger': {
                     responses: {
                         '200': {
                             'description': 'Deleted Task.',
-                            'schema': TaskValidator.taskModel
                         },
                         '404': {
                             'description': 'Task does not exists.'
@@ -114,7 +97,6 @@ export default function (server: Hapi.Server) {
                     responses: {
                         '200': {
                             'description': 'Deleted Task.',
-                            'schema': TaskValidator.taskModel
                         },
                         '404': {
                             'description': 'Task does not exists.'
@@ -139,8 +121,7 @@ export default function (server: Hapi.Server) {
                 'hapi-swagger': {
                     responses: {
                         '201': {
-                            'description': 'Created Task.',
-                            'schema': TaskValidator.taskModel
+                            'description': 'Created Task.'
                         }
                     }
                 }

@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "tsc": "tsc",
+    "tsc-watch": "tsc -w",
     "build": "gulp build",
     "start": "node build/src/index.js",
     "setup": "npm install & typings install",
@@ -40,6 +41,7 @@
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
     "gulp-rimraf": "^0.2.0",
+    "gulp-shell": "^0.5.2",
     "gulp-tslint": "^4.3.4",
     "sinon": "^1.17.4",
     "tslint": "^3.13.0",

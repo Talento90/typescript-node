@@ -1,8 +1,12 @@
 {
     "database": {
-        "connectionString": "mongodb://localhost/taskdb"
+        "connectionString": "mongodb://localhost/taskdb-dev"
     },
     "server": {
-        "port": 5000
+        "port": 5000,
+        "plugins": [
+            "logger",
+            "swagger"
+        ]
     }
 }

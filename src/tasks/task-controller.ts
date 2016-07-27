@@ -46,7 +46,7 @@ export default class TaskController {
     public getTaskById(request: Hapi.Request, reply: Hapi.IReply) {
         let id = request.params["id"];
 
-        TaskModel.findById(id).then((task: ITask) => {
+        TaskModel.findById(id).lean(true).then((task: ITask) => {
             if (task) {
                 reply(task);
             } else {
@@ -61,7 +61,7 @@ export default class TaskController {
         var top = request.query.top;
         var skip = request.query.skip;
 
-        TaskModel.find({}).skip(skip).limit(top).then((tasks: Array<ITask>) => {
+        TaskModel.find({}).lean(true).skip(skip).limit(top).then((tasks: Array<ITask>) => {
             reply(tasks);
         }).catch((error) => {
             reply(Boom.badImplementation(error));

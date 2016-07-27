@@ -7,7 +7,7 @@ import * as Tasks from "./tasks";
 import * as Confs from "./configurations";
 
 export function init() {
-    const port = process.env.port || Confs.get("server.port");
+    const port = process.env.port || Confs.get("server:port");
     const server = new Hapi.Server();
 
     server.connection({

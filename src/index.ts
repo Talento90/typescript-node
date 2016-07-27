@@ -5,7 +5,7 @@ import * as Configs from "./configurations";
 console.log(`Running enviroment ${process.env.NODE_ENV || "dev"}`);
 
 //Init Database
-const connectionString = Configs.get("database.connectionString");
+const connectionString = Configs.get("database:connectionString");
 Database.init(connectionString);
 
 //Starting Application Server

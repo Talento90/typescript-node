@@ -3,6 +3,10 @@
         "connectionString": "mongodb://localhost/taskdb-test"
     },
     "server": {
-        "port": 5005
+        "port": 5005,
+        "plugins": [
+            "logger",
+            "swagger"
+        ]
     }
 }
