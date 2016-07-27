@@ -4,6 +4,7 @@ import * as path from "path";
 import * as fs from "fs";
 import { IPlugin } from "./plugins/interfaces";
 import * as Tasks from "./tasks";
+import * as Users from "./users";
 import * as Confs from "./configurations";
 
 export function init() {
@@ -29,6 +30,7 @@ export function init() {
 
     //Init Features
     Tasks.init(server);
+    Users.init(server);
 
     return server;
 };
