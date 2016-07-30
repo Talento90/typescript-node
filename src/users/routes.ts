@@ -17,6 +17,9 @@ export default function (server: Hapi.Server) {
             auth: "jwt",
             tags: ['api', 'users'],
             description: 'Get user info.',
+            validate: {
+                headers: UserValidator.jwtValidator,
+            },
             plugins: {
                 'hapi-swagger': {
                     responses: {
@@ -40,6 +43,9 @@ export default function (server: Hapi.Server) {
             auth: "jwt",
             tags: ['api', 'users'],
             description: 'Delete current user.',
+            validate: {
+                headers: UserValidator.jwtValidator
+            },
             plugins: {
                 'hapi-swagger': {
                     responses: {
@@ -67,7 +73,8 @@ export default function (server: Hapi.Server) {
                 params: {
                     id: Joi.string().required()
                 },
-                payload: UserValidator.updateUserModel
+                payload: UserValidator.updateUserModel,
+                headers: UserValidator.jwtValidator
             },
             plugins: {
                 'hapi-swagger': {

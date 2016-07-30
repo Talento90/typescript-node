@@ -3,6 +3,8 @@ import * as Joi from "joi";
 import TaskController from "./task-controller";
 import { TaskModel } from "./task";
 import * as TaskValidator from "./task-validator";
+import { jwtValidator } from "../users/user-validator";
+
 
 export default function (server: Hapi.Server) {
 
@@ -20,7 +22,8 @@ export default function (server: Hapi.Server) {
             validate: {
                 params: {
                     id: Joi.string().required()
-                }
+                },
+                headers: jwtValidator
             },
             plugins: {
                 'hapi-swagger': {
@@ -49,7 +52,8 @@ export default function (server: Hapi.Server) {
                 query: {
                     top: Joi.number().default(5),
                     skip: Joi.number().default(0)
-                }
+                },
+                headers: jwtValidator
             }
         }
     });
@@ -65,7 +69,8 @@ export default function (server: Hapi.Server) {
             validate: {
                 params: {
                     id: Joi.string().required()
-                }
+                },
+                headers: jwtValidator
             },
             plugins: {
                 'hapi-swagger': {
@@ -94,7 +99,8 @@ export default function (server: Hapi.Server) {
                 params: {
                     id: Joi.string().required()
                 },
-                payload: TaskValidator.updateTaskModel
+                payload: TaskValidator.updateTaskModel,
+                headers: jwtValidator
             },
             plugins: {
                 'hapi-swagger': {
@@ -120,7 +126,8 @@ export default function (server: Hapi.Server) {
             tags: ['api', 'tasks'],
             description: 'Create a task.',
             validate: {
-                payload: TaskValidator.createTaskModel
+                payload: TaskValidator.createTaskModel,
+                headers: jwtValidator
             },
             plugins: {
                 'hapi-swagger': {

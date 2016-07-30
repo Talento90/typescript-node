@@ -22,11 +22,12 @@ export default class UserController {
 
         UserModel.findOne({ email: email })
             .then((user: IUser) => {
+
                 if (!user) {
                     return reply(Boom.unauthorized("User does not exists."));
                 }
 
-                if (!UserModel["validatePassword"](password)) {
+                if (!user.validatePassword(password)) {
                     return reply(Boom.unauthorized("Password is invalid."));
                 }
 
@@ -57,13 +58,13 @@ export default class UserController {
         const id = request.auth.credentials.id;
         const user: IUser = request.payload;
 
-        UserModel.findByIdAndUpdate(id, {$set: user}, {new: true})
-        .then((user) => {
-            reply(user);
-        })
-        .catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
+        UserModel.findByIdAndUpdate(id, { $set: user }, { new: true })
+            .then((user) => {
+                reply(user);
+            })
+            .catch((error) => {
+                reply(Boom.badImplementation(error));
+            });
     }
 
     public deleteUser(request: Hapi.Request, reply: Hapi.IReply) {
