@@ -22,14 +22,17 @@
     "test": "gulp test"
   },
   "dependencies": {
+    "bcryptjs": "^2.3.0",
     "boom": "^3.2.2",
     "fs": "0.0.2",
     "good": "^6.6.3",
     "good-console": "^5.3.2",
     "hapi": "^13.5.0",
+    "hapi-auth-jwt2": "^7.0.1",
     "hapi-swagger": "^4.3.1",
     "inert": "^3.2.1",
     "joi": "^8.4.2",
+    "jsonwebtoken": "^7.1.7",
     "moment": "^2.14.1",
     "mongoose": "^4.5.7",
     "nconf": "^0.8.4",

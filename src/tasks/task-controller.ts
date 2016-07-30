@@ -5,7 +5,9 @@ import { ITask, TaskModel } from "./task";
 export default class TaskController {
 
     public createTask(request: Hapi.Request, reply: Hapi.IReply) {
+        let userId = request.auth.credentials.id;
         var newTask: ITask = request.payload;
+        newTask.userId = userId;
 
         TaskModel.create(newTask).then((task) => {
             reply(task).code(201);
@@ -15,10 +17,11 @@ export default class TaskController {
     }
 
     public updateTask(request: Hapi.Request, reply: Hapi.IReply) {
-        const id = request.params["id"];
+        let userId = request.auth.credentials.id;
+        let id = request.params["id"];
         let task: ITask = request.payload;
 
-        TaskModel.findByIdAndUpdate(id, task).then((updatedTask: ITask) => {
+        TaskModel.findByIdAndUpdate({_id: id, userId: userId}, {$set: task}).then((updatedTask: ITask) => {
             if (updatedTask) {
                 reply(updatedTask);
             } else {
@@ -31,8 +34,9 @@ export default class TaskController {
 
     public deleteTask(request: Hapi.Request, reply: Hapi.IReply) {
         let id = request.params["id"];
+        let userId = request.auth.credentials.id;
 
-        TaskModel.findByIdAndRemove(id).then((deletedTask: ITask) => {
+        TaskModel.findOneAndRemove({_id: id, userId: userId}).then((deletedTask: ITask) => {
             if (deletedTask) {
                 reply(deletedTask);
             } else {
@@ -44,9 +48,10 @@ export default class TaskController {
     }
 
     public getTaskById(request: Hapi.Request, reply: Hapi.IReply) {
+        let userId = request.auth.credentials.id;
         let id = request.params["id"];
 
-        TaskModel.findById(id).lean(true).then((task: ITask) => {
+        TaskModel.findOne({_id: id, userId: userId}).lean(true).then((task: ITask) => {
             if (task) {
                 reply(task);
             } else {
@@ -58,10 +63,11 @@ export default class TaskController {
     }
 
     public getTasks(request: Hapi.Request, reply: Hapi.IReply) {
-        var top = request.query.top;
-        var skip = request.query.skip;
+        let userId = request.auth.credentials.id;
+        let top = request.query.top;
+        let skip = request.query.skip;
 
-        TaskModel.find({}).lean(true).skip(skip).limit(top).then((tasks: Array<ITask>) => {
+        TaskModel.find({userId: userId}).lean(true).skip(skip).limit(top).then((tasks: Array<ITask>) => {
             reply(tasks);
         }).catch((error) => {
             reply(Boom.badImplementation(error));

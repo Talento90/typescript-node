@@ -11,9 +11,10 @@ export default function (server: Hapi.Server) {
 
     server.route({
         method: 'GET',
-        path: '/api/users/info',
+        path: '/users/info',
         config: {
             handler: userController.infoUser,
+            auth: "jwt",
             tags: ['api', 'users'],
             description: 'Get user info.',
             plugins: {
@@ -33,9 +34,10 @@ export default function (server: Hapi.Server) {
 
     server.route({
         method: 'DELETE',
-        path: '/api/users',
+        path: '/users',
         config: {
             handler: userController.deleteUser,
+            auth: "jwt",
             tags: ['api', 'users'],
             description: 'Delete current user.',
             plugins: {
@@ -55,9 +57,10 @@ export default function (server: Hapi.Server) {
 
     server.route({
         method: 'PUT',
-        path: '/api/users',
+        path: '/users',
         config: {
             handler: userController.updateUser,
+            auth: "jwt",
             tags: ['api', 'users'],
             description: 'Update current user info.',
             validate: {
@@ -83,7 +86,7 @@ export default function (server: Hapi.Server) {
 
     server.route({
         method: 'POST',
-        path: '/api/users',
+        path: '/users',
         config: {
             handler: userController.createUser,
             tags: ['api', 'users'],
@@ -105,7 +108,7 @@ export default function (server: Hapi.Server) {
 
     server.route({
         method: 'POST',
-        path: '/api/users/login',
+        path: '/users/login',
         config: {
             handler: userController.loginUser,
             tags: ['api', 'users'],

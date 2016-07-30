@@ -4,6 +4,10 @@
     },
     "server": {
         "port": 5005,
+        "jwt": {
+            "secret": "random-secret-password",
+            "expiration": "1h"
+        },
         "plugins": [
             "logger",
             "swagger"
