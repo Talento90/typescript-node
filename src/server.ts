@@ -1,7 +1,5 @@
 /// <reference path="../typings.d.ts" />
 import * as Hapi from "hapi";
-import * as path from "path";
-import * as fs from "fs";
 import { IPlugin } from "./plugins/interfaces";
 import * as Tasks from "./tasks";
 import * as Users from "./users";
@@ -19,8 +17,7 @@ export function init() {
     });
 
     //  Setup Hapi Plugins
-    const pluginsPath = __dirname + '/plugins/';
-    const plugins = fs.readdirSync(pluginsPath).filter(file => fs.statSync(path.join(pluginsPath, file)).isDirectory());
+    const plugins: Array<string> = Confs.get("server:plugins");
 
     plugins.forEach((pluginName: string) => {
         var plugin: IPlugin = (require("./plugins/" + pluginName)).default();

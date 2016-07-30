@@ -11,6 +11,6 @@ const configs = new nconf.Provider({
   }
 });
 
-export function get(config: string): string {
+export function get(config: string): any {
     return configs.get(config);
 }

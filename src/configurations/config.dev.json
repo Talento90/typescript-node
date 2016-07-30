@@ -10,7 +10,8 @@
         },
         "plugins": [
             "logger",
-            "swagger"
+            "swagger",
+            "jwt-auth"
         ]
     }
 }

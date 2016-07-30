@@ -16,13 +16,12 @@ Boilerplate template for node and typescript services.
 
 **Features**
 
-* *Inversion of control using Inversify/*
-* *Service Api using Hapijs*
+* *REST Api using Hapijs*
 * *Swagger documentation*
-* *Generic Mongo and Memory Repository*
-
+* *Jwt authentication*
+* *Mongoose*
+* *Unit Tests*
 
 Running on port 5000 ex: localhost:5000/docs
 
 Have fun :)
-
