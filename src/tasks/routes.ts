@@ -1,14 +1,14 @@
 import * as Hapi from "hapi";
 import * as Joi from "joi";
 import TaskController from "./task-controller";
-import { TaskModel } from "./task";
 import * as TaskValidator from "./task-validator";
 import { jwtValidator } from "../users/user-validator";
+import { IDatabase } from "../database";
+import { IServerConfigurations } from "../configurations";
 
+export default function (server: Hapi.Server, configs: IServerConfigurations, database: IDatabase) {
 
-export default function (server: Hapi.Server) {
-
-    const taskController = new TaskController();
+    const taskController = new TaskController(configs, database);
     server.bind(taskController);
 
     server.route({

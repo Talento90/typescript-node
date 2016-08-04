@@ -3,10 +3,12 @@ import * as Joi from "joi";
 import UserController from "./user-controller";
 import { UserModel } from "./user";
 import * as UserValidator from "./user-validator";
+import { IDatabase } from "../database";
+import { IServerConfigurations } from "../configurations";
 
-export default function (server: Hapi.Server) {
+export default function (server: Hapi.Server, serverConfigs: IServerConfigurations, database: IDatabase) {
 
-    const userController = new UserController();
+    const userController = new UserController(serverConfigs, database);
     server.bind(userController);
 
     server.route({

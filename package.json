@@ -33,7 +33,7 @@
     "inert": "^3.2.1",
     "joi": "^8.4.2",
     "jsonwebtoken": "^7.1.7",
-    "moment": "^2.14.1",
+    "mockgoose": "^6.0.6",
     "mongoose": "^4.5.7",
     "nconf": "^0.8.4",
     "path": "^0.12.7",
@@ -46,7 +46,7 @@
     "gulp-rimraf": "^0.2.0",
     "gulp-shell": "^0.5.2",
     "gulp-tslint": "^4.3.4",
-    "sinon": "^1.17.4",
+    "mocha": "^3.0.0",
     "tslint": "^3.13.0",
     "typescript": "^1.8.10"
   },

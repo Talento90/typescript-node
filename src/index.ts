@@ -5,10 +5,12 @@ import * as Configs from "./configurations";
 console.log(`Running enviroment ${process.env.NODE_ENV || "dev"}`);
 
 //Init Database
-Database.init();
+const dbConfigs = Configs.getDatabaseConfig();
+const database = Database.init(dbConfigs);
 
 //Starting Application Server
-var server = Server.init();
+const serverConfigs = Configs.getServerConfigs();
+const server = Server.init(serverConfigs, database);
 
 server.start(() => {
     console.log('Server running at:', server.info.uri);

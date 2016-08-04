@@ -1,24 +1,23 @@
-import { IPlugin } from "../interfaces";
+import { IPlugin, IPluginOptions } from "../interfaces";
 import * as Hapi from "hapi";
 import { IUser, UserModel } from "../../users/user";
-import * as Configs from "../../configurations";
-
-
-const validateUser = (decoded, request, cb) => {
-    UserModel.findById(decoded.id)
-        .then((user: IUser) => {
-            if (!user) {
-                return cb(null, false);
-            }
-
-            return cb(null, true);
-        });
-};
-
 
 export default (): IPlugin => {
     return {
-        register: (server: Hapi.Server) => {
+        register: (server: Hapi.Server, options: IPluginOptions) => {
+            const database = options.database;
+            const serverConfig = options.serverConfigs;
+
+            const validateUser = (decoded, request, cb) => {
+                database.userModel.findById(decoded.id).lean(true)
+                    .then((user: IUser) => {
+                        if (!user) {
+                            return cb(null, false);
+                        }
+
+                        return cb(null, true);
+                    });
+            };
 
             server.register({
                 register: require('hapi-auth-jwt2')
@@ -28,7 +27,7 @@ export default (): IPlugin => {
                 } else {
                     server.auth.strategy('jwt', 'jwt', false,
                         {
-                            key: Configs.get("server:jwt:secret"),
+                            key: serverConfig.jwtSecret,
                             validateFunc: validateUser,
                             verifyOptions: { algorithms: ['HS256'] }
                         });

@@ -66,7 +66,7 @@ gulp.task('build', ['tslint', 'compile', 'configs'], () => {
 /**
  * Run tests.
  */
-gulp.task('test', ['compile'], (cb) => {
+gulp.task('test', ['build'], (cb) => {
   gulp.src(['build/test/**/*.js'])
     .pipe(mocha())
     .once('error', (error) => {

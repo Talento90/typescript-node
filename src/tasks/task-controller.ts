@@ -1,15 +1,25 @@
 import * as Hapi from "hapi";
 import * as Boom from "boom";
-import { ITask, TaskModel } from "./task";
+import { ITask } from "./task";
+import { IDatabase } from "../database";
+import { IServerConfigurations } from "../configurations";
 
 export default class TaskController {
+
+    private database: IDatabase;
+    private configs: IServerConfigurations;
+
+    constructor(configs: IServerConfigurations, database: IDatabase) {
+        this.configs = configs;
+        this.database = database;
+    }
 
     public createTask(request: Hapi.Request, reply: Hapi.IReply) {
         let userId = request.auth.credentials.id;
         var newTask: ITask = request.payload;
         newTask.userId = userId;
 
-        TaskModel.create(newTask).then((task) => {
+        this.database.taskModel.create(newTask).then((task) => {
             reply(task).code(201);
         }).catch((error) => {
             reply(Boom.badImplementation(error));
@@ -21,7 +31,7 @@ export default class TaskController {
         let id = request.params["id"];
         let task: ITask = request.payload;
 
-        TaskModel.findByIdAndUpdate({_id: id, userId: userId}, {$set: task}).then((updatedTask: ITask) => {
+        this.database.taskModel.findByIdAndUpdate({ _id: id, userId: userId }, { $set: task }).then((updatedTask: ITask) => {
             if (updatedTask) {
                 reply(updatedTask);
             } else {
@@ -36,7 +46,7 @@ export default class TaskController {
         let id = request.params["id"];
         let userId = request.auth.credentials.id;
 
-        TaskModel.findOneAndRemove({_id: id, userId: userId}).then((deletedTask: ITask) => {
+        this.database.taskModel.findOneAndRemove({ _id: id, userId: userId }).then((deletedTask: ITask) => {
             if (deletedTask) {
                 reply(deletedTask);
             } else {
@@ -51,7 +61,7 @@ export default class TaskController {
         let userId = request.auth.credentials.id;
         let id = request.params["id"];
 
-        TaskModel.findOne({_id: id, userId: userId}).lean(true).then((task: ITask) => {
+        this.database.taskModel.findOne({ _id: id, userId: userId }).lean(true).then((task: ITask) => {
             if (task) {
                 reply(task);
             } else {
@@ -67,7 +77,7 @@ export default class TaskController {
         let top = request.query.top;
         let skip = request.query.skip;
 
-        TaskModel.find({userId: userId}).lean(true).skip(skip).limit(top).then((tasks: Array<ITask>) => {
+        this.database.taskModel.find({ userId: userId }).lean(true).skip(skip).limit(top).then((tasks: Array<ITask>) => {
             reply(tasks);
         }).catch((error) => {
             reply(Boom.badImplementation(error));

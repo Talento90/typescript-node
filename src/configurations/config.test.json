@@ -1,13 +1,12 @@
 {
     "database": {
-        "connectionString": "mongodb://localhost/taskdb-test"
+        "connectionString": "mongodb://localhost/taskdb-test",
+        "isMemory": true
     },
     "server": {
-        "port": 5005,
-        "jwt": {
-            "secret": "random-secret-password",
-            "expiration": "1h"
-        },
+        "port": 5000,
+        "jwtsecret": "random-secret-password",
+        "jwtexpiration": "1h",
         "plugins": [
             "logger",
             "swagger",
