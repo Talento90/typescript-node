@@ -11,8 +11,9 @@ export default class UserController {
     private database: IDatabase;
     private configs: IServerConfigurations;
 
-    constructor(configurations: IServerConfigurations, database: IDatabase) {
+    constructor(configs: IServerConfigurations, database: IDatabase) {
         this.database = database;
+        this.configs = configs;
     }
 
     private generateToken(user: IUser) {

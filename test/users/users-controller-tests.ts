@@ -1,8 +1,7 @@
 /// <reference path="../../typings.d.ts" />
 import * as chai from "chai";
-import * as sinon from "sinon";
 import UserController from "../../src/users/user-controller";
-import { IUser, UserModel } from "../../src/users/user";
+import { IUser } from "../../src/users/user";
 import * as Configs from "../../src/configurations";
 import * as Server from "../../src/server";
 import * as Database from "../../src/database";
@@ -22,9 +21,9 @@ describe("UserController", () => {
         };
 
         server.inject({ method: 'POST', url: '/users', payload: user }, (res) => {
-            var userMock = sinon.mock(UserModel);
-            userMock.expects('create').yields(null, user);
             assert.equal(201, res.statusCode);
+            var responseBody: any = res.payload;
+            assert.isNotNull(responseBody.token);
             done();
         });
     });
