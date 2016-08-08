@@ -14,37 +14,42 @@
     "nodejs"
   ],
   "scripts": {
+    "tsc": "tsc",
+    "tsc-watch": "tsc -w",
     "build": "gulp build",
     "start": "node build/src/index.js",
     "setup": "npm install & typings install",
     "test": "gulp test"
   },
   "dependencies": {
-    "boom": "^3.1.3",
+    "bcryptjs": "^2.3.0",
+    "boom": "^3.2.2",
     "fs": "0.0.2",
     "good": "^6.6.3",
     "good-console": "^5.3.2",
-    "hapi": "^13.4.0",
+    "hapi": "^13.5.0",
+    "hapi-auth-jwt2": "^7.0.1",
     "hapi-swagger": "^4.3.1",
     "inert": "^3.2.1",
-    "inversify": "^2.0.0-rc.1",
-    "inversify-dts": "^1.2.0",
-    "joi": "^8.1.0",
-    "moment": "^2.13.0",
-    "mongodb": "^2.1.18",
-    "node-uuid": "^1.4.7",
+    "joi": "^8.4.2",
+    "jsonwebtoken": "^7.1.7",
+    "mongoose": "^4.5.7",
+    "nconf": "^0.8.4",
     "path": "^0.12.7",
-    "reflect-metadata": "^0.1.3",
     "vision": "^4.1.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
+    "gulp-env": "^0.4.0",
     "gulp-mocha": "^2.2.0",
     "gulp-rimraf": "^0.2.0",
-    "gulp-tslint": "4.3.4",
-    "tslint": "^3.6.0",
-    "typescript": "^1.8.9"
+    "gulp-shell": "^0.5.2",
+    "gulp-tslint": "^4.3.4",
+    "mocha": "^3.0.0",
+    "sinon": "^1.17.5",
+    "tslint": "^3.13.0",
+    "typescript": "^1.8.10"
   },
   "engines": {
     "node": ">=4.1.1"

@@ -1,34 +1,39 @@
 /// <reference path="../typings.d.ts" />
 import * as Hapi from "hapi";
-import Routes from "./routes";
-import kernel from "./libs/ioc";
-import * as path from "path";
-import * as fs from "fs";
-import { IPlugin } from "./libs/plugins/interfaces";
-import { IServerConfig } from "./configs/interfaces";
+import { IPlugin } from "./plugins/interfaces";
+import { IServerConfigurations } from "./configurations";
+import * as Tasks from "./tasks";
+import * as Users from "./users";
+import { IDatabase } from "./database";
 
-const serverConfigs = kernel.get<IServerConfig>("IServerConfig");
-const port = process.env.port || serverConfigs.port;
-const server = new Hapi.Server();
 
-server.connection({
-    port: port,
-    routes: {
-        cors: true
-    }
-});
+export function init(configs: IServerConfigurations, database: IDatabase) {
+    const port = process.env.port || configs.port;
+    const server = new Hapi.Server();
 
-//  Setup Hapi Plugins
-const pluginsPath = __dirname + '/libs/plugins/';
-const plugins = fs.readdirSync(pluginsPath).filter(file => fs.statSync(path.join(pluginsPath, file)).isDirectory());
+    server.connection({
+        port: port,
+        routes: {
+            cors: true
+        }
+    });
 
-plugins.forEach((pluginName: string) => {
-    var plugin: IPlugin = (require("./libs/plugins/" + pluginName)).default();
-    console.log(`Register Plugin ${plugin.info().name} v${plugin.info().version}`);
-    plugin.register(server);
-});
+    //  Setup Hapi Plugins
+    const plugins: Array<string> = configs.plugins;
+    const pluginOptions = {
+        database: database,
+        serverConfigs: configs
+    };
 
-//Register Routes
-Routes(server);
+    plugins.forEach((pluginName: string) => {
+        var plugin: IPlugin = (require("./plugins/" + pluginName)).default();
+        console.log(`Register Plugin ${plugin.info().name} v${plugin.info().version}`);
+        plugin.register(server, pluginOptions);
+    });
 
-export default server;
+    //Init Features
+    Tasks.init(server, configs, database);
+    Users.init(server, configs, database);
+
+    return server;
+};

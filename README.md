@@ -1,4 +1,4 @@
-# typescript-node
+# typescript-node ![](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)
 
 Boilerplate template for node and typescript services.
 
@@ -16,13 +16,14 @@ Boilerplate template for node and typescript services.
 
 **Features**
 
-* *Inversion of control using Inversify/*
-* *Service Api using Hapijs*
-* *Swagger documentation*
-* *Generic Mongo and Memory Repository*
-
+* *Project Structure - Feature oriented*
+* *Hapijs - REST Api*
+* *Swagger - documentation*
+* *Jwt - authentication*
+* *Mongoose - MongoDb*
+* *nconf - configurations*
+* *Unit Tests - chai + sinon + mocha*
 
 Running on port 5000 ex: localhost:5000/docs
 
 Have fun :)
-

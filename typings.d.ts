@@ -1,6 +1,13 @@
-/// <reference path="typings\index.d.ts" />
-/// <reference path="node_modules/inversify-dts/inversify/inversify.d.ts" />
+/// <reference path="./typings/index.d.ts" />
 
-declare module "node-uuid" {
-    export function v4();
-} 
+// * 2. To use native ES6 promises, add this line to your main .d.ts file:
+// *    type MongoosePromise<T> = Promise<T>;
+type MongoosePromise<T> = Promise<T>;
+
+//Mockoose Typings
+declare module "mockgoose" {
+    function mockgoose(db: any, options?: any): any;
+    module mockgoose {
+    }
+    export = mockgoose;
+}
