@@ -19,7 +19,6 @@ export interface IServerConfigurations {
 }
 
 export interface IDataConfiguration {
-    isMemory: boolean;
     connectionString: string;
 }
 

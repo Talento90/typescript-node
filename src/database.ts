@@ -13,25 +13,17 @@ export interface IDatabase {
 
 export function init(config: IDataConfiguration): IDatabase {
 
-    if (config.isMemory) {
-        Mockgoose(Mongoose).then(() => {
-            Mongoose.connect(config.connectionString, (error) => {
-                console.log(error);
-            });
-        });
-    } else {
-        Mongoose.connect(config.connectionString);
+    Mongoose.connect(config.connectionString);
 
-        let mongoDb = Mongoose.connection;
+    let mongoDb = Mongoose.connection;
 
-        mongoDb.on('error', () => {
-            console.log(`Unable to connect to database: ${config.connectionString}`);
-        });
+    mongoDb.on('error', () => {
+        console.log(`Unable to connect to database: ${config.connectionString}`);
+    });
 
-        mongoDb.once('open', () => {
-            console.log(`Connected to database: ${config.connectionString}`);
-        });
-    };
+    mongoDb.once('open', () => {
+        console.log(`Connected to database: ${config.connectionString}`);
+    });
 
     return {
         taskModel: TaskModel,

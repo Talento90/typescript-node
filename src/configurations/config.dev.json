@@ -1,7 +1,6 @@
 {
     "database": {
-        "connectionString": "mongodb://localhost/taskdb-dev",
-        "isMemory": false
+        "connectionString": "mongodb://localhost/taskdb-dev"
     },
     "server": {
         "port": 5000,
