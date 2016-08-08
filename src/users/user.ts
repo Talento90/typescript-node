@@ -45,7 +45,7 @@ UserSchema.pre('save', function (next) {
   return next();
 });
 
-UserSchema.pre('findOneAndUpdate', () => {
+UserSchema.pre('findOneAndUpdate', function () {
   const password = hashPassword(this.getUpdate().$set.password);
 
   if (!password) {

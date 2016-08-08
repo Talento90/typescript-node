@@ -1,12 +1,13 @@
 import * as Joi from "joi";
 
 export const createUserModel = Joi.object().keys({
-    email: Joi.string().trim().required(),
+    email: Joi.string().email().trim().required(),
     name: Joi.string().required(),
     password: Joi.string().trim().required()
 });
 
 export const updateUserModel = Joi.object().keys({
+    email: Joi.string().email().trim(),
     name: Joi.string(),
     password: Joi.string().trim()
 });

@@ -72,9 +72,6 @@ export default function (server: Hapi.Server, serverConfigs: IServerConfiguratio
             tags: ['api', 'users'],
             description: 'Update current user info.',
             validate: {
-                params: {
-                    id: Joi.string().required()
-                },
                 payload: UserValidator.updateUserModel,
                 headers: UserValidator.jwtValidator
             },
