@@ -5,6 +5,7 @@ const rimraf = require('gulp-rimraf');
 const tslint = require('gulp-tslint');
 const mocha = require('gulp-mocha');
 const shell = require('gulp-shell');
+const env = require('gulp-env');
 
 /**
  * Remove build directory.
@@ -67,7 +68,12 @@ gulp.task('build', ['tslint', 'compile', 'configs'], () => {
  * Run tests.
  */
 gulp.task('test', ['build'], (cb) => {
+  const envs = env.set({
+    NODE_ENV: 'test'
+  });
+
   gulp.src(['build/test/**/*.js'])
+    .pipe(envs)
     .pipe(mocha())
     .once('error', (error) => {
       console.log(error);

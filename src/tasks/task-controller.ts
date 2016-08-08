@@ -31,15 +31,16 @@ export default class TaskController {
         let id = request.params["id"];
         let task: ITask = request.payload;
 
-        this.database.taskModel.findByIdAndUpdate({ _id: id, userId: userId }, { $set: task }).then((updatedTask: ITask) => {
-            if (updatedTask) {
-                reply(updatedTask);
-            } else {
-                reply(Boom.notFound());
-            }
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
+        this.database.taskModel.findByIdAndUpdate({ _id: id, userId: userId }, { $set: task }, { new: true })
+            .then((updatedTask: ITask) => {
+                if (updatedTask) {
+                    reply(updatedTask);
+                } else {
+                    reply(Boom.notFound());
+                }
+            }).catch((error) => {
+                reply(Boom.badImplementation(error));
+            });
     }
 
     public deleteTask(request: Hapi.Request, reply: Hapi.IReply) {

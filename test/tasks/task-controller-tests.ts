@@ -1,58 +1,130 @@
-// /// <reference path="../../typings.d.ts" />
-// import * as chai from "chai";
-// import Task from "../../src/core/task";
-// import TaskController from "../../src/controllers/taskController";
-// import Server from "../../src/server";
+/// <reference path="../../typings.d.ts" />
+import * as chai from "chai";
+import TaskController from "../../src/tasks/task-controller";
+import { ITask } from "../../src/tasks/task";
+import { IUser } from "../../src/users/user";
+import * as Configs from "../../src/configurations";
+import * as Server from "../../src/server";
+import * as Database from "../../src/database";
+import * as Utils from "../utils";
 
+const configDb = Configs.getDatabaseConfig();
+const database = Database.init(configDb);
+const assert = chai.assert;
+const serverConfig = Configs.getServerConfigs();
+const server = Server.init(serverConfig, database);
 
-// let assert = chai.assert;
+describe("TastController Tests", () => {
 
-// describe("TaskController", () => {
-//     it("Get all tasks", (done) => {
-//         Server.inject({ method: 'GET', url: '/api/tasks' }, (res) => {
-//             assert.equal(200, res.statusCode);
-//             done();
-//         });
-//     });
+    beforeEach((done) => {
+        Utils.createSeedTaskData(database, done);
+    });
 
-//     it("Get a task by Id", (done) => {
-//         var payload = {
-//             name: "Task Test",
-//             description: "Task Test Description"
-//         };
+    afterEach((done) => {
+        Utils.clearDatabase(database, done);
+    });
 
-//         Server.inject({ method: 'POST', url: '/api/tasks', payload: payload }, (res) => {
-//             assert.equal(201, res.statusCode);
-//             var task: any = res.result;
+    it("Get tasks", (done) => {
+        var user = Utils.createUserDummy();
 
-//             Server.inject({ method: 'GET', url: '/api/tasks/' + task._id }, (res) => {
-//                 assert.equal(200, res.statusCode);
-//                 done();
-//             });
+        server.inject({ method: 'POST', url: '/users/login', payload: { email: user.email, password: user.password } }, (res) => {
+            assert.equal(200, res.statusCode);
+            var login: any = JSON.parse(res.payload);
 
-//         });
-//     });
+            server.inject({ method: 'Get', url: '/tasks', headers: { "authorization": login.token } }, (res) => {
+                assert.equal(200, res.statusCode);
+                var responseBody: Array<ITask> = JSON.parse(res.payload);
+                assert.equal(3, responseBody.length);
+                done();
+            });
+        });
+    });
 
-//     it("Task does't exists", (done) => {
-//         Server.inject({ method: 'GET', url: '/api/tasks/xxx' }, (res) => {
-//             assert.equal(404, res.statusCode);
-//             done();
-//         });
-//     });
+    it("Get single task", (done) => {
+        var user = Utils.createUserDummy();
 
-//     it("Create a task", (done) => {
-//         var payload = {
-//             name: "Task Test",
-//             description: "Task Test Description"
-//         };
+        server.inject({ method: 'POST', url: '/users/login', payload: { email: user.email, password: user.password } }, (res) => {
+            assert.equal(200, res.statusCode);
+            var login: any = JSON.parse(res.payload);
 
-//         Server.inject({ method: 'POST', url: '/api/tasks', payload: payload }, (res) => {
-//             assert.equal(201, res.statusCode);
+            database.taskModel.findOne({}).then((task) => {
+                server.inject({ method: 'Get', url: '/tasks/' + task._id, headers: { "authorization": login.token } }, (res) => {
+                    assert.equal(200, res.statusCode);
+                    var responseBody: ITask = JSON.parse(res.payload);
+                    assert.equal(task.name, responseBody.name);
+                    done();
+                });
+            });
+        });
+    });
 
-//             var task: any = res.result;
-//             assert.equal(payload.name, task.name);
-//             assert.equal(payload.description, task.description);
-//             done();
-//         });
-//     });
-// });
+    it("Create task", (done) => {
+        var user = Utils.createUserDummy();
+
+        server.inject({ method: 'POST', url: '/users/login', payload: { email: user.email, password: user.password } }, (res) => {
+            assert.equal(200, res.statusCode);
+            var login: any = JSON.parse(res.payload);
+
+            database.userModel.findOne({ email: user.email }).then((user: IUser) => {
+                var task = Utils.createTaskDummy();
+
+                server.inject({ method: 'POST', url: '/tasks', payload: task, headers: { "authorization": login.token } }, (res) => {
+                    assert.equal(201, res.statusCode);
+                    var responseBody: ITask = <ITask>JSON.parse(res.payload);
+                    assert.equal(task.name, responseBody.name);
+                    assert.equal(task.description, responseBody.description);
+                    done();
+                });
+            });
+        });
+    });
+
+    it("Update task", (done) => {
+        var user = Utils.createUserDummy();
+
+        server.inject({ method: 'POST', url: '/users/login', payload: { email: user.email, password: user.password } }, (res) => {
+            assert.equal(200, res.statusCode);
+            var login: any = JSON.parse(res.payload);
+
+            database.taskModel.findOne({}).then((task) => {
+
+                var updateTask = {
+                    completed: true,
+                    name: task.name,
+                    description: task.description
+                };
+
+                server.inject({ method: 'PUT', url: '/tasks/' + task._id, payload: updateTask, headers: { "authorization": login.token } },
+                    (res) => {
+                        assert.equal(200, res.statusCode);
+                        console.log(res.payload);
+                        var responseBody: ITask = JSON.parse(res.payload);
+                        assert.isTrue(responseBody.completed);
+                        done();
+                    });
+            });
+        });
+    });
+
+    it("Delete single task", (done) => {
+        var user = Utils.createUserDummy();
+
+        server.inject({ method: 'POST', url: '/users/login', payload: { email: user.email, password: user.password } }, (res) => {
+            assert.equal(200, res.statusCode);
+            var login: any = JSON.parse(res.payload);
+
+            database.taskModel.findOne({}).then((task) => {
+                server.inject({ method: 'DELETE', url: '/tasks/' + task._id, headers: { "authorization": login.token } }, (res) => {
+                    assert.equal(200, res.statusCode);
+                    var responseBody: ITask = JSON.parse(res.payload);
+                    assert.equal(task.name, responseBody.name);
+
+                    database.taskModel.findById(responseBody._id).then((deletedTask) => {
+                        assert.isNull(deletedTask);
+                        done();
+                    });
+                });
+            });
+        });
+    });
+});

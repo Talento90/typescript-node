@@ -42,6 +42,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
+    "gulp-env": "^0.4.0",
     "gulp-mocha": "^2.2.0",
     "gulp-rimraf": "^0.2.0",
     "gulp-shell": "^0.5.2",
