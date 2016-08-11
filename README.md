@@ -1,4 +1,4 @@
-# typescript-node ![](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)
+# typescript-node [![Build Status](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)](https://travis-ci.org/Talento90/typescript-node)
 
 Boilerplate template for node and typescript services.
 
