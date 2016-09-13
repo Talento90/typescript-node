@@ -1,0 +1,14 @@
+{
+    "apps": [{
+        "exec_mode": "cluster",
+		"instances" : 4,
+        "script": "./build/src/index.js",
+        "name": "type-node",
+        "interpreter": "node",
+        "env": {
+            "NODE_ENV": "dev"
+        },
+        "out_file": "C:\\Logs\\pm2\\type-node.log",
+        "error_file": "C:\\Logs\\pm2\\type-node-err.log"
+    }]
+}
