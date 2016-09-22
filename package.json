@@ -33,7 +33,7 @@
     "inert": "^3.2.1",
     "joi": "^8.4.2",
     "jsonwebtoken": "^7.1.7",
-    "mongoose": "^4.5.7",
+    "mongoose": "^4.6.1",
     "nconf": "^0.8.4",
     "path": "^0.12.7",
     "vision": "^4.1.0"
@@ -49,7 +49,7 @@
     "mocha": "^3.0.0",
     "sinon": "^1.17.5",
     "tslint": "^3.13.0",
-    "typescript": "^1.8.10"
+    "typescript": "^2.0.3"
   },
   "engines": {
     "node": ">=4.1.1"

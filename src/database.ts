@@ -4,8 +4,6 @@ import { IDataConfiguration } from "./configurations";
 import { IUser, UserModel } from "./users/user";
 import { ITask, TaskModel } from "./tasks/task";
 
-Mongoose.Promise = global.Promise;
-
 export interface IDatabase {
     userModel: Mongoose.Model<IUser>;
     taskModel: Mongoose.Model<ITask>;
@@ -13,6 +11,7 @@ export interface IDatabase {
 
 export function init(config: IDataConfiguration): IDatabase {
 
+    (<any>Mongoose).Promise = Promise;
     Mongoose.connect(config.connectionString);
 
     let mongoDb = Mongoose.connection;

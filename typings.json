@@ -1,14 +1,14 @@
 {
   "globalDependencies": {
     "bcryptjs": "registry:dt/bcryptjs#2.3.0+20151217030501",
-    "boom": "registry:dt/boom#0.0.0+20160317120654",
-    "hapi": "registry:dt/hapi#13.0.0+20160709092105",
-    "joi": "registry:dt/joi#9.0.0+20160626220651",
+    "boom": "registry:dt/boom#0.0.0+20160724101333",
+    "hapi": "registry:dt/hapi#13.0.0+20160818163303",
+    "joi": "registry:dt/joi#9.0.0+20160906140128",
     "jsonwebtoken": "registry:dt/jsonwebtoken#0.0.0+20160720062725",
     "mongodb": "registry:dt/mongodb#2.1.0+20160602142941",
-    "mongoose": "registry:dt/mongoose#4.5.4+20160721201159",
+    "mongoose": "registry:dt/mongoose#4.5.9+20160922172925",
     "nconf": "registry:dt/nconf#0.0.0+20160724073144",
-    "node": "registry:dt/node#6.0.0+20160720070758"
+    "node": "registry:dt/node#6.0.0+20160921192128"
   },
   "globalDevDependencies": {
     "chai": "registry:dt/chai#3.4.0+20160601211834",
