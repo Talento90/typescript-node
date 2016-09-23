@@ -8,8 +8,12 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true
   },
+  "include": [
+    "src/**/**.ts",
+    "test/**/**.ts",
+    "typings/index.d.ts"
+  ],
   "exclude": [
-    "node_modules",
-    "typings"
+    "node_modules"
   ]
 }

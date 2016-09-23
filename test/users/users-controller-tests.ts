@@ -1,4 +1,3 @@
-/// <reference path="../../typings.d.ts" />
 import * as chai from "chai";
 import UserController from "../../src/users/user-controller";
 import { IUser } from "../../src/users/user";

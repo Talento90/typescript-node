@@ -1,5 +1,4 @@
 import * as Mongoose from "mongoose";
-import * as Mockgoose from "mockgoose";
 import { IDataConfiguration } from "./configurations";
 import { IUser, UserModel } from "./users/user";
 import { ITask, TaskModel } from "./tasks/task";

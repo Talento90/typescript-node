@@ -47,7 +47,6 @@
     "gulp-shell": "^0.5.2",
     "gulp-tslint": "^4.3.4",
     "mocha": "^3.0.0",
-    "sinon": "^1.17.5",
     "tslint": "^3.13.0",
     "typescript": "^2.0.3"
   },

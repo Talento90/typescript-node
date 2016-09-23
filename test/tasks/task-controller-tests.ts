@@ -1,4 +1,3 @@
-/// <reference path="../../typings.d.ts" />
 import * as chai from "chai";
 import TaskController from "../../src/tasks/task-controller";
 import { ITask } from "../../src/tasks/task";

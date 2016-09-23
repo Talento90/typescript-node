@@ -1,4 +1,3 @@
-/// <reference path="../typings.d.ts" />
 import * as Hapi from "hapi";
 import { IPlugin } from "./plugins/interfaces";
 import { IServerConfigurations } from "./configurations";
