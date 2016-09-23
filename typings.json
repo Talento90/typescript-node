@@ -8,7 +8,7 @@
     "mongodb": "registry:dt/mongodb#2.1.0+20160602142941",
     "mongoose": "registry:dt/mongoose#4.5.9+20160922172925",
     "nconf": "registry:dt/nconf#0.0.0+20160724073144",
-    "node": "registry:dt/node#6.0.0+20160921192128"
+    "node": "registry:dt/node#6.0.0+20160923124626"
   },
   "globalDevDependencies": {
     "chai": "registry:dt/chai#3.4.0+20160601211834",
