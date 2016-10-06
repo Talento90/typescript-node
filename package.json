@@ -19,7 +19,8 @@
     "build": "gulp build",
     "start": "node build/src/index.js",
     "setup": "npm install & typings install",
-    "test": "gulp test"
+    "test": "gulp test",
+    "watch": "nodemon --watch build/src build/src/index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.3.0",
@@ -47,6 +48,7 @@
     "gulp-shell": "^0.5.2",
     "gulp-tslint": "^4.3.4",
     "mocha": "^3.0.0",
+    "nodemon": "^1.10.2",
     "tslint": "^3.13.0",
     "typescript": "^2.0.3"
   },
