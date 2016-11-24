@@ -7,7 +7,7 @@ import { IDatabase } from "./database";
 
 
 export function init(configs: IServerConfigurations, database: IDatabase) {
-    const port = process.env.port || configs.port;
+    const port = process.env.PORT || configs.port;
     const server = new Hapi.Server();
 
     server.connection({
