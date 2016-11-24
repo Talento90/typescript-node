@@ -1,6 +1,6 @@
 {
     "database": {
-        "connectionString": "mongodb://localhost/taskdb-test"
+        "connectionString": "mongodb://localhost:27017/taskdb-test"
     },
     "server": {
         "port": 5000,

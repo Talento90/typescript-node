@@ -40,6 +40,16 @@
     "vision": "^4.1.0"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.3.30",
+    "@types/boom": "0.0.32",
+    "@types/chai": "^3.4.34",
+    "@types/hapi": "^13.0.37",
+    "@types/joi": "^9.0.33",
+    "@types/jsonwebtoken": "^7.1.33",
+    "@types/mocha": "^2.2.33",
+    "@types/mongoose": "^4.6.1",
+    "@types/nconf": "0.0.32",
+    "@types/node": "^6.0.51",
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-env": "^0.4.0",
@@ -50,9 +60,9 @@
     "mocha": "^3.0.0",
     "nodemon": "^1.10.2",
     "tslint": "^3.13.0",
-    "typescript": "^2.0.3"
+    "typescript": "2.0.6"
   },
   "engines": {
-    "node": ">=4.1.1"
+    "node": ">=6.1.1"
   }
 }
