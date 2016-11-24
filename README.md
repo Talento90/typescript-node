@@ -19,7 +19,7 @@ Boilerplate template for node and typescript services.
 **Docker**
 * *docker-compose build* (compose images)
 * *docker-compose up* (running containers)
-* *browser: http://localhost:8080/docs* (have fun :))
+* *browser: http://localhost:8080/docs* (have fun :)
 
 **Features**
 
