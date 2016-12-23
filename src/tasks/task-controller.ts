@@ -14,74 +14,73 @@ export default class TaskController {
         this.database = database;
     }
 
-    public createTask(request: Hapi.Request, reply: Hapi.IReply) {
+    public async createTask(request: Hapi.Request, reply: Hapi.IReply) {
         let userId = request.auth.credentials.id;
         var newTask: ITask = request.payload;
         newTask.userId = userId;
 
-        this.database.taskModel.create(newTask).then((task) => {
-            reply(task).code(201);
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
+        try {
+            let task: ITask = await this.database.taskModel.create(newTask);
+            return reply(task).code(201);
+        }catch (error) {
+            return reply(Boom.badImplementation(error));
+        }
     }
 
-    public updateTask(request: Hapi.Request, reply: Hapi.IReply) {
-        let userId = request.auth.credentials.id;
-        let id = request.params["id"];
-        let task: ITask = request.payload;
-
-        this.database.taskModel.findByIdAndUpdate({ _id: id, userId: userId }, { $set: task }, { new: true })
-            .then((updatedTask: ITask) => {
-                if (updatedTask) {
-                    reply(updatedTask);
-                } else {
-                    reply(Boom.notFound());
-                }
-            }).catch((error) => {
-                reply(Boom.badImplementation(error));
-            });
-    }
-
-    public deleteTask(request: Hapi.Request, reply: Hapi.IReply) {
-        let id = request.params["id"];
-        let userId = request.auth.credentials.id;
-
-        this.database.taskModel.findOneAndRemove({ _id: id, userId: userId }).then((deletedTask: ITask) => {
-            if (deletedTask) {
-                reply(deletedTask);
-            } else {
-                reply(Boom.notFound());
-            }
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
-    }
-
-    public getTaskById(request: Hapi.Request, reply: Hapi.IReply) {
+    public async updateTask(request: Hapi.Request, reply: Hapi.IReply) {
         let userId = request.auth.credentials.id;
         let id = request.params["id"];
 
-        this.database.taskModel.findOne({ _id: id, userId: userId }).lean(true).then((task: ITask) => {
+        try {
+            let task: ITask = await this.database.taskModel.findByIdAndUpdate(
+                { _id: id, userId: userId },
+                { $set: request.payload },
+                { new: true }
+            );
+
             if (task) {
                 reply(task);
             } else {
                 reply(Boom.notFound());
             }
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
+
+        } catch (error) {
+            return reply(Boom.badImplementation(error));
+        }
     }
 
-    public getTasks(request: Hapi.Request, reply: Hapi.IReply) {
+    public async deleteTask(request: Hapi.Request, reply: Hapi.IReply) {
+        let id = request.params["id"];
+        let userId = request.auth.credentials.id;
+
+        let deletedTask = await this.database.taskModel.findOneAndRemove({ _id: id, userId: userId });
+
+        if (deletedTask) {
+            return reply(deletedTask);
+        } else {
+            return reply(Boom.notFound());
+        }
+    }
+
+    public async getTaskById(request: Hapi.Request, reply: Hapi.IReply) {
+        let userId = request.auth.credentials.id;
+        let id = request.params["id"];
+
+        let task = await this.database.taskModel.findOne({ _id: id, userId: userId }).lean(true);
+
+        if (task) {
+            reply(task);
+        } else {
+            reply(Boom.notFound());
+        }
+    }
+
+    public async getTasks(request: Hapi.Request, reply: Hapi.IReply) {
         let userId = request.auth.credentials.id;
         let top = request.query.top;
         let skip = request.query.skip;
+        let tasks = await this.database.taskModel.find({ userId: userId }).lean(true).skip(skip).limit(top);
 
-        this.database.taskModel.find({ userId: userId }).lean(true).skip(skip).limit(top).then((tasks: Array<ITask>) => {
-            reply(tasks);
-        }).catch((error) => {
-            reply(Boom.badImplementation(error));
-        });
+        return reply(tasks);
     }
 }
