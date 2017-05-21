@@ -14,7 +14,7 @@ Boilerplate template for node and typescript services.
 * *gulp watch* (watch ts files)
 * *npm run start* (start the application)
 * *npm run watch* (restart the application when files change)
-* *npm start* (run the application on http://localhost:5000/docs)
+* *npm start* (run the application on http://localhost:5000/api/docs)
 
 **Docker**
 * *docker-compose build* (compose images)
