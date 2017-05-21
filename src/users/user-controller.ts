@@ -24,7 +24,7 @@ export default class UserController {
     }
 
 
-    public async loginUser(request: Hapi.Request, reply: Hapi.IReply) {
+    public async loginUser(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const email = request.payload.email;
         const password = request.payload.password;
 
@@ -43,7 +43,7 @@ export default class UserController {
         });
     }
 
-    public async createUser(request: Hapi.Request, reply: Hapi.IReply) {
+    public async createUser(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         try {
             let user: any = await this.database.userModel.create(request.payload);
             return reply({ token: this.generateToken(user)}).code(201);
@@ -52,7 +52,7 @@ export default class UserController {
         }
     }
 
-    public async updateUser(request: Hapi.Request, reply: Hapi.IReply) {
+    public async updateUser(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const id = request.auth.credentials.id;
 
         try {
@@ -63,14 +63,14 @@ export default class UserController {
         }
     }
 
-    public async deleteUser(request: Hapi.Request, reply: Hapi.IReply) {
+    public async deleteUser(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const id = request.auth.credentials.id;
         let user: IUser = await this.database.userModel.findByIdAndRemove(id);
 
         return reply(user);
     }
 
-    public async infoUser(request: Hapi.Request, reply: Hapi.IReply) {
+    public async infoUser(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         const id = request.auth.credentials.id;
         let user: IUser = await this.database.userModel.findById(id);
 

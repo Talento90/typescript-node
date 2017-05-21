@@ -14,7 +14,7 @@ export default class TaskController {
         this.database = database;
     }
 
-    public async createTask(request: Hapi.Request, reply: Hapi.IReply) {
+    public async createTask(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         let userId = request.auth.credentials.id;
         var newTask: ITask = request.payload;
         newTask.userId = userId;
@@ -27,7 +27,7 @@ export default class TaskController {
         }
     }
 
-    public async updateTask(request: Hapi.Request, reply: Hapi.IReply) {
+    public async updateTask(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         let userId = request.auth.credentials.id;
         let id = request.params["id"];
 
@@ -49,7 +49,7 @@ export default class TaskController {
         }
     }
 
-    public async deleteTask(request: Hapi.Request, reply: Hapi.IReply) {
+    public async deleteTask(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         let id = request.params["id"];
         let userId = request.auth.credentials.id;
 
@@ -62,7 +62,7 @@ export default class TaskController {
         }
     }
 
-    public async getTaskById(request: Hapi.Request, reply: Hapi.IReply) {
+    public async getTaskById(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         let userId = request.auth.credentials.id;
         let id = request.params["id"];
 
@@ -75,10 +75,10 @@ export default class TaskController {
         }
     }
 
-    public async getTasks(request: Hapi.Request, reply: Hapi.IReply) {
+    public async getTasks(request: Hapi.Request, reply: Hapi.ReplyNoContinue) {
         let userId = request.auth.credentials.id;
-        let top = request.query.top;
-        let skip = request.query.skip;
+        let top = request.query['top'];
+        let skip = request.query['skip'];
         let tasks = await this.database.taskModel.find({ userId: userId }).lean(true).skip(skip).limit(top);
 
         return reply(tasks);

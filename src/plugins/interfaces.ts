@@ -9,7 +9,7 @@ export interface IPluginOptions {
 }
 
 export interface IPlugin {
-    register(server: Hapi.Server, options?: IPluginOptions);
+    register(server: Hapi.Server, options?: IPluginOptions): Promise<void>;
     info(): IPluginInfo;
 }
 

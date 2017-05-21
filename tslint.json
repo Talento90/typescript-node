@@ -9,7 +9,6 @@
             4
         ],
         "label-position": true,
-        "label-undefined": true,
         "max-line-length": [
             true,
             140
@@ -26,15 +25,12 @@
         ],
         "no-construct": true,
         "no-debugger": true,
-        "no-duplicate-key": true,
         "no-duplicate-variable": true,
         "no-empty": false,
         "no-eval": true,
         "no-string-literal": false,
         "no-trailing-whitespace": true,
         "no-unused-variable": false,
-        "no-unreachable": true,
-        "no-use-before-declare": true,
         "one-line": [
             true,
             "check-open-brace",
@@ -43,7 +39,10 @@
             "check-whitespace"
         ],
         "radix": true,
-        "semicolon": true,
+        "semicolon": [
+            true,
+            "always"
+        ],
         "triple-equals": [
             true,
             "allow-null-check"

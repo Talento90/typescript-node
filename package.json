@@ -1,6 +1,6 @@
 {
   "name": "typescript-node",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "",
   "license": "MIT",
   "repository": {
@@ -10,7 +10,6 @@
   "keywords": [
     "typescript",
     "project structure",
-    "gulp",
     "nodejs"
   ],
   "scripts": {
@@ -23,46 +22,55 @@
     "watch": "nodemon --watch build/src build/src/index.js"
   },
   "dependencies": {
-    "bcryptjs": "^2.3.0",
-    "boom": "^3.2.2",
-    "fs": "0.0.2",
-    "good": "^6.6.3",
-    "good-console": "^5.3.2",
-    "hapi": "^13.5.0",
-    "hapi-auth-jwt2": "^7.0.1",
-    "hapi-swagger": "^4.3.1",
-    "inert": "^3.2.1",
-    "joi": "^8.4.2",
-    "jsonwebtoken": "^7.1.7",
-    "mongoose": "^4.6.1",
+    "bcryptjs": "^2.4.3",
+    "fs": "0.0.1-security",
+    "good": "^7.2.0",
+    "good-console": "^6.4.0",
+    "hapi": "^16.1.1",
+    "hapi-auth-jwt2": "^7.2.4",
+    "hapi-swagger": "^7.7.0",
+    "inert": "^4.2.0",
+    "joi": "^10.5.0",
+    "jsonwebtoken": "^7.4.1",
+    "mongoose": "^4.10.0",
     "nconf": "^0.8.4",
     "path": "^0.12.7",
-    "vision": "^4.1.0"
+    "vision": "^4.1.1"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.3.30",
-    "@types/boom": "0.0.32",
-    "@types/chai": "^3.4.34",
-    "@types/hapi": "^13.0.37",
-    "@types/joi": "^9.0.33",
-    "@types/jsonwebtoken": "^7.1.33",
-    "@types/mocha": "^2.2.33",
-    "@types/mongoose": "^4.6.1",
-    "@types/nconf": "0.0.32",
-    "@types/node": "^6.0.51",
+    "@types/bcryptjs": "^2.4.0",
+    "@types/boom": "^4.3.2",
+    "@types/chai": "^3.5.2",
+    "@types/hapi": "^16.1.2",
+    "@types/joi": "^10.3.2",
+    "@types/jsonwebtoken": "^7.2.0",
+    "@types/mocha": "^2.2.41",
+    "@types/mongoose": "^4.7.13",
+    "@types/nconf": "0.0.34",
+    "@types/node": "^7.0.21",
+    "@types/sinon": "^2.2.2",
+    "bcryptjs": "^2.4.3",
+    "boom": "^4.3.1",
     "chai": "^3.5.0",
     "gulp": "^3.9.1",
     "gulp-env": "^0.4.0",
-    "gulp-mocha": "^2.2.0",
-    "gulp-rimraf": "^0.2.0",
-    "gulp-shell": "^0.5.2",
-    "gulp-tslint": "^4.3.4",
-    "mocha": "^3.0.0",
-    "nodemon": "^1.10.2",
-    "tslint": "^3.13.0",
-    "typescript": "^2.1.4"
+    "gulp-mocha": "^4.3.1",
+    "gulp-rimraf": "^0.2.1",
+    "gulp-shell": "^0.6.3",
+    "gulp-tslint": "^8.0.0",
+    "hapi": "^16.1.1",
+    "joi": "^10.5.0",
+    "jsonwebtoken": "^7.4.1",
+    "mocha": "^3.4.1",
+    "mongoose": "^4.10.0",
+    "nconf": "^0.8.4",
+    "node": "0.0.0",
+    "nodemon": "^1.11.0",
+    "sinon": "^2.2.0",
+    "tslint": "^5.2.0",
+    "typescript": "^2.3.2"
   },
   "engines": {
-    "node": ">=6.1.1"
+    "node": ">=7.6.0"
   }
 }

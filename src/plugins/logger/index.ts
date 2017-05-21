@@ -3,22 +3,31 @@ import * as Hapi from "hapi";
 
 export default (): IPlugin => {
     return {
-        register: (server: Hapi.Server) => {
+        register: (server: Hapi.Server): Promise<void> => {
             const opts = {
-                opsInterval: 1000,
-                reporters: [{
-                    reporter: require('good-console'),
-                    events: { error: '*', log: '*', response: '*', request: '*' }
-                }]
+                ops: {
+                    interval: 1000
+                },
+                reporters: {
+                    consoleReporter: [
+                        {
+                            module: 'good-console'
+                        }
+                    ]
+                }
             };
 
-            server.register({
-                register: require('good'),
-                options: opts
-            }, (error) => {
-                if (error) {
-                    console.log('error', error);
-                }
+            return new Promise<void>((resolve) => {
+                server.register({
+                    register: require('good'),
+                    options: opts
+                }, (error) => {
+                    if (error) {
+                        console.log(`Error registering logger plugin: ${error}`);
+                    }
+
+                    resolve();
+                });
             });
         },
         info: () => {

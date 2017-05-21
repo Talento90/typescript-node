@@ -20,8 +20,9 @@ const database = Database.init(dbConfigs);
 
 // Starting Application Server
 const serverConfigs = Configs.getServerConfigs();
-const server = Server.init(serverConfigs, database);
 
-server.start(() => {
-    console.log('Server running at:', server.info.uri);
+Server.init(serverConfigs, database).then((server) => {
+    server.start(() => {
+        console.log('Server running at:', server.info.uri);
+    });
 });

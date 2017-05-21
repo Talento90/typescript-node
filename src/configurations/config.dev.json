@@ -6,10 +6,11 @@
         "port": 5000,
         "jwtSecret": "random-secret-password",
         "jwtExpiration": "1h",
+        "routePrefix": "/api",
         "plugins": [
             "logger",
-            "swagger",
-            "jwt-auth"
+            "jwt-auth",
+            "swagger"
         ]
     }
 }
