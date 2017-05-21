@@ -8,8 +8,8 @@
         "jwtExpiration": "1h",
         "plugins": [
             "logger",
-            "swagger",
-            "jwt-auth"
+            "jwt-auth",
+            "swagger"
         ]
     }
 }

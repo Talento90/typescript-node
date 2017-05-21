@@ -5,11 +5,16 @@ export default (): IPlugin => {
     return {
         register: (server: Hapi.Server) => {
             const opts = {
-                opsInterval: 1000,
-                reporters: [{
-                    reporter: require('good-console'),
-                    events: { error: '*', log: '*', response: '*', request: '*' }
-                }]
+                ops: {
+                    interval: 1000
+                },
+                reporters: {
+                    consoleReporter: [
+                        {
+                            module: 'good-console'
+                        }
+                    ]
+                }
             };
 
             server.register({
@@ -17,7 +22,7 @@ export default (): IPlugin => {
                 options: opts
             }, (error) => {
                 if (error) {
-                    console.log('error', error);
+                    console.log(`Error initializing logger: ${error}`);
                 }
             });
         },

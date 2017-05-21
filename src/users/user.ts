@@ -8,7 +8,7 @@ export interface IUser extends Mongoose.Document {
   createdAt: Date;
   updateAt: Date;
   validatePassword(requestPassword): boolean;
-};
+}
 
 
 export const UserSchema = new Mongoose.Schema(

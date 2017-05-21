@@ -36,4 +36,4 @@ export function init(configs: IServerConfigurations, database: IDatabase) {
     Users.init(server, configs, database);
 
     return server;
-};
+}

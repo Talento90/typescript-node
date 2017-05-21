@@ -7,7 +7,7 @@ export interface ITask extends Mongoose.Document {
   completed: boolean;
   createdAt: Date;
   updateAt: Date;
-};
+}
 
 export const TaskSchema = new Mongoose.Schema({
   userId: { type: String, required: true },

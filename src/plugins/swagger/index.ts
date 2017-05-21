@@ -1,9 +1,10 @@
-import {IPlugin, IPluginInfo} from "../interfaces";
+import { IPlugin, IPluginInfo } from "../interfaces";
 import * as Hapi from "hapi";
 
 export default (): IPlugin => {
     return {
         register: (server: Hapi.Server) => {
+
             server.register([
                 require('inert'),
                 require('vision'),
@@ -25,14 +26,15 @@ export default (): IPlugin => {
                                 'description': 'Api users interface.'
                             }
                         ],
-                        enableDocumentation: true,
+                        swaggerUI: true,
+                        documentationPage: true,
                         documentationPath: '/docs'
                     }
                 }
             ]
                 , (error) => {
                     if (error) {
-                        console.log('error', error);
+                        console.log(`Error initializing logger: ${error}`);
                     }
                 });
         },
