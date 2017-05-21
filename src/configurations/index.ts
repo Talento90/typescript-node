@@ -16,6 +16,7 @@ export interface IServerConfigurations {
     plugins: Array<string>;
     jwtSecret: string;
     jwtExpiration: string;
+    routePrefix: string;
 }
 
 export interface IDataConfiguration {

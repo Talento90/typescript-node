@@ -3,7 +3,7 @@ import * as Hapi from "hapi";
 
 export default (): IPlugin => {
     return {
-        register: (server: Hapi.Server) => {
+        register: (server: Hapi.Server): Promise<void> => {
             const opts = {
                 ops: {
                     interval: 1000
@@ -17,13 +17,17 @@ export default (): IPlugin => {
                 }
             };
 
-            server.register({
-                register: require('good'),
-                options: opts
-            }, (error) => {
-                if (error) {
-                    console.log(`Error initializing logger: ${error}`);
-                }
+            return new Promise<void>((resolve) => {
+                server.register({
+                    register: require('good'),
+                    options: opts
+                }, (error) => {
+                    if (error) {
+                        console.log(`Error registering logger plugin: ${error}`);
+                    }
+
+                    resolve();
+                });
             });
         },
         info: () => {
