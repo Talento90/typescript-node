@@ -9,11 +9,13 @@ export default (): IPlugin => {
                     interval: 1000
                 },
                 reporters: {
-                    consoleReporter: [
-                        {
-                            module: 'good-console'
-                        }
-                    ]
+                    consoleReporter: [{
+                        module: 'good-squeeze',
+                        name: 'Squeeze',
+                        args: [{ error: '*', log: '*', response: '*', request: '*' }]
+                    }, {
+                        module: 'good-console'
+                    }, 'stdout']
                 }
             };
 
