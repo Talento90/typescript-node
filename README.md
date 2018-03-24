@@ -1,5 +1,9 @@
 # typescript-node [![Build Status](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)](https://travis-ci.org/Talento90/typescript-node)
 
+## Deprecated
+
+Please for an updated version look at this repository: https://github.com/dwyl/hapi-typescript-example
+
 Boilerplate template for node and typescript services.
 
 **Installation**
