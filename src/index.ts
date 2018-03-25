@@ -1,28 +1,38 @@
-import * as Server from "./server";
-import * as Database from "./database";
-import * as Configs from "./configurations";
+import { Server } from 'http'
+import * as pino from 'pino'
+import { MySql } from './database'
+import * as server from './server'
 
-console.log(`Running enviroment ${process.env.NODE_ENV || "dev"}`);
+export async function init() {
+  const logger = pino()
 
-// Catch unhandling unexpected exceptions
-process.on('uncaughtException', (error: Error) => {
-    console.error(`uncaughtException ${error.message}`);
-});
+  try {
+    // Starting the HTTP server
+    logger.info('Starting HTTP server')
 
-// Catch unhandling rejected promises
-process.on('unhandledRejection', (reason: any) => {
-    console.error(`unhandledRejection ${reason}`);
-});
+    const app = server.createServer().listen(process.env.PORT || 8080)
 
-// Init Database
-const dbConfigs = Configs.getDatabaseConfig();
-const database = Database.init(dbConfigs);
+    // Register global process events
+    registerProcessEvents(logger, app)
+  } catch (e) {
+    logger.error(e, 'An error occurred while initializing application.')
+  }
+}
 
-// Starting Application Server
-const serverConfigs = Configs.getServerConfigs();
+function registerProcessEvents(logger: pino.Logger, app: Server) {
+  process.on('uncaughtException', (error: Error) => {
+    logger.error('UncaughtException', error)
+  })
 
-Server.init(serverConfigs, database).then((server) => {
-    server.start(() => {
-        console.log('Server running at:', server.info.uri);
-    });
-});
+  process.on('unhandledRejection', (reason: any, promise: any) => {
+    logger.info(reason, promise)
+  })
+
+  process.on('SIGTERM', () => {
+    logger.info('Starting graceful shutdown')
+
+    app.close()
+  })
+}
+
+init()

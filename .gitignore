@@ -32,9 +32,6 @@ node_modules
 #VSCode
 .vscode
 
-#Ignore build folder
-build
-
-#Ignore typings
-typings
+#Ignore dist folder
+dist
 

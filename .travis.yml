@@ -1,8 +1,5 @@
 language: node_js
 node_js:
-  - "7"
-before_script:
-  - npm install -g typescript
-  - npm install -g gulp
+  - "8"
 services:
   - mongodb

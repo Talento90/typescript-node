@@ -1,15 +1,20 @@
-version: '2'
+version: '2.1'
 services:
   app:
     build: .
     environment:
       - PORT=8080
-      - MONGO_URL=mongodb:27017
-    ports: 
-      - "8080:8080"
-    links:
-      - mongodb
-  mongodb:
-    image: mongo:latest
+      - MYSQL_URL=mysql
     ports:
-      - "27017:27017"
+      - "8080:8080"
+      - "5858:5858"
+    links:
+      - mysql
+    volumes:
+      - .:/app/
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+    ports:
+      - "3306:3306"
