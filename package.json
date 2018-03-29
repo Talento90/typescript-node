@@ -16,7 +16,7 @@
     "build": "rm -rf dist && tsc",
     "clean": "rm -rf node_modules testdata .sonar",
     "coverage": "nyc --exclude dist/test --temp-directory coverage --check-coverage=false --report-dir coverage --reporter=lcov --reporter=html npm test",
-    "lint": "tslint 'src/**/*.ts' 'test/**/*.test.ts'",
+    "lint": "tslint 'src/**/*.ts' 'test/**/*.test.ts' --fix",
     "start": "node dist/src/index.js",
     "start:dev": "tsc-watch --onSuccess 'node --inspect=0.0.0.0:5858 dist/src/index.js'",
     "test": "npm run build && mocha --recursive dist/test"
@@ -64,7 +64,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && npm test"
+      "pre-commit": ""
     }
   }
 }

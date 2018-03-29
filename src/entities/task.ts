@@ -1,7 +1,9 @@
-export class Task {
-  public id: number
-  public name: string
-  public description: string
-  public done: boolean
-  public userId: number
+export interface Task {
+  id?: number
+  name: string
+  description: string
+  done: boolean
+  userId: number
+  created: Date
+  updated: Date
 }
