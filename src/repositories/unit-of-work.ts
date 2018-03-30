@@ -27,7 +27,9 @@ export class UnitOfWork {
     })
   }
 
-  private async withinTransaction(execute: (trx: knex.Transaction) => Promise<void>): Promise<void> {
+  private async withinTransaction(
+    execute: (trx: knex.Transaction) => Promise<void>
+  ): Promise<void> {
     const trx = await this.getTransaction()
 
     try {
