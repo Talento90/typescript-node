@@ -2,9 +2,13 @@ version: '2.1'
 services:
   app:
     build: .
+    command: npm run start:dev
     environment:
       - PORT=8080
-      - MYSQL_URL=mysql
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=secret
     ports:
       - "8080:8080"
       - "5858:5858"
@@ -12,9 +16,14 @@ services:
       - mysql
     volumes:
       - .:/app/
+    network_mode: bridge
   mysql:
     image: mysql:latest
     environment:
-      MYSQL_ROOT_PASSWORD: secret
+      - MYSQL_DATABASE=task_manager
+      - MYSQL_ROOT_PASSWORD=secret
     ports:
       - "3306:3306"
+    volumes:
+      - ./db-scripts:/docker-entrypoint-initdb.d
+    network_mode: bridge

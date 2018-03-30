@@ -20,9 +20,6 @@ export class MySql {
     this.config = config
   }
 
-  /**
-   * Retuns a connection to the database.
-   */
   public async getConnection(): Promise<knex> {
     if (!this.connection) {
       this.connection = await this.retryDbConnection()
@@ -38,9 +35,17 @@ export class MySql {
     }
   }
 
+  public async schemaMigration() {
+    const connection = await this.getConnection()
+
+    await connection.migrate.latest({
+      directory: path.resolve(__dirname, './migrations')
+    })
+  }
+
   private async createConnection(): Promise<knex> {
     const config: knex.Config = {
-      client: 'mysql',
+      client: 'mysql2',
       connection: {
         host: this.config.host,
         port: this.config.port,
@@ -96,11 +101,5 @@ export class MySql {
     })
 
     return this.retryDbConnectionPromise
-  }
-
-  private async schemaMigration() {
-    await this.connection.migrate.latest({
-      directory: path.resolve(__dirname, './migrations')
-    })
   }
 }

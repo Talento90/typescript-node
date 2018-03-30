@@ -14,15 +14,14 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "clean": "rm -rf node_modules testdata .sonar",
-    "coverage": "nyc --exclude dist/test --temp-directory coverage --check-coverage=false --report-dir coverage --reporter=lcov --reporter=html npm test",
+    "clean": "rm -rf node_modules coverage dist",
+    "coverage": "nyc --exclude dist/test --reporter=html npm test",
     "lint": "tslint 'src/**/*.ts' 'test/**/*.test.ts' --fix",
     "start": "node dist/src/index.js",
     "start:dev": "tsc-watch --onSuccess 'node --inspect=0.0.0.0:5858 dist/src/index.js'",
     "test": "npm run build && mocha --recursive dist/test"
   },
   "dependencies": {
-    "@types/async": "^2.0.48",
     "async": "^2.6.0",
     "joi": "^13.1.2",
     "knex": "^0.14.4",
@@ -34,6 +33,7 @@
     "pino": "^4.15.0"
   },
   "devDependencies": {
+    "@types/async": "^2.0.48",
     "@types/chai": "^4.1.2",
     "@types/joi": "^13.0.7",
     "@types/knex": "^0.14.9",
@@ -64,7 +64,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": ""
+      "pre-commit": "npm run lint && npm test"
     }
   }
 }

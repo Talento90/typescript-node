@@ -1,19 +1,20 @@
-import * as knex from 'knex'
+import { MySql } from '../database'
 import { User } from '../entities'
 
 export class UserRepository {
-  private connection: knex
   private readonly TABLE: string = 'USER'
+  private db: MySql
 
-  constructor(connection: knex) {
-    this.connection = connection
+  constructor(db: MySql) {
+    this.db = db
   }
 
   public async insert(user: User): Promise<User> {
     user.created = new Date()
     user.updated = new Date()
 
-    const result = await this.connection.insert(user)
+    const conn = await this.db.getConnection()
+    const result = await conn.table(this.TABLE).insert(user)
 
     user.id = result[0].insertId
 
@@ -23,7 +24,8 @@ export class UserRepository {
   public async update(user: User): Promise<User> {
     user.updated = new Date()
 
-    const result = await this.connection.update({
+    const conn = await this.db.getConnection()
+    const result = await conn.table(this.TABLE).update({
       first_name: user.firstName,
       last_name: user.lastName
     })
@@ -32,7 +34,8 @@ export class UserRepository {
   }
 
   public async find(email: string): Promise<User> {
-    const result = await this.connection.table(this.TABLE).first({ email })
+    const conn = await this.db.getConnection()
+    const result = await conn.table(this.TABLE).first({ email })
 
     return this.transform(result)
   }

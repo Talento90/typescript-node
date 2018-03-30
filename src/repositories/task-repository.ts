@@ -1,19 +1,20 @@
-import * as knex from 'knex'
+import { MySql } from '../database'
 import { Task } from '../entities'
 
 export class TaskRepository {
-  private static TABLE: string = 'tasks'
-  private connection: knex
+  private readonly TABLE: string = 'tasks'
+  private db: MySql
 
-  constructor(connection: knex) {
-    this.connection = connection
+  constructor(db: MySql) {
+    this.db = db
   }
 
   public async insert(task: Task): Promise<Task> {
     task.created = new Date()
     task.updated = new Date()
 
-    const result = await this.connection.insert(task)
+    const conn = await this.db.getConnection()
+    const result = await conn.table(this.TABLE).insert(task)
 
     task.id = result[0].insertId
 
@@ -23,7 +24,8 @@ export class TaskRepository {
   public async update(task: Task): Promise<Task> {
     task.updated = new Date()
 
-    const result = await this.connection.update({
+    const conn = await this.db.getConnection()
+    const result = await conn.table(this.TABLE).update({
       name: task.name,
       description: task.description,
       done: task.done
@@ -33,16 +35,22 @@ export class TaskRepository {
   }
 
   public async findByUser(userId: number): Promise<Task[]> {
-    const results = await this.connection
+    const conn = await this.db.getConnection()
+    const results = await conn
       .select()
-      .from('')
+      .from(this.TABLE)
       .where({ user_id: userId })
 
     return results.map((r: any) => this.transform(r))
   }
 
   public async delete(taskId: number): Promise<void> {
-    await this.connection.delete().where({ id: taskId })
+    const conn = await this.db.getConnection()
+
+    await conn
+      .from(this.TABLE)
+      .delete()
+      .where({ id: taskId })
   }
 
   private transform(row: any): Task {
