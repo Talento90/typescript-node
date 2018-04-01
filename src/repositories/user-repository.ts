@@ -44,6 +44,9 @@ export class UserRepository {
     return {
       id: row.id,
       email: row.email,
+      password: row.password,
+      salt: row.salt,
+      role: row.role,
       firstName: row.first_name,
       lastName: row.last_name,
       created: row.created,

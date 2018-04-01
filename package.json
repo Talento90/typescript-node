@@ -23,7 +23,9 @@
   },
   "dependencies": {
     "async": "^2.6.0",
+    "bcrypt": "^1.0.3",
     "joi": "^13.1.2",
+    "jsonwebtoken": "^8.2.0",
     "knex": "^0.14.4",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
@@ -34,8 +36,10 @@
   },
   "devDependencies": {
     "@types/async": "^2.0.48",
+    "@types/bcrypt": "^1.0.0",
     "@types/chai": "^4.1.2",
     "@types/joi": "^13.0.7",
+    "@types/jsonwebtoken": "^7.2.6",
     "@types/knex": "^0.14.9",
     "@types/koa": "^2.0.44",
     "@types/koa-bodyparser": "^4.2.0",

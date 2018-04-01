@@ -4,7 +4,10 @@ export function up(db: knex) {
   return db.schema
     .createTable('user', table => {
       table.increments('id').primary()
-      table.string('email', 50).notNullable()
+      table.string('email', 50).unique()
+      table.string('password', 50).notNullable()
+      table.string('salt', 50).notNullable()
+      table.enum('role', ['user', 'admin']).notNullable()
       table.string('first_name', 50).notNullable()
       table.string('last_name', 50).notNullable()
       table.dateTime('created').notNullable()
