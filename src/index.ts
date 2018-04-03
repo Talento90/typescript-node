@@ -1,7 +1,7 @@
 import { Server } from 'http'
 import * as pino from 'pino'
 import { createContainer } from './container'
-import { MySql } from './database'
+import { MySql } from './lib/database'
 import * as server from './server'
 
 export async function init() {
@@ -24,7 +24,7 @@ export async function init() {
     await db.schemaMigration()
 
     const port = process.env.PORT || 8080
-    const container = createContainer(db)
+    const container = createContainer(db, logger)
     const app = server.createServer(container).listen(port)
 
     // Register global process events and graceful shutdown

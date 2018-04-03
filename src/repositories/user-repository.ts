@@ -1,5 +1,5 @@
-import { MySql } from '../database'
 import { User } from '../entities'
+import { MySql } from '../lib/database'
 
 export class UserRepository {
   private readonly TABLE: string = 'USER'

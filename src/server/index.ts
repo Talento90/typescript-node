@@ -1,7 +1,6 @@
 import { ErrorCallback, retry } from 'async'
 import { Server } from 'http'
 import * as Koa from 'koa'
-import * as bodyParser from 'koa-bodyparser'
 import * as helmet from 'koa-helmet'
 import { ServiceContainer } from '../container'
 import * as health from './health'
@@ -12,7 +11,6 @@ export function createServer(container: ServiceContainer): Koa {
 
   // Register Middlewares
   app.use(helmet())
-  app.use(bodyParser())
 
   // Register routes
   health.init(app)

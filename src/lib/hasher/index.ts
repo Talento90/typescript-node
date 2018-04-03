@@ -10,10 +10,10 @@ export interface HashPassword {
   salt: string
 }
 
-class BasicHasher implements Hasher {
+export class BCryptHasher implements Hasher {
   public async hashPassword(password: string): Promise<HashPassword> {
     const salt = ''
-    const hash = await bcrypt.hash('', salt)
+    const hash = await bcrypt.hash(password, salt)
 
     return { hash, salt }
   }

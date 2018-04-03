@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken'
-import { User } from '../entities'
-import { UserManager } from '../managers'
+import { User } from '../../entities'
+import { UserRepository } from '../../repositories'
 
 export interface AuthUser {
   id: number
@@ -19,24 +19,26 @@ export interface Authenticator {
 }
 
 export class JWTAuthenticator implements Authenticator {
-  private userManager: UserManager
+  private userRepo: UserRepository
   private secret: string
 
-  constructor(userManager: UserManager) {
-    this.userManager = userManager
+  constructor(userRepo: UserRepository) {
+    this.userRepo = userRepo
     this.secret = process.env.SECRET_KEY || 'secret'
   }
 
-  public validate(token: string): Promise<AuthUser> {
+  public async validate(token: string): Promise<AuthUser> {
     try {
-      const decode = jwt.verify(token, this.secret)
+      const decode: any = jwt.verify(token, this.secret)
+      const user = await this.userRepo.find(decode.email)
 
-      return Promise.resolve({
-        id: 1,
-        email: '',
-        role: Role.user
-      })
+      return {
+        id: user.id,
+        email: user.email,
+        role: user.role as Role
+      }
     } catch (err) {
+      // Throw correct error
       throw err
     }
   }
