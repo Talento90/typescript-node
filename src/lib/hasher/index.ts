@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt'
+import * as bcrypt from 'bcryptjs'
 
 export interface Hasher {
   hashPassword(password: string): Promise<HashPassword>

@@ -21,7 +21,7 @@ export function init(server: Koa, container: ServiceContainer) {
     '/',
     bodyParser(),
     middleware.validate(createUserModel),
-    controller.create.bind(this)
+    controller.create.bind(controller)
   )
 
   router.get(

@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "async": "^2.6.0",
-    "bcrypt": "^1.0.3",
+    "bcryptjs": "^2.4.3",
     "joi": "^13.1.2",
     "jsonwebtoken": "^8.2.0",
     "knex": "^0.14.4",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@types/async": "^2.0.48",
-    "@types/bcrypt": "^1.0.0",
+    "@types/bcryptjs": "^2.4.1",
     "@types/chai": "^4.1.2",
     "@types/joi": "^13.0.7",
     "@types/jsonwebtoken": "^7.2.6",

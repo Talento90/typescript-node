@@ -12,7 +12,7 @@ export class UserController {
   }
 
   public async create(ctx: Context) {
-    const userDto: CreateUser = ctx.body
+    const userDto: CreateUser = ctx.request.body
     const newUser = await this.manager.create(userDto as User)
 
     ctx.body = new UserModel(newUser)

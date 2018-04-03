@@ -9,7 +9,7 @@ import { TaskRepository, UserRepository } from '../../src/repositories'
 import { closeServer, createServer } from '../../src/server'
 
 const mysqlConfig: Configuration = {
-  database: 'task-manager-test',
+  database: 'task-manager',
   host: 'mysql',
   port: 3306,
   user: 'root',
