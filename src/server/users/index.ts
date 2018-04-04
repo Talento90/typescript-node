@@ -7,7 +7,7 @@ import { Role } from '../../lib/authentication'
 import { UserManager } from '../../managers'
 import * as middleware from '../middlewares'
 import { UserController } from './controller'
-import { createUserModel } from './model'
+import * as validators from './validators'
 
 export function init(server: Koa, container: ServiceContainer) {
   const router = new Router({ prefix: '/api/v1/users' })
@@ -20,8 +20,15 @@ export function init(server: Koa, container: ServiceContainer) {
   router.post(
     '/',
     bodyParser(),
-    middleware.validate(createUserModel),
+    middleware.validate({ request: { body: validators.createUser } }),
     controller.create.bind(controller)
+  )
+
+  router.post(
+    '/login',
+    bodyParser(),
+    middleware.validate({ request: { body: validators.login } }),
+    controller.login.bind(controller)
   )
 
   router.get(
@@ -30,7 +37,7 @@ export function init(server: Koa, container: ServiceContainer) {
       Role.user,
       Role.admin
     ]),
-    controller.get.bind(this)
+    controller.get.bind(controller)
   )
 
   server.use(router.routes())

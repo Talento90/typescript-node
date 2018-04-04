@@ -15,7 +15,7 @@ export enum Role {
 
 export interface Authenticator {
   validate(token: string): Promise<AuthUser>
-  authenticate(user: User)
+  authenticate(user: User): string
 }
 
 export class JWTAuthenticator implements Authenticator {
@@ -44,8 +44,12 @@ export class JWTAuthenticator implements Authenticator {
   }
 
   public authenticate(user: User): string {
-    return jwt.sign({ id: user.id, role: user.role }, this.secret, {
-      expiresIn: 60 * 60
-    })
+    return jwt.sign(
+      { id: user.id, email: user.email, role: user.role },
+      this.secret,
+      {
+        expiresIn: 60 * 60
+      }
+    )
   }
 }

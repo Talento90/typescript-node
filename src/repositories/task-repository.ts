@@ -2,7 +2,7 @@ import { Task } from '../entities'
 import { MySql } from '../lib/database'
 
 export class TaskRepository {
-  private readonly TABLE: string = 'tasks'
+  private readonly TABLE: string = 'task'
   private db: MySql
 
   constructor(db: MySql) {

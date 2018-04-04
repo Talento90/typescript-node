@@ -25,12 +25,13 @@ export function createContainer(db: MySql, logger: Logger): ServiceContainer {
   const taskRepo = new TaskRepository(db)
   const userRepo = new UserRepository(db)
   const hasher = new BCryptHasher()
+  const authenticator = new JWTAuthenticator(userRepo)
 
   return {
     logger,
     lib: {
       hasher,
-      authenticator: new JWTAuthenticator(userRepo)
+      authenticator
     },
     repositories: {
       task: taskRepo,
@@ -38,7 +39,7 @@ export function createContainer(db: MySql, logger: Logger): ServiceContainer {
     },
     managers: {
       task: new TaskManager(taskRepo),
-      user: new UserManager(userRepo, hasher)
+      user: new UserManager(userRepo, hasher, authenticator)
     }
   }
 }

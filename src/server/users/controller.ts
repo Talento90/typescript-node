@@ -19,6 +19,15 @@ export class UserController {
     ctx.status = 201
   }
 
+  public async login(ctx: Context) {
+    ctx.body = {
+      token: await this.manager.login(
+        ctx.request.body.email,
+        ctx.request.body.password
+      )
+    }
+  }
+
   public async update(ctx: Context) {
     const userDto = ctx.body
 

@@ -3,9 +3,23 @@ import { Context } from 'koa'
 import * as bodyParser from 'koa-bodyparser'
 import { IMiddleware } from 'koa-router'
 
-export function validate(schema: Joi.ObjectSchema): IMiddleware {
+export interface SchemaMap {
+  params?: { [key: string]: Joi.SchemaLike }
+
+  request?: {
+    body?: { [key: string]: Joi.SchemaLike } | Joi.ArraySchema
+    headers?: { [key: string]: Joi.SchemaLike }
+  }
+
+  response?: {
+    body?: { [key: string]: Joi.SchemaLike } | Joi.ArraySchema
+    headers?: { [key: string]: Joi.SchemaLike }
+  }
+}
+
+export function validate(schema: SchemaMap): IMiddleware {
   return async (ctx: Context, next: () => Promise<any>) => {
-    const valResult = Joi.validate(ctx.request.body, schema, {
+    const valResult = Joi.validate(ctx, schema, {
       allowUnknown: true,
       abortEarly: false
     })

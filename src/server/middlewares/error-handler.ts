@@ -6,5 +6,7 @@ export async function errorHandler(ctx: Context, next: () => Promise<any>) {
   } catch (e) {
     // TODO: sanitize error
     console.log(e)
+
+    throw e
   }
 }

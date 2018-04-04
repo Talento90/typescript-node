@@ -1,4 +1,3 @@
-import * as Joi from 'joi'
 import { User } from '../../entities'
 
 export interface CreateUser {
@@ -7,18 +6,6 @@ export interface CreateUser {
   firstName: string
   lastName: string
 }
-
-export const createUserModel = Joi.object().keys({
-  email: Joi.string()
-    .email()
-    .trim()
-    .required(),
-  password: Joi.string()
-    .trim()
-    .required(),
-  firstName: Joi.string().required(),
-  lastName: Joi.string().required()
-})
 
 export class UserModel {
   public id: number

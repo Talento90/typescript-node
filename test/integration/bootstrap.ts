@@ -21,12 +21,13 @@ function createTestServer(logger: pino.Logger, db: MySql): Koa {
   const taskRepo = new TaskRepository(db)
   const userRepo = new UserRepository(db)
   const hasher = new BCryptHasher()
+  const authenticator = new JWTAuthenticator(userRepo)
 
   const container: ServiceContainer = {
     logger,
     lib: {
       hasher,
-      authenticator: new JWTAuthenticator(userRepo)
+      authenticator
     },
     repositories: {
       task: taskRepo,
@@ -34,7 +35,7 @@ function createTestServer(logger: pino.Logger, db: MySql): Koa {
     },
     managers: {
       task: new TaskManager(taskRepo),
-      user: new UserManager(userRepo, hasher)
+      user: new UserManager(userRepo, hasher, authenticator)
     }
   }
 
