@@ -12,6 +12,11 @@ export const createUser: Joi.SchemaMap = {
   lastName: Joi.string().required()
 }
 
+export const updateUser: Joi.SchemaMap = {
+  firstName: Joi.string().required(),
+  lastName: Joi.string().required()
+}
+
 export const login: Joi.SchemaMap = {
   email: Joi.string()
     .email()

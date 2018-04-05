@@ -29,12 +29,24 @@ export class UserController {
   }
 
   public async update(ctx: Context) {
-    const userDto = ctx.body
+    const userDto = ctx.request.body
+    const user = await this.manager.findByEmail(ctx.state.user.email)
 
-    const newUser = await this.manager.create(userDto)
+    user.firstName = userDto.firstName
+    user.lastName = userDto.lastName
 
-    ctx.body = newUser
+    const updatedUser = await this.manager.update(user)
+
+    ctx.body = new UserModel(updatedUser)
     ctx.status = 200
+  }
+
+  public async changePassword(ctx: Context) {
+    const newPassword = ctx.request.body.password
+
+    await this.manager.changePassword(ctx.state.user.email, newPassword)
+
+    ctx.status = 204
   }
 
   public async get(ctx: Context) {

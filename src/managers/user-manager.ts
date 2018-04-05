@@ -36,6 +36,15 @@ export class UserManager {
     return this.repo.update(user)
   }
 
+  public async changePassword(
+    email: string,
+    newPassword: string
+  ): Promise<void> {
+    const hashPassword = await this.hasher.hashPassword(newPassword)
+
+    return this.repo.changePassword(email, newPassword)
+  }
+
   public async findByEmail(email: string): Promise<User> {
     return this.repo.find(email)
   }

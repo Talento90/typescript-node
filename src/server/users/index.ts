@@ -31,6 +31,28 @@ export function init(server: Koa, container: ServiceContainer) {
     controller.login.bind(controller)
   )
 
+  router.put(
+    '/',
+    bodyParser(),
+    middleware.validate({ request: { body: validators.login } }),
+    controller.update.bind(controller)
+  )
+
+  router.put(
+    '/password',
+    bodyParser(),
+    middleware.validate({
+      request: {
+        body: {
+          password: Joi.string()
+            .trim()
+            .required()
+        }
+      }
+    }),
+    controller.changePassword.bind(controller)
+  )
+
   router.get(
     '/me',
     middleware.authentication(container.lib.authenticator, [

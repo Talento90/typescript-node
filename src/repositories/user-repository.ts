@@ -35,10 +35,25 @@ export class UserRepository {
     const conn = await this.db.getConnection()
     const result = await conn.table(this.TABLE).update({
       first_name: user.firstName,
-      last_name: user.lastName
+      last_name: user.lastName,
+      password: user.password
     })
 
     return user
+  }
+
+  public async changePassword(
+    email: string,
+    newPassword: string
+  ): Promise<void> {
+    const conn = await this.db.getConnection()
+    const result = await conn
+      .table(this.TABLE)
+      .update({
+        password: newPassword,
+        updated: new Date()
+      })
+      .where('email', email)
   }
 
   public async find(email: string): Promise<User> {
