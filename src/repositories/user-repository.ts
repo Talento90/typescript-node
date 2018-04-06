@@ -9,6 +9,16 @@ export class UserRepository {
     this.db = db
   }
 
+  public async find(email: string): Promise<User> {
+    const conn = await this.db.getConnection()
+    const row = await conn
+      .table(this.TABLE)
+      .where({ email })
+      .first()
+
+    return this.transform(row)
+  }
+
   public async insert(user: User): Promise<User> {
     user.created = new Date()
     user.updated = new Date()
@@ -54,16 +64,6 @@ export class UserRepository {
         updated: new Date()
       })
       .where('email', email)
-  }
-
-  public async find(email: string): Promise<User> {
-    const conn = await this.db.getConnection()
-    const result = await conn
-      .table(this.TABLE)
-      .where({ email })
-      .first()
-
-    return this.transform(result)
   }
 
   private transform(row: any): User {

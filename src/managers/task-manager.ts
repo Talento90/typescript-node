@@ -8,7 +8,19 @@ export class TaskManager {
     this.repo = repo
   }
 
-  public insert(task: Task): Promise<Task> {
+  public find(id: number): Promise<Task> {
+    return this.repo.find(id)
+  }
+
+  public async findUserTasks(
+    email: string,
+    limit: number,
+    offset: number
+  ): Promise<Task[]> {
+    return this.repo.findByUser(email, limit, offset)
+  }
+
+  public create(task: Task): Promise<Task> {
     return this.repo.insert(task)
   }
 
@@ -16,11 +28,7 @@ export class TaskManager {
     return this.repo.update(task)
   }
 
-  public delete(taskId: number): Promise<void> {
-    return this.repo.delete(taskId)
-  }
-
-  public async findUserTasks(userId: number): Promise<Task[]> {
-    return this.repo.findByUser(userId)
+  public delete(email: string, taskId: number): Promise<void> {
+    return this.repo.delete(email, taskId)
   }
 }

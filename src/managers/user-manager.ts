@@ -14,6 +14,10 @@ export class UserManager {
     this.auth = auth
   }
 
+  public async findByEmail(email: string): Promise<User> {
+    return this.repo.find(email)
+  }
+
   public async create(user: User): Promise<User> {
     const hashPassword = await this.hasher.hashPassword(user.password)
 
@@ -43,9 +47,5 @@ export class UserManager {
     const hashPassword = await this.hasher.hashPassword(newPassword)
 
     return this.repo.changePassword(email, newPassword)
-  }
-
-  public async findByEmail(email: string): Promise<User> {
-    return this.repo.find(email)
   }
 }

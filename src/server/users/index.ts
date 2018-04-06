@@ -17,6 +17,15 @@ export function init(server: Koa, container: ServiceContainer) {
 
   const controller = new UserController(container.managers.user)
 
+  router.get(
+    '/me',
+    middleware.authentication(container.lib.authenticator, [
+      Role.user,
+      Role.admin
+    ]),
+    controller.get.bind(controller)
+  )
+
   router.post(
     '/',
     bodyParser(),
@@ -51,15 +60,6 @@ export function init(server: Koa, container: ServiceContainer) {
       }
     }),
     controller.changePassword.bind(controller)
-  )
-
-  router.get(
-    '/me',
-    middleware.authentication(container.lib.authenticator, [
-      Role.user,
-      Role.admin
-    ]),
-    controller.get.bind(controller)
   )
 
   server.use(router.routes())
