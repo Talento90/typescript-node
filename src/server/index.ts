@@ -4,6 +4,8 @@ import * as Koa from 'koa'
 import * as helmet from 'koa-helmet'
 import { ServiceContainer } from '../container'
 import * as health from './health'
+import * as middlewares from './middlewares'
+import * as task from './tasks'
 import * as user from './users'
 
 export function createServer(container: ServiceContainer): Koa {
@@ -11,10 +13,14 @@ export function createServer(container: ServiceContainer): Koa {
 
   // Register Middlewares
   app.use(helmet())
+  app.use(middlewares.responseTime)
+  app.use(middlewares.logRequest(container.logger))
+  app.use(middlewares.errorHandler(container.logger))
 
   // Register routes
   health.init(app)
   user.init(app, container)
+  task.init(app, container)
 
   return app
 }

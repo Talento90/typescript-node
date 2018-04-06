@@ -2,7 +2,7 @@ import { Context } from 'koa'
 import { Task } from '../../entities'
 import { AuthUser } from '../../lib/authentication'
 import { TaskManager } from '../../managers'
-import { CreateTask, TaskModel } from './model'
+import { TaskModel } from './model'
 
 export class TaskController {
   private manager: TaskManager
@@ -12,7 +12,8 @@ export class TaskController {
   }
 
   public async get(ctx: Context) {
-    const task = await this.manager.find(ctx.params.id)
+    const authUser: AuthUser = ctx.state.user
+    const task = await this.manager.find(authUser.id, ctx.params.id)
 
     ctx.body = new TaskModel(task)
     ctx.status = 200
@@ -21,20 +22,20 @@ export class TaskController {
   public async getAll(ctx: Context) {
     const authUser: AuthUser = ctx.state.user
     const limit = isNaN(ctx.query.limit) ? 10 : parseInt(ctx.query.limit, 10)
-    const offset = isNaN(ctx.query.offset) ? 10 : parseInt(ctx.query.offset, 10)
-    const tasks = await this.manager.findUserTasks(
-      authUser.email,
-      limit,
-      offset
-    )
+    const offset = isNaN(ctx.query.offset) ? 0 : parseInt(ctx.query.offset, 10)
+    const tasks = await this.manager.findUserTasks(authUser.id, limit, offset)
 
     ctx.body = tasks.map((t: Task) => new TaskModel(t))
     ctx.status = 200
   }
 
   public async create(ctx: Context) {
-    const taskDto: CreateTask = ctx.request.body
-    const newTask = await this.manager.create(taskDto as Task)
+    const authUser: AuthUser = ctx.state.user
+    const task: Task = ctx.request.body
+
+    task.userId = authUser.id
+
+    const newTask = await this.manager.create(task)
 
     ctx.body = new TaskModel(newTask)
     ctx.status = 201
@@ -42,7 +43,8 @@ export class TaskController {
 
   public async update(ctx: Context) {
     const taskDto = ctx.request.body
-    const task = await this.manager.find(ctx.params.id)
+    const authUser: AuthUser = ctx.state.user
+    const task = await this.manager.find(authUser.id, ctx.params.id)
 
     task.name = taskDto.name
     task.description = taskDto.description
@@ -58,7 +60,7 @@ export class TaskController {
     const authUser: AuthUser = ctx.state.user
     const id: number = ctx.params.id
 
-    await this.manager.delete(authUser.email, id)
+    await this.manager.delete(authUser.id, id)
 
     ctx.status = 204
   }

@@ -8,16 +8,16 @@ export class TaskManager {
     this.repo = repo
   }
 
-  public find(id: number): Promise<Task> {
-    return this.repo.find(id)
+  public find(userId: number, id: number): Promise<Task> {
+    return this.repo.find(userId, id)
   }
 
   public async findUserTasks(
-    email: string,
+    userId: number,
     limit: number,
     offset: number
   ): Promise<Task[]> {
-    return this.repo.findByUser(email, limit, offset)
+    return this.repo.findByUser(userId, limit, offset)
   }
 
   public create(task: Task): Promise<Task> {
@@ -28,7 +28,7 @@ export class TaskManager {
     return this.repo.update(task)
   }
 
-  public delete(email: string, taskId: number): Promise<void> {
-    return this.repo.delete(email, taskId)
+  public delete(userId: number, taskId: number): Promise<void> {
+    return this.repo.delete(userId, taskId)
   }
 }

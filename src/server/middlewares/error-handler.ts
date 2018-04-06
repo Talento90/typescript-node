@@ -1,4 +1,6 @@
 import { Context } from 'koa'
+import { IMiddleware } from 'koa-router'
+import { Logger } from 'pino'
 import { AppError } from '../../errors'
 
 const httpCodes = {
@@ -9,16 +11,20 @@ const httpCodes = {
   30002: 403
 }
 
-export async function errorHandler(ctx: Context, next: () => Promise<any>) {
-  try {
-    await next()
-  } catch (err) {
-    if (err instanceof AppError) {
-      ctx.body = err
-      ctx.status = httpCodes[err.code] ? httpCodes[err.code] : 500
-    } else {
-      ctx.body = new AppError(9, 'Internal Error Server')
-      ctx.status = 500
+export function errorHandler(logger: Logger): IMiddleware {
+  return async (ctx: Context, next: () => Promise<any>) => {
+    try {
+      await next()
+    } catch (err) {
+      logger.error('Error Handler:', err)
+
+      if (err instanceof AppError) {
+        ctx.body = err.toModel()
+        ctx.status = httpCodes[err.code] ? httpCodes[err.code] : 500
+      } else {
+        ctx.body = new AppError(10000, 'Internal Error Server')
+        ctx.status = 500
+      }
     }
   }
 }

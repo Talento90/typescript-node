@@ -17,7 +17,7 @@ export function logRequest(logger: Logger): IMiddleware {
     }
 
     if (ctx.status >= 400) {
-      logger.error(message, logData)
+      logger.error(message, logData, ctx.body)
     } else {
       logger.info(message, logData)
     }

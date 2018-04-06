@@ -21,7 +21,7 @@ export class UserController {
 
   public async login(ctx: Context) {
     ctx.body = {
-      token: await this.manager.login(
+      accessToken: await this.manager.login(
         ctx.request.body.email,
         ctx.request.body.password
       )

@@ -11,10 +11,6 @@ import * as validators from './validators'
 
 export function init(server: Koa, container: ServiceContainer) {
   const router = new Router({ prefix: '/api/v1/tasks' })
-
-  router.use(middleware.logRequest(container.logger))
-  router.use(middleware.errorHandler)
-
   const controller = new TaskController(container.managers.task)
 
   router.get(
@@ -38,6 +34,10 @@ export function init(server: Koa, container: ServiceContainer) {
   router.post(
     '/',
     bodyParser(),
+    middleware.authentication(container.lib.authenticator, [
+      Role.user,
+      Role.admin
+    ]),
     middleware.validate({ request: { body: validators.task } }),
     controller.create.bind(controller)
   )
@@ -45,6 +45,10 @@ export function init(server: Koa, container: ServiceContainer) {
   router.put(
     '/:id',
     bodyParser(),
+    middleware.authentication(container.lib.authenticator, [
+      Role.user,
+      Role.admin
+    ]),
     middleware.validate({
       params: { id: Joi.number().required() },
       request: {
@@ -55,7 +59,11 @@ export function init(server: Koa, container: ServiceContainer) {
   )
 
   router.delete(
-    '/id',
+    '/:id',
+    middleware.authentication(container.lib.authenticator, [
+      Role.user,
+      Role.admin
+    ]),
     middleware.validate({ params: { id: Joi.number().required() } }),
     controller.delete.bind(controller)
   )

@@ -1,5 +1,6 @@
 import * as jwt from 'jsonwebtoken'
 import { User } from '../../entities'
+import { UnauthorizedError } from '../../errors'
 import { UserRepository } from '../../repositories'
 
 export interface AuthUser {
@@ -38,8 +39,7 @@ export class JWTAuthenticator implements Authenticator {
         role: user.role as Role
       }
     } catch (err) {
-      // Throw correct error
-      throw err
+      throw new UnauthorizedError(err)
     }
   }
 

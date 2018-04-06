@@ -1,4 +1,5 @@
 import { Task } from '../entities'
+import { NotFoundError } from '../errors'
 import { MySql } from '../lib/database'
 
 export class TaskRepository {
@@ -9,19 +10,23 @@ export class TaskRepository {
     this.db = db
   }
 
-  public async find(id: number): Promise<Task> {
+  public async find(userId: number, id: number): Promise<Task> {
     const conn = await this.db.getConnection()
     const row = await conn
       .select()
       .from(this.TABLE)
-      .where({ id })
+      .where({ id, user_id: userId })
       .first()
+
+    if (!row) {
+      throw new NotFoundError('Task does not exist')
+    }
 
     return this.transform(row)
   }
 
   public async findByUser(
-    email: string,
+    userId: number,
     limit: number,
     offset: number
   ): Promise<Task[]> {
@@ -29,7 +34,7 @@ export class TaskRepository {
     const results = await conn
       .select()
       .from(this.TABLE)
-      .where({ email })
+      .where({ user_id: userId })
       .orderBy('updated', 'DESC')
       .offset(offset)
       .limit(limit)
@@ -42,9 +47,16 @@ export class TaskRepository {
     task.updated = new Date()
 
     const conn = await this.db.getConnection()
-    const result = await conn.table(this.TABLE).insert(task)
+    const result = await conn.table(this.TABLE).insert({
+      name: task.name,
+      description: task.name,
+      done: task.done,
+      created: task.created,
+      updated: task.updated,
+      user_id: task.userId
+    })
 
-    task.id = result[0].insertId
+    task.id = result[0]
 
     return task
   }
@@ -53,23 +65,25 @@ export class TaskRepository {
     task.updated = new Date()
 
     const conn = await this.db.getConnection()
-    const result = await conn.table(this.TABLE).update({
-      name: task.name,
-      description: task.description,
-      done: task.done
-    })
+    const result = await conn
+      .table(this.TABLE)
+      .update({
+        name: task.name,
+        description: task.description,
+        done: task.done
+      })
+      .where({ user_id: task.userId, id: task.id })
 
     return task
   }
 
-  public async delete(email: string, taskId: number): Promise<void> {
+  public async delete(userId: number, taskId: number): Promise<void> {
     const conn = await this.db.getConnection()
 
     await conn
       .from(this.TABLE)
       .delete()
-      .where({ id: taskId })
-      .andWhere({ email })
+      .where({ id: taskId, user_id: userId })
   }
 
   private transform(row: any): Task {
@@ -78,7 +92,7 @@ export class TaskRepository {
       name: row.name,
       description: row.description,
       userId: row.user_id,
-      done: row.done,
+      done: row.done === 1,
       created: row.created,
       updated: row.updated
     }

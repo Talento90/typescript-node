@@ -1,4 +1,5 @@
 import { User } from '../entities'
+import { ValidationError } from '../errors'
 import { Authenticator } from '../lib/authentication'
 import { Hasher } from '../lib/hasher'
 import { UserRepository } from '../repositories'
@@ -29,11 +30,11 @@ export class UserManager {
   public async login(email: string, password: string): Promise<string> {
     const user = await this.repo.find(email)
 
-    if (this.hasher.verifyPassword(password, user.password)) {
+    if (await this.hasher.verifyPassword(password, user.password)) {
       return this.auth.authenticate(user)
     }
 
-    throw new Error('Wrong credentials')
+    throw new ValidationError('Wrong credentials')
   }
 
   public update(user: User): Promise<User> {
@@ -46,6 +47,6 @@ export class UserManager {
   ): Promise<void> {
     const hashPassword = await this.hasher.hashPassword(newPassword)
 
-    return this.repo.changePassword(email, newPassword)
+    return this.repo.changePassword(email, hashPassword)
   }
 }

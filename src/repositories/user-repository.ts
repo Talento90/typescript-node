@@ -1,4 +1,5 @@
 import { User } from '../entities'
+import { NotFoundError, ValidationError } from '../errors'
 import { MySql } from '../lib/database'
 
 export class UserRepository {
@@ -16,6 +17,10 @@ export class UserRepository {
       .where({ email })
       .first()
 
+    if (!row) {
+      throw new NotFoundError('User does not exist')
+    }
+
     return this.transform(row)
   }
 
@@ -24,19 +29,28 @@ export class UserRepository {
     user.updated = new Date()
 
     const conn = await this.db.getConnection()
-    const result = await conn.table(this.TABLE).insert({
-      email: user.email,
-      password: user.password,
-      role: user.role,
-      first_name: user.firstName,
-      last_name: user.lastName,
-      created: user.created,
-      updated: user.updated
-    })
 
-    user.id = result[0].insertId
+    try {
+      const result = await conn.table(this.TABLE).insert({
+        email: user.email,
+        password: user.password,
+        role: user.role,
+        first_name: user.firstName,
+        last_name: user.lastName,
+        created: user.created,
+        updated: user.updated
+      })
 
-    return user
+      user.id = result[0]
+
+      return user
+    } catch (err) {
+      if (err.code === 'ER_DUP_ENTRY') {
+        throw new ValidationError(`Email ${user.email} already exists`, err)
+      }
+
+      throw err
+    }
   }
 
   public async update(user: User): Promise<User> {
@@ -57,7 +71,8 @@ export class UserRepository {
     newPassword: string
   ): Promise<void> {
     const conn = await this.db.getConnection()
-    const result = await conn
+
+    await conn
       .table(this.TABLE)
       .update({
         password: newPassword,

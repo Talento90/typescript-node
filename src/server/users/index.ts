@@ -11,10 +11,6 @@ import * as validators from './validators'
 
 export function init(server: Koa, container: ServiceContainer) {
   const router = new Router({ prefix: '/api/v1/users' })
-
-  router.use(middleware.logRequest(container.logger))
-  router.use(middleware.errorHandler)
-
   const controller = new UserController(container.managers.user)
 
   router.get(
@@ -43,13 +39,21 @@ export function init(server: Koa, container: ServiceContainer) {
   router.put(
     '/',
     bodyParser(),
-    middleware.validate({ request: { body: validators.login } }),
+    middleware.authentication(container.lib.authenticator, [
+      Role.user,
+      Role.admin
+    ]),
+    middleware.validate({ request: { body: validators.updateUser } }),
     controller.update.bind(controller)
   )
 
   router.put(
     '/password',
     bodyParser(),
+    middleware.authentication(container.lib.authenticator, [
+      Role.user,
+      Role.admin
+    ]),
     middleware.validate({
       request: {
         body: {
