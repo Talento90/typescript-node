@@ -1,38 +1,37 @@
 # typescript-node [![Build Status](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)](https://travis-ci.org/Talento90/typescript-node)
 
-Boilerplate template for node and typescript services.
+TypeBaked is a boilerplate template for building nodejs and typescript services. It supports the following features:
 
-## Deprecated
-Please for an updated version look at this repository: https://github.com/dwyl/hapi-typescript-example
+***Features***
 
+* Language - [TypeScript](https://www.typescriptlang.org/)
+* REST API - [koa2](http://koajs.com/)
+* Graceful Shutdown - [Pattern](https://nemethgergely.com/nodejs-healthcheck-graceful-shutdown/)
+* HealthCheck - [Patern /health](http://microservices.io/patterns/observability/health-check-api.html)
+* SQL Database & Migrations - [knex](http://knexjs.org/)
+* Authentication and Authorization - [JWT Tokens](https://github.com/auth0/node-jsonwebtoken)
+* Validation - [Joi](https://github.com/hapijs/joi)
+* Testing - [Mocha](https://mochajs.org/) [Chai](http://www.chaijs.com/) + [Sinon](http://sinonjs.org/) [Coverage](https://istanbul.js.org/)
+* Code Style - [Prettier](https://prettier.io/)
+* Git Hooks - [Husky](https://github.com/typicode/husky)
 
-**Installation**
+## Installation & Run
 
-* *npm run setup* (install nuget packages & typings)
+* *npm install* - Install dependencies
+* *npm run start* - Start application (It needs a mysql database)
 
-**Run**
+### Running with Docker
 
-* *gulp build* (build ts files)
-* *gulp test* (run mocha tests)
-* *gulp tslint* (run tslint)
-* *gulp watch* (watch ts files)
-* *npm run start* (start the application)
-* *npm run watch* (restart the application when files change)
-* *npm start* (run the application on http://localhost:5000/api/docs)
+* *docker-compose up* (compose and run, it also creates the mysql database)
+* *docker-compose down* (Destroy application and mysql containers)
 
-**Docker**
-* *docker-compose build* (compose images)
-* *docker-compose up* (running containers)
-* *browser: http://localhost:8080/docs* (have fun :)
+## Useful npm commands
 
-**Features**
-
-* *Project Structure - Feature oriented*
-* *Hapijs - REST Api*
-* *Swagger - documentation*
-* *Jwt - authentication*
-* *Mongoose - MongoDb*
-* *nconf - configurations*
-* *Unit Tests - chai + sinon + mocha*
-
-Have fun :)
+* *npm run build* - Transpile TypeScript code
+* *npm run clean* - Remove dist, node_modules, coverage folders
+* *npm run coverage* - Run NYC coverage
+* *npm run lint* - Lint your TypeScript code
+* *npm run start:dev* - Run application in dev mode (debug & watch). Debug mode is running on port 5858 (open `chrome://inspect/#devices`).
+* *npm run test* - Run unit tests
+* *npm run test:integration* - Run integration tests
+* *npm run test:all* - Run Unit and Integration tests
