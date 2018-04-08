@@ -2,14 +2,13 @@ language: node_js
 node_js:
   - "8"
 env:
-  - PORT=8080
-  - DB_HOST=127.0.0.1
-  - DB_PORT=3306
-  - DB_USER=root
+  global:
+    - PORT=8080
+    - DB_HOST=127.0.0.1
+    - DB_PORT=3306
+    - DB_USER=root
 services:
   - mysql
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS task_manager;'
-before_script:
-  - npm install
 script: npm run test:all
