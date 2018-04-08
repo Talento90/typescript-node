@@ -9,7 +9,7 @@ env:
 services:
   - mysql
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS task-manager-test;'
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS task_manager;'
 before_script:
   - npm install
 script: npm run test:all
