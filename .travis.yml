@@ -1,5 +1,15 @@
 language: node_js
 node_js:
   - "8"
+env:
+  - PORT=8080
+  - DB_HOST=127.0.0.1
+  - DB_PORT=3306
+  - DB_USER=root
 services:
-  - mongodb
+  - mysql
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS task-manager-test;'
+before_script:
+  - npm install
+script: npm run test:all

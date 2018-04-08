@@ -93,8 +93,6 @@ export class MySql {
             resolve(db)
           }
 
-          // After the connection succeeds or fails, we clear the promise so that we can
-          // attempt to retry to establish the db connection at a later time if required.
           this.retryDbConnectionPromise = undefined
         }
       )
