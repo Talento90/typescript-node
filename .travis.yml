@@ -11,4 +11,6 @@ services:
   - mysql
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS task_manager;'
+before_script:
+  - npm run start
 script: npm run test:all

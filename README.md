@@ -35,3 +35,12 @@ TypeBaked is a boilerplate template for building nodejs and typescript services.
 * *npm run test* - Run unit tests
 * *npm run test:integration* - Run integration tests
 * *npm run test:all* - Run Unit and Integration tests
+
+
+## Todo
+
+* Unit and Integration Tests
+* Authorization & Authentication Middlewares
+* Cache Middleware cache('url', data) & invalidateCache('url')
+  * set etag and last-modified headers
+* Add location to create

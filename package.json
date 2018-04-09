@@ -20,8 +20,8 @@
     "start": "node dist/src/index.js",
     "start:dev": "tsc-watch --onSuccess 'node --inspect=0.0.0.0:5858 dist/src/index.js'",
     "test": "npm run build && mocha --recursive dist/test/unit/**/*.test.js",
-    "test:integration": "npm run build && mocha --recursive dist/test/integration/**/*.test.js --require dist/test/integration/bootstrap.js",
-    "test:all": "npm run build && mocha --recursive dist/test/**/*.test.js --require dist/test/integration/bootstrap.js"
+    "test:integration": "npm run build && mocha --recursive dist/test/integration/**/*.test.js",
+    "test:all": "npm run build && mocha --recursive dist/test/**/*.test.js"
   },
   "dependencies": {
     "async": "^2.6.0",
