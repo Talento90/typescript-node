@@ -7,8 +7,9 @@ const httpCodes = {
   10000: 500,
   20000: 404,
   30000: 400,
-  30001: 401,
-  30002: 403
+  30001: 400,
+  30002: 401,
+  30003: 403
 }
 
 export function errorHandler(logger: Logger): IMiddleware {

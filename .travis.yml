@@ -10,7 +10,7 @@ env:
 services:
   - mysql
 before_install:
-  - mysql -e 'CREATE DATABASE IF NOT EXISTS task_manager;'
+  - mysql -u root --password="" < db-scripts/create_database.sql
 before_script:
-  - npm run start
+  - npm run build && npm run start
 script: npm run test:all
