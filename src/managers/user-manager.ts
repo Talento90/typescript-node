@@ -43,8 +43,19 @@ export class UserManager {
 
   public async changePassword(
     email: string,
-    newPassword: string
+    newPassword: string,
+    oldPassword: string
   ): Promise<void> {
+    const user = await this.repo.find(email)
+    const validPassword = await this.hasher.verifyPassword(
+      oldPassword,
+      user.password
+    )
+
+    if (!validPassword) {
+      throw new ValidationError('Old password is not correct')
+    }
+
     const hashPassword = await this.hasher.hashPassword(newPassword)
 
     return this.repo.changePassword(email, hashPassword)

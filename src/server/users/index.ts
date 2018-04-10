@@ -56,11 +56,7 @@ export function init(server: Koa, container: ServiceContainer) {
     ]),
     middleware.validate({
       request: {
-        body: {
-          password: Joi.string()
-            .trim()
-            .required()
-        }
+        body: validators.changePassword
       }
     }),
     controller.changePassword.bind(controller)

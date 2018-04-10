@@ -38,7 +38,7 @@ export function init(server: Koa, container: ServiceContainer) {
       Role.user,
       Role.admin
     ]),
-    middleware.validate({ request: { body: validators.task } }),
+    middleware.validate({ request: { body: validators.createTask } }),
     controller.create.bind(controller)
   )
 
@@ -52,7 +52,7 @@ export function init(server: Koa, container: ServiceContainer) {
     middleware.validate({
       params: { id: Joi.number().required() },
       request: {
-        body: validators.task
+        body: validators.updateTask
       }
     }),
     controller.update.bind(controller)

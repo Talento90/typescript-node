@@ -34,6 +34,7 @@ export class TaskController {
     const task: Task = ctx.request.body
 
     task.userId = authUser.id
+    task.done = false
 
     const newTask = await this.manager.create(task)
 

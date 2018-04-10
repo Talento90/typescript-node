@@ -17,6 +17,11 @@ export const updateUser: Joi.SchemaMap = {
   lastName: Joi.string().required()
 }
 
+export const changePassword: Joi.SchemaMap = {
+  oldPassword: Joi.string().required(),
+  newPassword: Joi.string().required()
+}
+
 export const login: Joi.SchemaMap = {
   email: Joi.string()
     .email()

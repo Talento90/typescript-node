@@ -42,9 +42,14 @@ export class UserController {
   }
 
   public async changePassword(ctx: Context) {
-    const newPassword = ctx.request.body.password
+    const newPassword = ctx.request.body.newPassword
+    const oldPassword = ctx.request.body.oldPassword
 
-    await this.manager.changePassword(ctx.state.user.email, newPassword)
+    await this.manager.changePassword(
+      ctx.state.user.email,
+      newPassword,
+      oldPassword
+    )
 
     ctx.status = 204
   }
