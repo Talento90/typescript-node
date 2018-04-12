@@ -1,41 +1,69 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
 import { TaskModel } from '../../../../src/server/tasks/model'
+import { truncateTables } from '../../database-utils'
+import {
+  createTaskTest,
+  createUserTest,
+  getLoginToken,
+  testServer
+} from '../../server-utils'
 
-describe('Create user', () => {
-  it('Should create a task and return 201', async () => {
-    const task = {
-      name: 'dummy@gmail.com',
-      description: 'super',
-      done: false
+describe('GET /api/v1/tasks', () => {
+  let token: string
+
+  before(async () => {
+    await truncateTables(['task', 'user'])
+
+    const user = {
+      email: 'dude@gmail.com',
+      firstName: 'super',
+      lastName: 'mocha',
+      password: 'secret'
     }
 
-    const res = await supertest(100)
-      .post('/api/v1/tasks')
-      .send(task)
-      .expect(201)
-
-    expect(res.body).equals('dummy@gmail.com')
-    expect(res.body).keys([])
+    await createUserTest(user)
+    token = await getLoginToken('dude@gmail.com', 'secret')
   })
 
-  it('Should return 400 when missing body data', async () => {
-    const task = {
-      name: 'dummy@gmail.com'
+  it('Should return a list of tasks', async () => {
+    const task1 = {
+      name: 'Clean Room',
+      description: 'Mom said that I need to clean my room.'
     }
 
-    const res = await supertest(100)
-      .post('/api/v1/tasks')
-      .send(task)
-      .expect(400)
+    const task2 = {
+      name: 'Do Homework',
+      description: 'Math homework.'
+    }
 
-    expect(res.body.code).equals(30001)
-    expect(res.body.fields).eql([])
+    await createTaskTest(task1, token)
+    await createTaskTest(task2, token)
+
+    const res = await supertest(testServer)
+      .get('/api/v1/tasks')
+      .set('Authorization', token)
+      .expect(200)
+
+    expect(res.body.length).equals(2)
+    expect(res.body[0].name).equals('Clean Room')
+    expect(res.body[1].name).equals('Do Homework')
   })
 
-  it('Should return unauthorized when user is not logged in', async () => {
-    const res = await supertest(100)
-      .post('/api/v1/tasks')
+  it('Should return unauthorized when token is not valid', async () => {
+    const res = await supertest(testServer)
+      .get(`/api/v1/tasks`)
+      .set('Authorization', 'wrong token')
       .expect(401)
+
+    expect(res.body.code).equals(30002)
+  })
+
+  it('Should return unauthorized when token is missing', async () => {
+    const res = await supertest(testServer)
+      .get(`/api/v1/tasks`)
+      .expect(401)
+
+    expect(res.body.code).equals(30002)
   })
 })

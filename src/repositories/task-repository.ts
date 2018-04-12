@@ -49,7 +49,7 @@ export class TaskRepository {
     const conn = await this.db.getConnection()
     const result = await conn.table(this.TABLE).insert({
       name: task.name,
-      description: task.name,
+      description: task.description,
       done: task.done,
       created: task.created,
       updated: task.updated,
@@ -80,10 +80,14 @@ export class TaskRepository {
   public async delete(userId: number, taskId: number): Promise<void> {
     const conn = await this.db.getConnection()
 
-    await conn
+    const result = await conn
       .from(this.TABLE)
       .delete()
       .where({ id: taskId, user_id: userId })
+
+    if (result === 0) {
+      throw new NotFoundError('Task does not exist')
+    }
   }
 
   private transform(row: any): Task {

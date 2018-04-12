@@ -1,41 +1,71 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
 import { TaskModel } from '../../../../src/server/tasks/model'
+import { truncateTables } from '../../database-utils'
+import {
+  createTaskTest,
+  createUserTest,
+  getLoginToken,
+  testServer
+} from '../../server-utils'
 
-describe('Create user', () => {
-  it('Should create a task and return 201', async () => {
-    const task = {
-      name: 'dummy@gmail.com',
-      description: 'super',
-      done: false
+describe('DELETE /api/v1/tasks/:id', () => {
+  let token: string
+
+  before(async () => {
+    await truncateTables(['task', 'user'])
+
+    const user = {
+      email: 'dude@gmail.com',
+      firstName: 'super',
+      lastName: 'mocha',
+      password: 'secret'
     }
 
-    const res = await supertest(100)
-      .post('/api/v1/tasks')
-      .send(task)
-      .expect(201)
-
-    expect(res.body).equals('dummy@gmail.com')
-    expect(res.body).keys([])
+    await createUserTest(user)
+    token = await getLoginToken('dude@gmail.com', 'secret')
   })
 
-  it('Should return 400 when missing body data', async () => {
+  it('Should delete a task and return 204', async () => {
     const task = {
-      name: 'dummy@gmail.com'
+      name: 'Do Something',
+      description: 'Some random description'
     }
 
-    const res = await supertest(100)
-      .post('/api/v1/tasks')
-      .send(task)
-      .expect(400)
+    const createdTask = await createTaskTest(task, token)
 
-    expect(res.body.code).equals(30001)
-    expect(res.body.fields).eql([])
+    let res = await supertest(testServer)
+      .delete(`/api/v1/tasks/${createdTask.id}`)
+      .set('Authorization', token)
+      .expect(204)
+
+    res = await supertest(testServer)
+      .get(`/api/v1/tasks/${createdTask.id}`)
+      .set('Authorization', token)
+      .expect(404)
   })
 
-  it('Should return unauthorized when user is not logged in', async () => {
-    const res = await supertest(100)
-      .post('/api/v1/tasks')
+  it('Should return 404 when task does not exist', async () => {
+    await supertest(testServer)
+      .delete(`/api/v1/tasks/1000000`)
+      .set('Authorization', token)
+      .expect(404)
+  })
+
+  it('Should return unauthorized when token is not valid', async () => {
+    const res = await supertest(testServer)
+      .delete(`/api/v1/tasks/1000000`)
+      .set('Authorization', 'wrong token')
       .expect(401)
+
+    expect(res.body.code).equals(30002)
+  })
+
+  it('Should return unauthorized when token is missing', async () => {
+    const res = await supertest(testServer)
+      .delete(`/api/v1/tasks/1000000`)
+      .expect(401)
+
+    expect(res.body.code).equals(30002)
   })
 })

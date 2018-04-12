@@ -1,41 +1,72 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
 import { TaskModel } from '../../../../src/server/tasks/model'
+import { truncateTables } from '../../database-utils'
+import {
+  createTaskTest,
+  createUserTest,
+  getLoginToken,
+  testServer
+} from '../../server-utils'
 
-describe('Create user', () => {
-  it('Should create a task and return 201', async () => {
+describe('GET /api/v1/tasks/:id', () => {
+  let token: string
+
+  before(async () => {
+    await truncateTables(['task', 'user'])
+
+    const user = {
+      email: 'dude@gmail.com',
+      firstName: 'super',
+      lastName: 'mocha',
+      password: 'secret'
+    }
+
+    await createUserTest(user)
+    token = await getLoginToken('dude@gmail.com', 'secret')
+  })
+
+  it('Should return a single task', async () => {
     const task = {
-      name: 'dummy@gmail.com',
-      description: 'super',
+      name: 'Clean Room',
+      description: 'Mom said that I need to clean my room.'
+    }
+
+    const createdTask = await createTaskTest(task, token)
+
+    const res = await supertest(testServer)
+      .get(`/api/v1/tasks/${createdTask.id}`)
+      .set('Authorization', token)
+      .expect(200)
+
+    expect(res.body).includes({
+      name: 'Clean Room',
+      description: 'Mom said that I need to clean my room.',
       done: false
-    }
-
-    const res = await supertest(100)
-      .post('/api/v1/tasks')
-      .send(task)
-      .expect(201)
-
-    expect(res.body).equals('dummy@gmail.com')
-    expect(res.body).keys([])
+    })
   })
 
-  it('Should return 400 when missing body data', async () => {
-    const task = {
-      name: 'dummy@gmail.com'
-    }
-
-    const res = await supertest(100)
-      .post('/api/v1/tasks')
-      .send(task)
-      .expect(400)
-
-    expect(res.body.code).equals(30001)
-    expect(res.body.fields).eql([])
+  it('Should return 404 when task does not exist', async () => {
+    const res = await supertest(testServer)
+      .get(`/api/v1/tasks/111111111`)
+      .set('Authorization', token)
+      .expect(404)
   })
 
-  it('Should return unauthorized when user is not logged in', async () => {
-    const res = await supertest(100)
-      .post('/api/v1/tasks')
+  it('Should return unauthorized when token is not valid', async () => {
+    const res = await supertest(testServer)
+      .get('/api/v1/tasks/1')
+      .set('Authorization', 'wrong token')
       .expect(401)
+
+    expect(res.body.code).equals(30002)
+  })
+
+  it('Should return unauthorized when token is missing', async () => {
+    const res = await supertest(testServer)
+      .get('/api/v1/tasks/1')
+      .expect(401)
+
+    expect(res.body.code).equals(30002)
   })
 })

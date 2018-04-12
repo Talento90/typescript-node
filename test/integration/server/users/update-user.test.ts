@@ -1,9 +1,14 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
-import { createUserTest, getLoginToken, SERVER_URL } from '../../test-utils'
+import { truncateTables } from '../../database-utils'
+import { createUserTest, getLoginToken, testServer } from '../../server-utils'
 
 describe('PUT /api/v1/users', () => {
-  before(async () => {
+  let token: string
+
+  beforeEach(async () => {
+    await truncateTables(['user'])
+
     const user = {
       email: 'dude@gmail.com',
       firstName: 'super',
@@ -12,23 +17,16 @@ describe('PUT /api/v1/users', () => {
     }
 
     await createUserTest(user)
+
+    token = await getLoginToken('dude@gmail.com', 'test')
   })
 
   it('Should update first and last name', async () => {
-    const token = await getLoginToken('dude@gmail.com', 'test')
-    let res = await supertest(SERVER_URL)
+    const res = await supertest(testServer)
       .put('/api/v1/users')
       .set('Authorization', token)
       .send({ firstName: 'dude', lastName: 'test' })
       .expect(200)
-
-    res = await supertest(SERVER_URL)
-      .get('/api/v1/users/me')
-      .set('Authorization', token)
-      .expect(200)
-
-    expect(res.body.firstName).equals('dude')
-    expect(res.body.lastName).equals('test')
 
     expect(res.body).include({
       firstName: 'dude',
@@ -37,9 +35,9 @@ describe('PUT /api/v1/users', () => {
   })
 
   it('Should return 400 when missing lastName data', async () => {
-    const res = await supertest(SERVER_URL)
-      .put('/api/v1/users/password')
-      .set('Authorization', '')
+    const res = await supertest(testServer)
+      .put('/api/v1/users')
+      .set('Authorization', token)
       .send({ firstName: 'dude' })
       .expect(400)
 
@@ -49,8 +47,8 @@ describe('PUT /api/v1/users', () => {
   })
 
   it('Should return unauthorized when token is not valid', async () => {
-    const res = await supertest(SERVER_URL)
-      .put('/api/v1/users/password')
+    const res = await supertest(testServer)
+      .put('/api/v1/users')
       .set('Authorization', 'wrong token')
       .expect(401)
 
@@ -58,8 +56,8 @@ describe('PUT /api/v1/users', () => {
   })
 
   it('Should return unauthorized when token is missing', async () => {
-    const res = await supertest(SERVER_URL)
-      .put('/api/v1/users/password')
+    const res = await supertest(testServer)
+      .put('/api/v1/users')
       .expect(401)
 
     expect(res.body.code).equals(30002)

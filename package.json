@@ -14,14 +14,14 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc",
-    "clean": "rm -rf node_modules coverage dist",
-    "coverage": "nyc --exclude dist/test --reporter=html npm test",
+    "clean": "rm -rf node_modules coverage dist .nyc_output",
+    "coverage": "nyc --exclude dist/test --reporter=html npm run test:all",
     "lint": "tslint 'src/**/*.ts' 'test/**/*.test.ts'",
     "start": "node dist/src/index.js",
     "start:dev": "tsc-watch --onSuccess 'node --inspect=0.0.0.0:5858 dist/src/index.js'",
     "test": "npm run build && mocha --recursive dist/test/unit/**/*.test.js",
-    "test:integration": "npm run build && mocha --recursive dist/test/integration/**/*.test.js",
-    "test:all": "npm run build && mocha --recursive dist/test/**/*.test.js"
+    "test:integration": "npm run build && mocha --exit --recursive dist/test/integration/**/*.test.js",
+    "test:all": "npm run build && mocha --exit --recursive dist/test/integration/**/*.test.js"
   },
   "dependencies": {
     "async": "^2.6.0",

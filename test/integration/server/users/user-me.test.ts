@@ -1,9 +1,12 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
-import { createUserTest, getLoginToken, SERVER_URL } from '../../test-utils'
+import { truncateTables } from '../../database-utils'
+import { createUserTest, getLoginToken, testServer } from '../../server-utils'
 
 describe('GET /api/v1/users/me', () => {
-  before(async () => {
+  beforeEach(async () => {
+    await truncateTables(['user'])
+
     const user = {
       email: 'dude@gmail.com',
       firstName: 'super',
@@ -16,7 +19,7 @@ describe('GET /api/v1/users/me', () => {
 
   it('Should return user information', async () => {
     const token = await getLoginToken('dude@gmail.com', 'test')
-    const res = await supertest(SERVER_URL)
+    const res = await supertest(testServer)
       .get('/api/v1/users/me')
       .set('Authorization', token)
       .expect(200)
@@ -32,7 +35,7 @@ describe('GET /api/v1/users/me', () => {
   })
 
   it('Should return unauthorized when token is not valid', async () => {
-    const res = await supertest(SERVER_URL)
+    const res = await supertest(testServer)
       .get('/api/v1/users/me')
       .set('Authorization', 'wrong token')
       .expect(401)
@@ -41,7 +44,7 @@ describe('GET /api/v1/users/me', () => {
   })
 
   it('Should return unauthorized when token is missing', async () => {
-    const res = await supertest(SERVER_URL)
+    const res = await supertest(testServer)
       .get('/api/v1/users/me')
       .expect(401)
 

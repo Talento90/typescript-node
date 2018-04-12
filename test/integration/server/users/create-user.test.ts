@@ -1,10 +1,14 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
-import { createServer } from '../../../../src/server'
 import { CreateUser } from '../../../../src/server/users/model'
-import { SERVER_URL } from '../../test-utils'
+import { truncateTables } from '../../database-utils'
+import { createUserTest, getLoginToken, testServer } from '../../server-utils'
 
 describe('POST /api/v1/users', () => {
+  beforeEach(async () => {
+    await truncateTables(['user'])
+  })
+
   it('Should create a valid user and return 201', async () => {
     const user: CreateUser = {
       email: 'dummy@gmail.com',
@@ -13,7 +17,7 @@ describe('POST /api/v1/users', () => {
       password: '123123123'
     }
 
-    const res = await supertest(SERVER_URL)
+    const res = await supertest(testServer)
       .post('/api/v1/users')
       .send(user)
       .expect(201)
@@ -21,14 +25,11 @@ describe('POST /api/v1/users', () => {
     expect(res.body.email).equals('dummy@gmail.com')
     expect(res.body.firstName).equals('super')
     expect(res.body.lastName).equals('test')
-    expect(res.body).keys([
-      'id',
-      'email',
-      'firstName',
-      'lastName',
-      'created',
-      'updated'
-    ])
+    expect(res.body).includes({
+      email: 'dummy@gmail.com',
+      firstName: 'super',
+      lastName: 'test'
+    })
   })
 
   it('Should return 400 when duplicated email', async () => {
@@ -39,7 +40,12 @@ describe('POST /api/v1/users', () => {
       password: '123123123'
     }
 
-    const res = await supertest(SERVER_URL)
+    let res = await supertest(testServer)
+      .post('/api/v1/users')
+      .send(user)
+      .expect(201)
+
+    res = await supertest(testServer)
       .post('/api/v1/users')
       .send(user)
       .expect(400)
@@ -57,7 +63,7 @@ describe('POST /api/v1/users', () => {
       lastName: 'test'
     }
 
-    const res = await supertest(SERVER_URL)
+    const res = await supertest(testServer)
       .post('/api/v1/users')
       .send(user)
       .expect(400)

@@ -1,9 +1,12 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
-import { createUserTest, SERVER_URL } from '../../test-utils'
+import { truncateTables } from '../../database-utils'
+import { createUserTest, testServer } from '../../server-utils'
 
 describe('POST /api/v1/users/login', () => {
-  before(async () => {
+  beforeEach(async () => {
+    await truncateTables(['user'])
+
     const user = {
       email: 'dude@gmail.com',
       firstName: 'super',
@@ -15,7 +18,7 @@ describe('POST /api/v1/users/login', () => {
   })
 
   it('Should return a valid token', async () => {
-    const res = await supertest(SERVER_URL)
+    const res = await supertest(testServer)
       .post('/api/v1/users/login')
       .send({ email: 'dude@gmail.com', password: 'test' })
       .expect(200)
@@ -24,7 +27,7 @@ describe('POST /api/v1/users/login', () => {
   })
 
   it('Should return 400 when missing password', async () => {
-    const res = await supertest(SERVER_URL)
+    const res = await supertest(testServer)
       .post('/api/v1/users/login')
       .send({ email: 'dude@mail.com' })
       .expect(400)

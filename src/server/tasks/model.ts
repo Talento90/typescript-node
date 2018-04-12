@@ -1,5 +1,10 @@
 import { Task } from '../../entities'
 
+export interface CreateTask {
+  name: string
+  description: string
+}
+
 export class TaskModel {
   public id?: number
   public name: string
