@@ -11,6 +11,4 @@ services:
   - mysql
 before_install:
   - mysql -u root --password="" < db-scripts/create_database.sql
-before_script:
-  - npm run build && npm run start
 script: npm run test:all
