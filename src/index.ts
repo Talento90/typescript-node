@@ -2,7 +2,8 @@ import { Server } from 'http'
 import * as pino from 'pino'
 import { createContainer } from './container'
 import { MySql } from './lib/database'
-import * as server from './server'
+import { HealthMonitor } from './lib/health'
+import { AppServer, createServer } from './server'
 
 export async function init() {
   const logger = pino()
@@ -23,12 +24,15 @@ export async function init() {
     logger.info('Apply database migration')
     await db.schemaMigration()
 
-    const port = process.env.PORT || 8080
+    const port = Number(process.env.PORT) || 8080
     const container = createContainer(db, logger)
-    const app = server.createServer(container).listen(port)
+    const app = createServer(container)
+    const health = container.health
+
+    app.listen(port)
 
     // Register global process events and graceful shutdown
-    registerProcessEvents(logger, app, db)
+    registerProcessEvents(logger, app, db, health)
 
     logger.info(`Application running on port: ${port}`)
   } catch (e) {
@@ -36,7 +40,12 @@ export async function init() {
   }
 }
 
-function registerProcessEvents(logger: pino.Logger, app: Server, db: MySql) {
+function registerProcessEvents(
+  logger: pino.Logger,
+  app: AppServer,
+  db: MySql,
+  health: HealthMonitor
+) {
   process.on('uncaughtException', (error: Error) => {
     logger.error('UncaughtException', error)
   })
@@ -48,8 +57,10 @@ function registerProcessEvents(logger: pino.Logger, app: Server, db: MySql) {
   process.on('SIGTERM', async () => {
     logger.info('Starting graceful shutdown')
 
+    health.shuttingDown()
+
     let exitCode = 0
-    const shutdown = [server.closeServer(app), db.closeDatabase()]
+    const shutdown = [app.closeServer(), db.closeDatabase()]
 
     for (const s of shutdown) {
       try {

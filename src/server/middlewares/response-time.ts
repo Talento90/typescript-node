@@ -5,5 +5,5 @@ export async function responseTime(ctx: Context, next: () => Promise<any>) {
 
   await next()
 
-  ctx.response.headers['X-Response-Time'] = Date.now() - start
+  ctx.set('X-Response-Time', (Date.now() - start).toString())
 }

@@ -40,6 +40,7 @@ export class TaskController {
 
     ctx.body = new TaskModel(newTask)
     ctx.status = 201
+    ctx.set('location', `/api/v1/tasks/${newTask.id}`)
   }
 
   public async update(ctx: Context) {

@@ -1,14 +1,14 @@
-import { closeServer } from '../../src/server'
 import { database } from './database-utils'
-import { testServer } from './server-utils'
+import { appServer } from './server-utils'
 
-before(async () => {
+before(async function() {
+  this.timeout(5000)
   console.info('Initializing database migration.')
   await database.schemaMigration()
 })
 
 after(async () => {
-  const shutdowns = [closeServer(testServer), database.closeDatabase()]
+  const shutdowns = [appServer.closeServer(), database.closeDatabase()]
 
   console.info('Start cleaning test resources.')
 

@@ -1,27 +1,14 @@
-import * as jwt from 'jsonwebtoken'
 import { Context } from 'koa'
 import { IMiddleware } from 'koa-router'
 import { PermissionError } from '../../errors'
-import { Authenticator, Role } from '../../lib/authentication'
+import { Authenticator } from '../../lib/authentication'
 
-export function authentication(
-  authenticator: Authenticator,
-  roles: Role[]
-): IMiddleware {
+export function authentication(authenticator: Authenticator): IMiddleware {
   return async (ctx: Context, next: () => Promise<any>) => {
     const token = ctx.headers.authorization
+    const user = await authenticator.validate(token)
 
-    try {
-      const user = await authenticator.validate(token)
-
-      if (roles.indexOf(user.role) < 0) {
-        throw new PermissionError()
-      }
-
-      ctx.state.user = user
-      await next()
-    } catch (err) {
-      throw err
-    }
+    ctx.state.user = user
+    await next()
   }
 }

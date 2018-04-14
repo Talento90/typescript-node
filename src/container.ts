@@ -2,10 +2,12 @@ import { Logger } from 'pino'
 import { Authenticator, JWTAuthenticator } from './lib/authentication'
 import { MySql } from './lib/database'
 import { BCryptHasher, Hasher } from './lib/hasher'
+import { HealthMonitor } from './lib/health'
 import { TaskManager, UserManager } from './managers'
 import { TaskRepository, UserRepository } from './repositories'
 
 export interface ServiceContainer {
+  health: HealthMonitor
   logger: Logger
   lib: {
     hasher: Hasher
@@ -26,8 +28,10 @@ export function createContainer(db: MySql, logger: Logger): ServiceContainer {
   const userRepo = new UserRepository(db)
   const hasher = new BCryptHasher()
   const authenticator = new JWTAuthenticator(userRepo)
+  const healthMonitor = new HealthMonitor()
 
   return {
+    health: healthMonitor,
     logger,
     lib: {
       hasher,

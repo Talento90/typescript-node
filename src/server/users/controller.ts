@@ -17,6 +17,7 @@ export class UserController {
 
     ctx.body = new UserModel(newUser)
     ctx.status = 201
+    ctx.set('location', '/api/v1/users/me')
   }
 
   public async login(ctx: Context) {

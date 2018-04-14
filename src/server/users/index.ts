@@ -15,10 +15,8 @@ export function init(server: Koa, container: ServiceContainer) {
 
   router.get(
     '/me',
-    middleware.authentication(container.lib.authenticator, [
-      Role.user,
-      Role.admin
-    ]),
+    middleware.authentication(container.lib.authenticator),
+    middleware.authorization([Role.user, Role.admin]),
     controller.get.bind(controller)
   )
 
@@ -39,10 +37,8 @@ export function init(server: Koa, container: ServiceContainer) {
   router.put(
     '/',
     bodyParser(),
-    middleware.authentication(container.lib.authenticator, [
-      Role.user,
-      Role.admin
-    ]),
+    middleware.authentication(container.lib.authenticator),
+    middleware.authorization([Role.user, Role.admin]),
     middleware.validate({ request: { body: validators.updateUser } }),
     controller.update.bind(controller)
   )
@@ -50,10 +46,8 @@ export function init(server: Koa, container: ServiceContainer) {
   router.put(
     '/password',
     bodyParser(),
-    middleware.authentication(container.lib.authenticator, [
-      Role.user,
-      Role.admin
-    ]),
+    middleware.authentication(container.lib.authenticator),
+    middleware.authorization([Role.user, Role.admin]),
     middleware.validate({
       request: {
         body: validators.changePassword

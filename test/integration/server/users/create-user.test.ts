@@ -22,9 +22,7 @@ describe('POST /api/v1/users', () => {
       .send(user)
       .expect(201)
 
-    expect(res.body.email).equals('dummy@gmail.com')
-    expect(res.body.firstName).equals('super')
-    expect(res.body.lastName).equals('test')
+    expect(res.header.location).equals('/api/v1/users/me')
     expect(res.body).includes({
       email: 'dummy@gmail.com',
       firstName: 'super',

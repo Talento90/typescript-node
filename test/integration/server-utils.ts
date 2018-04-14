@@ -1,16 +1,17 @@
 import * as pino from 'pino'
 import * as supertest from 'supertest'
 import { createContainer } from '../../src/container'
-import { closeServer, createServer } from '../../src/server'
+import { createServer } from '../../src/server'
 import { CreateTask, TaskModel } from '../../src/server/tasks/model'
 import { CreateUser, UserModel } from '../../src/server/users/model'
 import { database } from './database-utils'
 
 const logger = pino({ name: 'test', level: 'silent' })
 const container = createContainer(database, logger)
-const port = process.env.PORT || 8080
+const port = Number(process.env.PORT) || 8080
 
-export const testServer = createServer(container).listen(port)
+export const appServer = createServer(container)
+export const testServer = appServer.listen(port)
 
 export async function createUserTest(user: CreateUser): Promise<UserModel> {
   const res = await supertest(testServer)

@@ -33,6 +33,7 @@ describe('POST /api/v1/tasks', () => {
       .send(task)
       .expect(201)
 
+    expect(res.header.location).equals(`/api/v1/tasks/${res.body.id}`)
     expect(res.body).include({
       name: 'Do homework',
       description: 'Exercise 1 and 2',

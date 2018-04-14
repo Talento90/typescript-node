@@ -15,29 +15,23 @@ export function init(server: Koa, container: ServiceContainer) {
 
   router.get(
     '/:id',
-    middleware.authentication(container.lib.authenticator, [
-      Role.user,
-      Role.admin
-    ]),
+    middleware.authentication(container.lib.authenticator),
+    middleware.authorization([Role.user, Role.admin]),
     controller.get.bind(controller)
   )
 
   router.get(
     '/',
-    middleware.authentication(container.lib.authenticator, [
-      Role.user,
-      Role.admin
-    ]),
+    middleware.authentication(container.lib.authenticator),
+    middleware.authorization([Role.user, Role.admin]),
     controller.getAll.bind(controller)
   )
 
   router.post(
     '/',
     bodyParser(),
-    middleware.authentication(container.lib.authenticator, [
-      Role.user,
-      Role.admin
-    ]),
+    middleware.authentication(container.lib.authenticator),
+    middleware.authorization([Role.user, Role.admin]),
     middleware.validate({ request: { body: validators.createTask } }),
     controller.create.bind(controller)
   )
@@ -45,10 +39,8 @@ export function init(server: Koa, container: ServiceContainer) {
   router.put(
     '/:id',
     bodyParser(),
-    middleware.authentication(container.lib.authenticator, [
-      Role.user,
-      Role.admin
-    ]),
+    middleware.authentication(container.lib.authenticator),
+    middleware.authorization([Role.user, Role.admin]),
     middleware.validate({
       params: { id: Joi.number().required() },
       request: {
@@ -60,10 +52,8 @@ export function init(server: Koa, container: ServiceContainer) {
 
   router.delete(
     '/:id',
-    middleware.authentication(container.lib.authenticator, [
-      Role.user,
-      Role.admin
-    ]),
+    middleware.authentication(container.lib.authenticator),
+    middleware.authorization([Role.user, Role.admin]),
     middleware.validate({ params: { id: Joi.number().required() } }),
     controller.delete.bind(controller)
   )
