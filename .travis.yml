@@ -17,6 +17,7 @@ before_install:
   - mysql -u travis --password="secret" < db-scripts/create_database.sql
 
 install:
+  - npm install
   - npm install -g codecov
 
 script:
