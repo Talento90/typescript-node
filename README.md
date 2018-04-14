@@ -1,6 +1,7 @@
-# typescript-node [![Build Status](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)](https://travis-ci.org/Talento90/typescript-node)
+# typescript-node [![Build Status](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)](https://travis-ci.org/Talento90/typescript-node) [![codecov](https://codecov.io/gh/Talento90/typescript-node/branch/master/graph/badge.svg)](https://codecov.io/gh/Talento90/typescript-node)
 
-TypeBaked is a boilerplate template for building nodejs and typescript services. It supports the following features:
+
+Template for building nodejs and typescript services. The main goal of this boilerplate is to offer a good Developer Experience (eg: debugging, watch and recompile) by providing the following features out of the box:
 
 ***Features***
 
@@ -35,10 +36,3 @@ TypeBaked is a boilerplate template for building nodejs and typescript services.
 * *npm run test* - Run unit tests
 * *npm run test:integration* - Run integration tests
 * *npm run test:all* - Run Unit and Integration tests
-
-
-## Todo
-
-* Unit and Integration Tests
-* Cache Middleware cache('url', data) & invalidateCache('url')
-  * set etag and last-modified headers

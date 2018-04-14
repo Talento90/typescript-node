@@ -16,4 +16,10 @@ before_install:
   - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('secret')"
   - mysql -u travis --password="secret" < db-scripts/create_database.sql
 
-script: npm run test:all
+install:
+  - npm install -g codecov
+
+script:
+  - npm run test:all
+  - ./node_modules/nyc/bin/nyc.js --exclude dist/test --reporter lcovonly npm run test:all
+  - codecov
