@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import * as supertest from 'supertest'
 import { CreateUser } from '../../../../src/server/users/model'
 import { truncateTables } from '../../database-utils'
-import { createUserTest, getLoginToken, testServer } from '../../server-utils'
+import { testServer } from '../../server-utils'
 
 describe('POST /api/v1/users', () => {
   beforeEach(async () => {

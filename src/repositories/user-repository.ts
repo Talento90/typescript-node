@@ -57,7 +57,8 @@ export class UserRepository {
     user.updated = new Date()
 
     const conn = await this.db.getConnection()
-    const result = await conn.table(this.TABLE).update({
+
+    await conn.table(this.TABLE).update({
       first_name: user.firstName,
       last_name: user.lastName,
       password: user.password

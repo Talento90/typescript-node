@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
-import { TaskModel } from '../../../../src/server/tasks/model'
 import { truncateTables } from '../../database-utils'
 import {
   createTaskTest,
@@ -34,12 +33,12 @@ describe('DELETE /api/v1/tasks/:id', () => {
 
     const createdTask = await createTaskTest(task, token)
 
-    let res = await supertest(testServer)
+    await supertest(testServer)
       .delete(`/api/v1/tasks/${createdTask.id}`)
       .set('Authorization', token)
       .expect(204)
 
-    res = await supertest(testServer)
+    await supertest(testServer)
       .get(`/api/v1/tasks/${createdTask.id}`)
       .set('Authorization', token)
       .expect(404)

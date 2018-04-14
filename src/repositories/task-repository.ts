@@ -65,7 +65,8 @@ export class TaskRepository {
     task.updated = new Date()
 
     const conn = await this.db.getConnection()
-    const result = await conn
+
+    await conn
       .table(this.TABLE)
       .update({
         name: task.name,

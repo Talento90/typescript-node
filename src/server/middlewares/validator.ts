@@ -1,6 +1,5 @@
 import * as Joi from 'joi'
 import { Context } from 'koa'
-import * as bodyParser from 'koa-bodyparser'
 import { IMiddleware } from 'koa-router'
 import { FieldValidationError } from '../../errors'
 

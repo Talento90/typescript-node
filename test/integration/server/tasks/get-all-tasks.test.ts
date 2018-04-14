@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
-import { TaskModel } from '../../../../src/server/tasks/model'
 import { truncateTables } from '../../database-utils'
 import {
   createTaskTest,

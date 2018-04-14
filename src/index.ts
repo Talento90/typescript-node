@@ -1,4 +1,3 @@
-import { Server } from 'http'
 import * as pino from 'pino'
 import { createContainer } from './container'
 import { MySql } from './lib/database'

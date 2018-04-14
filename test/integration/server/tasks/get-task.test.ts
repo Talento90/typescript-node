@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
-import { TaskModel } from '../../../../src/server/tasks/model'
 import { truncateTables } from '../../database-utils'
 import {
   createTaskTest,
@@ -47,7 +46,7 @@ describe('GET /api/v1/tasks/:id', () => {
   })
 
   it('Should return 404 when task does not exist', async () => {
-    const res = await supertest(testServer)
+    await supertest(testServer)
       .get(`/api/v1/tasks/111111111`)
       .set('Authorization', token)
       .expect(404)

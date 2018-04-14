@@ -48,7 +48,7 @@ export class FieldValidationError extends AppError {
 
 export class UnauthorizedError extends AppError {
   constructor(error?: Error) {
-    super(30002, 'Unauthorized user')
+    super(30002, 'Unauthorized user', error)
   }
 }
 

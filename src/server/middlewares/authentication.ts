@@ -1,6 +1,5 @@
 import { Context } from 'koa'
 import { IMiddleware } from 'koa-router'
-import { PermissionError } from '../../errors'
 import { Authenticator } from '../../lib/authentication'
 
 export function authentication(authenticator: Authenticator): IMiddleware {

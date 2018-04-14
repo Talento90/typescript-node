@@ -1,6 +1,5 @@
 import { expect } from 'chai'
 import * as supertest from 'supertest'
-import { UserModel } from '../../../../src/server/users/model'
 import { database, setAdminMode, truncateTables } from '../../database-utils'
 import {
   createTaskTest,
