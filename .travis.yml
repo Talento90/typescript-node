@@ -6,9 +6,9 @@ env:
     - PORT=8080
     - DB_HOST=127.0.0.1
     - DB_PORT=3306
-    - DB_USER=root
+    - DB_USER=travis
 services:
   - mysql
 before_install:
-  - mysql -u root --password="" < db-scripts/create_database.sql
+  - mysql -u travis --password="" < db-scripts/create_database.sql
 script: npm run test:all

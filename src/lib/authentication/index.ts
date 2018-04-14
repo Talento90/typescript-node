@@ -31,7 +31,7 @@ export class JWTAuthenticator implements Authenticator {
   public async validate(token: string): Promise<AuthUser> {
     try {
       const decode: any = jwt.verify(token, this.secret)
-      const user = await this.userRepo.find(decode.email)
+      const user = await this.userRepo.findByEmail(decode.email)
 
       return {
         id: user.id,

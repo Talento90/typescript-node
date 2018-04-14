@@ -14,6 +14,7 @@
   ],
   "scripts": {
     "build": "rm -rf dist && tsc",
+    "build:watch": "rm -rf dist && tsc -w",
     "clean": "rm -rf node_modules coverage dist .nyc_output",
     "coverage": "nyc --exclude dist/test --reporter=html npm run test:all",
     "lint": "tslint 'src/**/*.ts' 'test/**/*.test.ts'",

@@ -28,6 +28,20 @@ export class MySql {
     return this.connection
   }
 
+  public async getTransaction(): Promise<knex.Transaction> {
+    const connection = await this.getConnection()
+
+    return new Promise<knex.Transaction>((resolve, reject) => {
+      try {
+        connection.transaction((trx: knex.Transaction) => {
+          resolve(trx)
+        })
+      } catch (err) {
+        reject(err)
+      }
+    })
+  }
+
   public async closeDatabase(): Promise<void> {
     if (this.connection) {
       await this.connection.destroy()

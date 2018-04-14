@@ -62,4 +62,10 @@ export class UserController {
     ctx.body = new UserModel(user)
     ctx.status = 200
   }
+
+  public async delete(ctx: Context) {
+    await this.manager.delete(ctx.params.id)
+
+    ctx.status = 204
+  }
 }

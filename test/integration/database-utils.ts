@@ -1,3 +1,5 @@
+import { Task, User } from '../../src/entities'
+import { Role } from '../../src/lib/authentication'
 import { Configuration, MySql } from '../../src/lib/database'
 
 const testMysqlConfig: Configuration = {
@@ -17,4 +19,12 @@ export async function truncateTables(tables: string[]) {
   for (const table of tables) {
     await conn.raw(`DELETE FROM ${table}`)
   }
+}
+
+export async function setAdminMode(email: string): Promise<void> {
+  const conn = await database.getConnection()
+
+  await conn.table('user').update({
+    role: Role.admin
+  })
 }

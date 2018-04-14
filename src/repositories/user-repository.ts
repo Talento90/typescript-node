@@ -10,7 +10,7 @@ export class UserRepository {
     this.db = db
   }
 
-  public async find(email: string): Promise<User> {
+  public async findByEmail(email: string): Promise<User> {
     const conn = await this.db.getConnection()
     const row = await conn
       .table(this.TABLE)
@@ -79,6 +79,27 @@ export class UserRepository {
         updated: new Date()
       })
       .where('email', email)
+  }
+
+  public async delete(userId: number): Promise<void> {
+    const trx = await this.db.getTransaction()
+
+    try {
+      await trx
+        .from('task')
+        .delete()
+        .where({ user_id: userId })
+
+      await trx
+        .from(this.TABLE)
+        .delete()
+        .where({ id: userId })
+
+      await trx.commit()
+    } catch (error) {
+      trx.rollback(error)
+      throw error
+    }
   }
 
   private transform(row: any): User {

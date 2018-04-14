@@ -56,5 +56,15 @@ export function init(server: Koa, container: ServiceContainer) {
     controller.changePassword.bind(controller)
   )
 
+  router.delete(
+    '/:id',
+    middleware.authentication(container.lib.authenticator),
+    middleware.authorization([Role.admin]),
+    middleware.validate({
+      params: { id: Joi.number().required() }
+    }),
+    controller.delete.bind(controller)
+  )
+
   server.use(router.routes())
 }
