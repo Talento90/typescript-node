@@ -1,14 +1,28 @@
+addons:
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+      - mysql-client
+
 language: node_js
+
 node_js:
   - "8"
+
 env:
   global:
     - PORT=8080
     - DB_HOST=127.0.0.1
     - DB_PORT=3306
-    - DB_USER=travis
-services:
-  - mysql
+    - DB_USER=root
+    - DB_PASSWORD=secret
+
 before_install:
-  - mysql -u travis --password="" < db-scripts/create_database.sql
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('secret') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo mysql_upgrade
+  - sudo service mysql restart
+  - mysql -u root --password="secret" < db-scripts/create_database.sql
+
 script: npm run test:all

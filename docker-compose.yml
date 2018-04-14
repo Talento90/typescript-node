@@ -1,22 +1,22 @@
 version: '2.1'
 services:
-  # app:
-  #   build: .
-  #   command: npm run start:dev
-  #   environment:
-  #     - PORT=8080
-  #     - DB_HOST=mysql
-  #     - DB_PORT=3306
-  #     - DB_USER=root
-  #     - DB_PASSWORD=secret
-  #   ports:
-  #     - "8080:8080"
-  #     - "5858:5858"
-  #   links:
-  #     - mysql
-  #   volumes:
-  #     - .:/app/
-  #   network_mode: bridge
+  app:
+    build: .
+    command: npm run start:dev
+    environment:
+      - PORT=8080
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=secret
+    ports:
+      - "8080:8080"
+      - "5858:5858"
+    links:
+      - mysql
+    volumes:
+      - .:/app/
+    network_mode: bridge
   mysql:
     image: mysql:latest
     environment:
