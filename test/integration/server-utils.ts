@@ -22,6 +22,10 @@ export async function createUserTest(user: CreateUser): Promise<UserModel> {
   return res.body
 }
 
+export function shuttingDown(): void {
+  container.health.shuttingDown()
+}
+
 export async function createTaskTest(
   task: CreateTask,
   token: string
