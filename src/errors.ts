@@ -1,11 +1,11 @@
-export class AppError {
+export class AppError extends Error {
   public code: number
-  public message: string
   public error: Error
 
   constructor(code: number, message: string, error?: Error) {
+    super(message)
+
     this.code = code
-    this.message = message
     this.error = error
   }
 
