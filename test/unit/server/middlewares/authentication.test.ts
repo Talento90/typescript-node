@@ -4,7 +4,7 @@ import { UnauthorizedError } from '../../../../src/errors'
 import { Role } from '../../../../src/lib/authentication'
 import { authentication } from '../../../../src/server/middlewares'
 
-describe.only('authentication', () => {
+describe('authentication', () => {
   const sandbox = sinon.createSandbox()
 
   afterEach(() => {
