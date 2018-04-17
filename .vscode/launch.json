@@ -1,0 +1,35 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Mocha Tests",
+        "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
+        "args": [
+          "${workspaceRoot}/dist/test/**/*.js"
+        ],
+        "internalConsoleOptions": "openOnSessionStart",
+        "remoteRoot": "/app",
+        "outFiles": [
+          "${workspaceRoot}/dist/**/*.js"
+        ]
+      },
+      {
+        "type": "node",
+        "request": "attach",
+        "name": "Docker: Attach to Node",
+        "port": 5858,
+        "address": "localhost",
+        "localRoot": "${workspaceFolder}",
+        "remoteRoot": "/app",
+        "protocol": "inspector",
+        "outFiles": [
+          "${workspaceRoot}/dist/**/*.js"
+        ]
+      }
+    ]
+}

@@ -1,27 +1,12 @@
-FROM mhart/alpine-node:6.9.1
+FROM node:8.10-alpine
 
-MAINTAINER Talento90
-
-# create a specific user to run this container
-RUN adduser -S -D user-app
-
-# add files to container
-ADD . /app
+USER nobody
 
 # specify the working directory
 WORKDIR app
 
-RUN chmod -R 777 .
-
-# build process
-RUN npm install
-RUN npm run build
-RUN npm prune --production
-
-# run the container using a specific user
-USER user-app
-
-EXPOSE 8080
+# expose server and debug port
+EXPOSE 8080 5858
 
 # run application
-CMD ["npm", "start"]
+CMD ["node", "dist/src/index.js"]

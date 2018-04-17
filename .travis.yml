@@ -1,8 +1,25 @@
 language: node_js
 node_js:
-  - "7"
-before_script:
-  - npm install -g typescript
-  - npm install -g gulp
+  - "8"
+env:
+  global:
+    - PORT=8080
+    - DB_HOST=127.0.0.1
+    - DB_PORT=3306
+    - DB_USER=travis
+    - DB_PASSWORD=secret
+
 services:
-  - mongodb
+  - mysql
+
+before_install:
+  - mysql -u root -e "SET PASSWORD FOR 'travis'@'localhost' = PASSWORD('secret')"
+  - mysql -u travis --password="secret" < db-scripts/create_database.sql
+
+install:
+  - npm install
+  - npm install -g codecov
+
+script:
+  - ./node_modules/nyc/bin/nyc.js --exclude dist/test --reporter lcovonly npm run test:all
+  - codecov

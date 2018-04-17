@@ -1,15 +1,29 @@
-version: '2'
+version: '2.1'
 services:
   app:
     build: .
+    command: npm run start:dev
     environment:
       - PORT=8080
-      - MONGO_URL=mongodb:27017
-    ports: 
-      - "8080:8080"
-    links:
-      - mongodb
-  mongodb:
-    image: mongo:latest
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASSWORD=secret
     ports:
-      - "27017:27017"
+      - "8080:8080"
+      - "5858:5858"
+    links:
+      - mysql
+    volumes:
+      - .:/app/
+    network_mode: bridge
+  mysql:
+    image: mysql:latest
+    environment:
+      - MYSQL_DATABASE=task_manager
+      - MYSQL_ROOT_PASSWORD=secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db-scripts:/docker-entrypoint-initdb.d
+    network_mode: bridge

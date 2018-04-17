@@ -1,38 +1,38 @@
-# typescript-node [![Build Status](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)](https://travis-ci.org/Talento90/typescript-node)
-
-Boilerplate template for node and typescript services.
-
-## Deprecated
-Please for an updated version look at this repository: https://github.com/dwyl/hapi-typescript-example
+# typescript-node [![Build Status](https://travis-ci.org/Talento90/typescript-node.svg?branch=master)](https://travis-ci.org/Talento90/typescript-node) [![codecov](https://codecov.io/gh/Talento90/typescript-node/branch/master/graph/badge.svg)](https://codecov.io/gh/Talento90/typescript-node)
 
 
-**Installation**
+Template for building nodejs and typescript services. The main goal of this boilerplate is to offer a good Developer Experience (eg: debugging, watch and recompile) by providing the following features out of the box:
 
-* *npm run setup* (install nuget packages & typings)
+***Features***
 
-**Run**
+* Language - [TypeScript](https://www.typescriptlang.org/)
+* REST API - [koa2](http://koajs.com/)
+* Graceful Shutdown - [Pattern](https://nemethgergely.com/nodejs-healthcheck-graceful-shutdown/)
+* HealthCheck - [Patern /health](http://microservices.io/patterns/observability/health-check-api.html)
+* SQL Database & Migrations - [knex](http://knexjs.org/)
+* Authentication and Authorization - [JWT Tokens](https://github.com/auth0/node-jsonwebtoken)
+* Validation - [Joi](https://github.com/hapijs/joi)
+* Testing - [Mocha](https://mochajs.org/) [Chai](http://www.chaijs.com/) + [Sinon](http://sinonjs.org/) [Coverage](https://istanbul.js.org/)
+* Code Style - [Prettier](https://prettier.io/)
+* Git Hooks - [Husky](https://github.com/typicode/husky)
 
-* *gulp build* (build ts files)
-* *gulp test* (run mocha tests)
-* *gulp tslint* (run tslint)
-* *gulp watch* (watch ts files)
-* *npm run start* (start the application)
-* *npm run watch* (restart the application when files change)
-* *npm start* (run the application on http://localhost:5000/api/docs)
+## Installation & Run
 
-**Docker**
-* *docker-compose build* (compose images)
-* *docker-compose up* (running containers)
-* *browser: http://localhost:8080/docs* (have fun :)
+* *npm install* - Install dependencies
+* *npm run start* - Start application (It needs a mysql database)
 
-**Features**
+### Running with Docker
 
-* *Project Structure - Feature oriented*
-* *Hapijs - REST Api*
-* *Swagger - documentation*
-* *Jwt - authentication*
-* *Mongoose - MongoDb*
-* *nconf - configurations*
-* *Unit Tests - chai + sinon + mocha*
+* *docker-compose up* (compose and run, it also creates the mysql database)
+* *docker-compose down* (Destroy application and mysql containers)
 
-Have fun :)
+## Useful npm commands
+
+* *npm run build* - Transpile TypeScript code
+* *npm run clean* - Remove dist, node_modules, coverage folders
+* *npm run coverage* - Run NYC coverage
+* *npm run lint* - Lint your TypeScript code
+* *npm run start:dev* - Run application in dev mode (debug & watch). Debug mode is running on port 5858 (open `chrome://inspect/#devices`).
+* *npm run test* - Run unit tests
+* *npm run test:integration* - Run integration tests
+* *npm run test:all* - Run Unit and Integration tests
