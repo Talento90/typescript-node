@@ -7,7 +7,7 @@ describe('logRequest', () => {
   const sandbox = sinon.createSandbox()
 
   afterEach(() => {
-    sandbox.reset()
+    sandbox.restore()
   })
 
   it('Should log info level when no errors', async () => {

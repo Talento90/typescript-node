@@ -6,7 +6,7 @@ describe('responseTime', () => {
   const sandbox = sinon.createSandbox()
 
   afterEach(() => {
-    sandbox.reset()
+    sandbox.restore()
   })
 
   it('Should set header x-response-time', async () => {
@@ -16,11 +16,11 @@ describe('responseTime', () => {
       }
     }
 
-    const stub = sinon.stub(ctx, 'set')
+    const spy = sinon.spy(ctx, 'set')
 
     await responseTime(ctx, () => Promise.resolve())
 
-    expect(stub.calledOnce).equals(true)
-    expect(stub.args[0][0]).equals('X-Response-Time')
+    expect(spy.calledOnce).equals(true)
+    expect(spy.args[0][0]).equals('X-Response-Time')
   })
 })
