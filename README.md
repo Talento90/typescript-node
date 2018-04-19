@@ -10,7 +10,7 @@ Template for building nodejs and typescript services. The main goal of this boil
 * Graceful Shutdown - [Pattern](https://nemethgergely.com/nodejs-healthcheck-graceful-shutdown/)
 * HealthCheck - [Pattern /health](http://microservices.io/patterns/observability/health-check-api.html)
 * SQL Database & Migrations - [knex](http://knexjs.org/)
-* Authentication and Authorization - [JWT Tokens](https://github.com/auth0/node-jsonwebtoken)
+* Authentication and Authorization - [JWT](https://github.com/auth0/node-jsonwebtoken)
 * Validation - [Joi](https://github.com/hapijs/joi)
 * Testing - [Mocha](https://mochajs.org/) [Chai](http://www.chaijs.com/) + [Sinon](http://sinonjs.org/) [Coverage](https://istanbul.js.org/)
 * Code Style - [Prettier](https://prettier.io/)
