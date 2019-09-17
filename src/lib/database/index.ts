@@ -76,7 +76,7 @@ export class MySql {
     const db = knex(config)
 
     // Test database connectivity!
-    await db.raw('select 1').timeout(500)
+    await db.raw('select 1')
 
     return db
   }
