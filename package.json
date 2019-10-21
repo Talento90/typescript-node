@@ -29,7 +29,7 @@
     "bcryptjs": "^2.4.3",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
-    "knex": "^0.19.4",
+    "knex": "^0.19.5",
     "koa": "^2.8.1",
     "koa-bodyparser": "^4.2.1",
     "koa-helmet": "^5.1.0",
