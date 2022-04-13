@@ -25,7 +25,7 @@
     "test:all": "npm run build && mocha --exit --recursive dist/test"
   },
   "dependencies": {
-    "async": "^3.1.0",
+    "async": "^3.2.2",
     "bcryptjs": "^2.4.3",
     "joi": "^14.3.1",
     "jsonwebtoken": "^8.5.1",
