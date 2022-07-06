@@ -34,7 +34,7 @@
     "koa-bodyparser": "^4.2.1",
     "koa-helmet": "^5.1.0",
     "koa-router": "^7.4.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "mysql2": "^1.7.0",
     "pino": "^5.13.3"
   },
