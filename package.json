@@ -28,7 +28,7 @@
     "async": "^3.1.0",
     "bcryptjs": "^2.4.3",
     "joi": "^14.3.1",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "knex": "^0.19.5",
     "koa": "^2.8.1",
     "koa-bodyparser": "^4.2.1",
