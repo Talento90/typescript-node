@@ -30,7 +30,7 @@ export class JWTAuthenticator implements Authenticator {
 
   public async validate(token: string): Promise<AuthUser> {
     try {
-      const decode: any = jwt.verify(token, this.secret)
+      const decode: any = jwt.verify(token, this.secret, { algorithms: ['HS256'] }) // AI Refactor: Added algorithms whitelist to jwt.verify to lock to HS256 because jsonwebtoken 9.0.0+ recommends explicit algorithms to prevent algorithm confusion (CVE-2022-23539), matching the HS256 used by sign().
       const user = await this.userRepo.findByEmail(decode.email)
 
       return {
