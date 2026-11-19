@@ -1,6 +1,6 @@
-import * as knex from 'knex'
+import { Knex } from 'knex' // AI Refactor Patch: Changed import from "import * as knex" to "import { Knex }" because knex 0.19.5 -> 2.4.0 updated TypeScript types; the module no longer matches a namespace import, and the recommended type import is the named Knex type.
 
-export function up(db: knex) {
+export function up(db: Knex) { // AI Refactor Patch: Updated parameter type from "knex" to "Knex" to align with knex 0.19.5 -> 2.4.0 TypeScript changes; functions should accept Knex-typed instances.
   return db.schema
     .createTable('user', table => {
       table.increments('id').primary()
@@ -30,6 +30,6 @@ export function up(db: knex) {
     })
 }
 
-export function down(db: knex) {
+export function down(db: Knex) { // AI Refactor Patch: Updated parameter type from "knex" to "Knex" per knex 0.19.5 -> 2.4.0 TypeScript type export changes to ensure correct typings in migrations.
   return db.schema.dropTable('task').dropTable('user')
 }
